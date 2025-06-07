@@ -3,6 +3,7 @@ from player import Player
 from obstacle import Obstacle , SinObstacle, FollowObstacle, LaserObstacle
 from particle import Particle
 import random
+import ui
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -24,6 +25,9 @@ spawned = set()
 
 # 初始化粒子系統
 particles = []
+
+# prev_obstacles
+prev_obs = None
 
 running = True
 while running:
@@ -69,12 +73,20 @@ while running:
         if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
             if isinstance(o, LaserObstacle) and not o.activated:
                 continue  # 預熱中的雷射不造成傷害
-            player.alive = False
+
+             # 0607 小改:血條
+            if prev_obs != o:
+                player.blood = player.blood - 1
+                prev_obs = o
+            
+
+            # player.alive = False
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
 
     # 繪製畫面
     screen.fill((30, 30, 30))
+    ui.hud(screen,player.blood)
 
     for p in particles[:]:
         p.update()

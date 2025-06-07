@@ -17,7 +17,15 @@ class Player:
         self.dash_duration = 200  # 0.5 秒
         self.dash_speed_multiplier = 5
 
+        # 0607 小改:血條
+        self.blood = 10
+
     def update(self, keys):
+
+        # 0607 小改:血條
+        if self.blood < 0:
+            self.alive = False
+
         if not self.alive:
             return
 
