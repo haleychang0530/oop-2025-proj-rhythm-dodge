@@ -273,7 +273,7 @@ class CannonObstacle:
 
         elif self.state == "wave":
             self.wave_progress += self.wave_speed
-            if self.wave_progress >= 2:
+            if self.wave_progress >= 2.35:
                 self.expired = True
                 self.state = "done"
             else:
@@ -284,29 +284,30 @@ class CannonObstacle:
         self.wave_rects = []
         for i in range(self.num_bars):
             dis = abs(i - self.num_bars / 2)
-            arrived = (self.wave_progress * 20 / (dis + 1) > 2)
+            arrived = (self.wave_progress * 20 / (dis + 1) > 1.5)
             phase = dis / (self.num_bars-1) * math.pi * 5
-            decay = 1 - dis / self.num_bars
-            height = math.sin(self.wave_progress * math.pi - phase) * self.wave_amplitude * decay * arrived
+            decay = 1 - dis / self.num_bars * 1
+            passed = dis + 10 > self.wave_progress * 8
+            height = math.sin(self.wave_progress * math.pi - phase) * self.wave_amplitude * decay * arrived * passed
             bar_length = self.wave_length / self.num_bars
 
             if self.wave_dir in ("up", "down"):
-                bar_height = height
-                y = self.wave_origin[1] - bar_height / 2
-                if self.wave_dir == "up":
+                if self.wave_dir == "down":
                     x = self.wave_origin[0] + i * bar_length - self.num_bars * bar_length / 2
+                    y = self.wave_origin[1] - height / 2
                 else:
                     x = self.wave_origin[0] - i * bar_length + self.num_bars * bar_length / 2
-                rect = pygame.Rect(x, y, bar_length - 2, bar_height)
+                    y = self.wave_origin[1] - height / 2
+                rect = pygame.Rect(x, y, bar_length - 2, height)
 
             else:  
-                bar_width = height
-                x = self.wave_origin[0] - bar_width / 2
                 if self.wave_dir == "left":
+                    x = self.wave_origin[0] - height / 2
                     y = self.wave_origin[1] + i * bar_length - self.num_bars * bar_length / 2
                 else:
+                    x = self.wave_origin[0] - height / 2
                     y = self.wave_origin[1] - i * bar_length + self.num_bars * bar_length / 2
-                rect = pygame.Rect(x, y, bar_width, bar_length - 2)
+                rect = pygame.Rect(x, y, height, bar_length - 2)
 
             self.wave_rects.append(rect)
 
