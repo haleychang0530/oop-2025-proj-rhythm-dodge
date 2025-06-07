@@ -1,6 +1,6 @@
 import pygame, json
 from player import Player
-from obstacle import Obstacle , SinObstacle, FollowObstacle, LaserObstacle
+from obstacle import Obstacle, SinObstacle, FollowObstacle, LaserObstacle, CircleObstacle, SinCircleObstacle, FollowCircleObstacle, LaserCircleObstacle
 from particle import Particle
 import random
 
@@ -56,6 +56,34 @@ while running:
                 obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
             elif evt.get("type") == "laser":
                 obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
+            
+            # === 圓形類型 ===
+            elif evt.get("type") == "circle":
+                obs = CircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"]
+                )
+
+            elif evt.get("type") == "circle_sin":
+                obs = SinCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    amplitude=evt.get("amplitude", 50),
+                    frequency=evt.get("frequency", 0.01)
+                )
+
+            elif evt.get("type") == "circle_follow":
+                obs = FollowCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    player, speed=evt.get("speed", 15)
+                )
+
+            elif evt.get("type") == "circle_laser":
+                obs = LaserCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    charge_time=evt.get("charge", 1000) * 1.02564
+                )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
