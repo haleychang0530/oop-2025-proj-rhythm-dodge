@@ -4,9 +4,11 @@ from obstacle import *
 from particle import Particle
 import random
 import ui
+import effect
+import sprinkle
 
 pygame.init()
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 1400, 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
@@ -23,11 +25,13 @@ with open("levels/level1.json", "r") as f:
 
 spawned = set()
 
-# 初始化粒子系統
+# 初始化
 particles = []
+sprinkles=[]
 
 # prev_obstacles
 prev_obs = None
+
 
 running = True
 while running:
@@ -130,11 +134,11 @@ while running:
                 continue  # 預熱中的雷射不造成傷害
 
              # 0607 小改:血條
-            if prev_obs != o:
+            if prev_obs != o and player.blood >0:
                 player.blood = player.blood - 1
                 prev_obs = o
+                effect.hurt(screen,player)
             
-
             # player.alive = False
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -143,6 +147,9 @@ while running:
     # 繪製畫面
     screen.fill((30, 30, 30))
     ui.hud(screen,player.blood)
+   
+    
+    #sprinkle.sprinkle(screen,sprinkles,WIDTH, HEIGHT)
 
     # 畫邊界
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
