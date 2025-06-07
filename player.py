@@ -18,12 +18,12 @@ class Player:
         self.dash_speed_multiplier = 5
 
         # 0607 小改:血條
-        self.blood = 10
+        self.blood = 20
 
     def update(self, keys):
 
         # 0607 小改:血條
-        if self.blood < 0:
+        if self.blood <= 0:
             self.alive = False
 
         if not self.alive:

@@ -8,7 +8,7 @@ import effect
 import sprinkle
 
 pygame.init()
-WIDTH, HEIGHT = 1400, 700
+WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
