@@ -1,8 +1,8 @@
 import pygame, json
 from player import Player
-from obstacle import Obstacle
+from obstacle import Obstacle , SinObstacle, FollowObstacle, LaserObstacle
 from particle import Particle
-
+import random
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -13,10 +13,11 @@ clock = pygame.time.Clock()
 player = Player(100, 250)
 obstacles = []
 
+
 # 音樂與事件載入
-pygame.mixer.music.load("assets/bgm.mp3")
+pygame.mixer.music.load("assets/music/bgm.mp3")
 pygame.mixer.music.play(start=95)
-with open("level.json", "r") as f:
+with open("levels/level1.json", "r") as f:
     events = json.load(f)
 
 spawned = set()
@@ -49,16 +50,29 @@ while running:
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
         if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
-            o = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
-            obstacles.append(o)
+            if evt.get("type") == "sin":
+                obs = SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
+            elif evt.get("type") == "follow":
+                obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
+            elif evt.get("type") == "laser":
+                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
+            else:
+                obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
+            obstacles.append(obs)
             spawned.add(i)
 
     # 更新障礙物
     for o in obstacles:
-        o.update()
+        if isinstance(o, FollowObstacle):
+            o.update(player)
+        else:
+            o.update()
+        if isinstance(o, LaserObstacle) and o.expired:
+            obstacles.remove(o)
         if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
+            if isinstance(o, LaserObstacle) and not o.activated:
+                continue  # 預熱中的雷射不造成傷害
             player.alive = False
-            # 粒子爆炸
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
 
