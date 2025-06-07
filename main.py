@@ -66,6 +66,8 @@ while running:
         o.update()
         if isinstance(o, LaserObstacle) and o.expired:
             obstacles.remove(o)
+        if not screen.get_rect().colliderect(o.rect):
+            obstacles.remove(o)
         if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
             if isinstance(o, LaserObstacle) and not o.activated:
                 continue  # 預熱中的雷射不造成傷害
@@ -75,6 +77,9 @@ while running:
 
     # 繪製畫面
     screen.fill((30, 30, 30))
+
+    # 畫邊界
+    pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(0, 0, 800, 600), 5)
 
     for p in particles[:]:
         p.update()

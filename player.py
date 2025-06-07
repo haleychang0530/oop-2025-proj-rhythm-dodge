@@ -58,12 +58,16 @@ class Player:
                 self.rect.x += self.dash_vector[0] * speed
                 self.rect.y += self.dash_vector[1] * speed
                 self.color = (255, 255, 255)
+                self.rect.clamp_ip(pygame.Rect(5, 5, 790, 590))
                 return  # dash 中不接受其他移動輸入
                 
 
         # 一般移動（未衝刺時）
         self.rect.x += dx * self.speed
         self.rect.y += dy * self.speed
+
+        # 限制在邊界內
+        self.rect.clamp_ip(pygame.Rect(5, 5, 790, 590))
 
 
 
