@@ -1,6 +1,6 @@
 import pygame, json
 from player import Player
-from obstacle import Obstacle , SinObstacle, FollowObstacle, LaserObstacle
+from obstacle import *
 from particle import Particle
 import random
 import ui
@@ -64,6 +64,57 @@ while running:
                 obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
             elif evt.get("type") == "laser":
                 obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
+            
+            # === 圓形類型 ===
+            elif evt.get("type") == "circle":
+                obs = CircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"]
+                )
+
+            elif evt.get("type") == "circle_sin":
+                obs = SinCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    amplitude=evt.get("amplitude", 50),
+                    frequency=evt.get("frequency", 0.01)
+                )
+
+            elif evt.get("type") == "circle_follow":
+                obs = FollowCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    player, speed=evt.get("speed", 15)
+                )
+
+            elif evt.get("type") == "circle_laser":
+                obs = LaserCircleObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    charge_time=evt.get("charge", 1000) * 1.02564
+                )
+            elif evt.get("type") == "gear":
+                obs = GearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    teeth=evt.get("teeth", 8),
+                    rotation_speed=evt.get("rot_speed", 2)
+            )
+            elif evt.get("type") == "gear_follow":
+                obs = FollowGearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    player, speed=evt.get("speed", 15),
+                    teeth=evt.get("teeth", 8),
+                    rotation_speed=evt.get("rot_speed", 2)
+                )
+            elif evt.get("type") == "gear_sin":
+                obs = SinGearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["vx"], evt["vy"],
+                    amplitude=evt.get("amplitude", 50),
+                    frequency=evt.get("frequency", 0.01),
+                    teeth=evt.get("teeth", 8),
+                    rotation_speed=evt.get("rot_speed", 2)
+                )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
@@ -74,6 +125,10 @@ while running:
         o.update()
         if isinstance(o, LaserObstacle) and o.expired:
             obstacles.remove(o)
+        if not screen.get_rect().colliderect(o.rect):
+            obstacles.remove(o)
+        # 檢查玩家與障礙物碰撞
+
         if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
             if isinstance(o, LaserObstacle) and not o.activated:
                 continue  # 預熱中的雷射不造成傷害
@@ -88,12 +143,16 @@ while running:
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
 
+
     # 繪製畫面
     screen.fill((30, 30, 30))
     ui.hud(screen,player.blood)
    
     
     #sprinkle.sprinkle(screen,sprinkles,WIDTH, HEIGHT)
+
+    # 畫邊界
+    pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
 
     for p in particles[:]:
         p.update()
@@ -108,3 +167,6 @@ while running:
     for o in obstacles:
         o.draw(screen)
     pygame.display.flip()
+
+pygame.quit()
+# 退出遊戲
