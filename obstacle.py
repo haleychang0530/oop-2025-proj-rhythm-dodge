@@ -1,6 +1,5 @@
 import pygame
 import math
-from player import Player
 
 class Obstacle:
     def __init__(self, x, y, w, h, vx, vy):
