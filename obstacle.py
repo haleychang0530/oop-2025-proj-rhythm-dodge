@@ -188,7 +188,7 @@ class GearObstacle():
 
         # 畫齒輪本體（內圓）
         pygame.draw.circle(surface, self.color, center, r)  # 畫內圓稍大一點
-        pygame.draw.rect(screen, (0, 0, 0), self.rect, 2)  # 畫黑色邊框表示碰撞箱
+        #pygame.draw.rect(screen, (0, 0, 0), self.rect, 2)  # 畫黑色邊框表示碰撞箱
 
         # 畫到主畫面
         screen.blit(surface, (self.x - self.radius, self.y - self.radius))
@@ -208,6 +208,8 @@ class FollowGearObstacle(GearObstacle):
         self.x += self.vx
         self.y += self.vy
         self.rect.center = (self.x, self.y)
+        self.rotation += self.rotation_speed
+        self.rect.center = (self.x, self.y)
 
 class SinGearObstacle(GearObstacle):
     def __init__(self, x, y, radius, vx, vy, amplitude, frequency, teeth, rotation_speed=2):
@@ -223,3 +225,103 @@ class SinGearObstacle(GearObstacle):
         self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
         self.rotation += self.rotation_speed
         self.rect.center = (self.x, self.y)
+
+class CannonObstacle:
+    def __init__(self, x, y, w, h, vx, vy, wave_length=2000, wave_speed=0.05, wave_amplitude=300, num_bars=51):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.vx = vx
+        self.vy = vy
+        self.rect = pygame.Rect(x, y, w, h)
+        self.state = "moving"
+        self.expired = False
+
+        self.wave_origin = None
+        self.wave_dir = None
+        self.wave_length = wave_length
+        self.wave_speed = wave_speed
+        self.wave_amplitude = wave_amplitude
+        self.wave_progress = 0
+        self.num_bars = num_bars
+        self.wave_rects = []
+
+        self.hitbox_type = "none"
+        self.wave_damaged = False
+
+    def update(self, screen_rect, player):
+        if self.state == "moving":
+            self.x += self.vx
+            self.y += self.vy
+            self.rect.topleft = (self.x, self.y)
+
+            if not screen_rect.contains(self.rect):
+                self.state = "wave"
+                if self.rect.right > screen_rect.right:
+                    self.wave_origin = (screen_rect.right, self.rect.centery)
+                    self.wave_dir = "left"
+                elif self.rect.left < screen_rect.left:
+                    self.wave_origin = (screen_rect.left, self.rect.centery)
+                    self.wave_dir = "right"
+                elif self.rect.bottom > screen_rect.bottom:
+                    self.wave_origin = (self.rect.centerx, screen_rect.bottom)
+                    self.wave_dir = "up"
+                elif self.rect.top < screen_rect.top:
+                    self.wave_origin = (self.rect.centerx, screen_rect.top)
+                    self.wave_dir = "down"
+
+        elif self.state == "wave":
+            self.wave_progress += self.wave_speed
+            if self.wave_progress >= 2:
+                self.expired = True
+                self.state = "done"
+            else:
+                self.generate_wave_rects()
+                self.check_player_hit(player)
+
+    def generate_wave_rects(self):
+        self.wave_rects = []
+        for i in range(self.num_bars):
+            dis = abs(i - self.num_bars / 2)
+            arrived = (self.wave_progress * 20 / (dis + 1) > 2)
+            phase = dis / (self.num_bars-1) * math.pi * 5
+            decay = 1 - dis / self.num_bars
+            height = math.sin(self.wave_progress * math.pi - phase) * self.wave_amplitude * decay * arrived
+            bar_length = self.wave_length / self.num_bars
+
+            if self.wave_dir in ("up", "down"):
+                bar_height = height
+                y = self.wave_origin[1] - bar_height / 2
+                if self.wave_dir == "up":
+                    x = self.wave_origin[0] + i * bar_length - self.num_bars * bar_length / 2
+                else:
+                    x = self.wave_origin[0] - i * bar_length + self.num_bars * bar_length / 2
+                rect = pygame.Rect(x, y, bar_length - 2, bar_height)
+
+            else:  
+                bar_width = height
+                x = self.wave_origin[0] - bar_width / 2
+                if self.wave_dir == "left":
+                    y = self.wave_origin[1] + i * bar_length - self.num_bars * bar_length / 2
+                else:
+                    y = self.wave_origin[1] - i * bar_length + self.num_bars * bar_length / 2
+                rect = pygame.Rect(x, y, bar_width, bar_length - 2)
+
+            self.wave_rects.append(rect)
+
+    def check_player_hit(self, player):
+        if self.wave_damaged or not player.alive or player.dashing:
+            return
+        for rect in self.wave_rects:
+            if player.rect.colliderect(rect):
+                player.alive = False
+                self.wave_damaged = True
+                break
+
+    def draw(self, screen):
+        if self.state == "moving":
+            pygame.draw.rect(screen, (255, 100, 50), self.rect)
+        elif self.state == "wave":
+            for rect in self.wave_rects:
+                pygame.draw.rect(screen, (255, 0, 0), rect) 

@@ -13,6 +13,7 @@ clock = pygame.time.Clock()
 player = Player(100, 250)
 obstacles = []
 
+screen_rect = screen.get_rect()
 
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
@@ -107,14 +108,23 @@ while running:
                     teeth=evt.get("teeth", 8),
                     rotation_speed=evt.get("rot_speed", 2)
                 )
+            elif evt.get("type") == "cannon":
+                obs = CannonObstacle(
+                    evt["x"], evt["y"], evt["w"], evt["h"],
+                    evt["vx"], evt["vy"],
+                    
+                )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
             spawned.add(i)
-
+    
     # 更新障礙物
     for o in obstacles:
-        o.update()
+        if isinstance(o, CannonObstacle):
+            o.update(screen_rect, player)
+        else:
+            o.update()    
         if isinstance(o, LaserObstacle) and o.expired:
             obstacles.remove(o)
         if not screen.get_rect().colliderect(o.rect):
