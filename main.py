@@ -79,7 +79,7 @@ while running:
     screen.fill((30, 30, 30))
 
     # 畫邊界
-    pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(0, 0, 800, 600), 5)
+    pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
 
     for p in particles[:]:
         p.update()
