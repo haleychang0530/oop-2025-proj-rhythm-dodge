@@ -1,6 +1,7 @@
 import pygame
 import math
 
+
 class Obstacle:
     def __init__(self, x, y, w, h, vx, vy):
         self.rect = pygame.Rect(x, y, w, h)
@@ -29,15 +30,19 @@ class SinObstacle(Obstacle):
         self.rect.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
 
 class FollowObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy):
+    def __init__(self, x, y, w, h, player, speed):
+        # 計算指向玩家的方向向量
+        dx = player.rect.centerx - x
+        dy = player.rect.centery - y
+        length = max(1, math.hypot(dx, dy))
+
+        # 單位方向向量乘以速度
+        vx = dx / length * speed
+        vy = dy / length * speed
+
         super().__init__(x, y, w, h, vx, vy)
-    def update(self, player):
-        if (abs(self.vx) <= 1):
-            dx = player.rect.centerx - self.rect.centerx
-            self.rect.x += self.vx + dx/40
-        if (abs(self.vy) <= 1):
-            dy = player.rect.centery - self.rect.centery
-            self.rect.y += self.vy + dy/40
+
+    def update(self):
         self.rect.x += self.vx
         self.rect.y += self.vy
 
