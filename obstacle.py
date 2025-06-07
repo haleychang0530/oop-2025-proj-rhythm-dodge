@@ -140,8 +140,8 @@ class LaserCircleObstacle(CircleObstacle):
 
 class GearObstacle():
     def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
-        self.x = x
-        self.y = y
+        self.x = x + radius
+        self.y = y + radius
         self.radius = radius
         self.vx = vx
         self.vy = vy
@@ -212,7 +212,7 @@ class FollowGearObstacle(GearObstacle):
 class SinGearObstacle(GearObstacle):
     def __init__(self, x, y, radius, vx, vy, amplitude, frequency, teeth, rotation_speed=2):
         super().__init__(x, y, radius, vx, vy, teeth, rotation_speed=rotation_speed)
-        self.base_y = y
+        self.base_y = y + radius
         self.amplitude = amplitude
         self.frequency = frequency
         self.start_time = pygame.time.get_ticks()
