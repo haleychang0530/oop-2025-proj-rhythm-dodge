@@ -21,6 +21,8 @@ screen_rect = screen.get_rect()
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
 pygame.mixer.music.play(start=95)
+pygame.mixer.music.set_volume(0.5)
+
 with open("levels/level1.json", "r") as f:
     events = json.load(f)
 
@@ -128,6 +130,7 @@ while running:
             spawned.add(i)
     
     # 更新障礙物
+    all_pass = True
     for o in obstacles:
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
@@ -145,14 +148,17 @@ while running:
 
              # 0607 小改:血條
             if prev_obs != o and player.blood >0:
+                all_pass=False
                 player.blood = player.blood - 1
                 prev_obs = o
-                effect.hurt(screen,player,o)
+                effect.hurt(o)
             
             # player.alive = False
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
-
+            
+    if all_pass:
+        prev_obs = None
 
     # 繪製畫面
     screen.fill((30, 30, 30))
