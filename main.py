@@ -6,12 +6,16 @@ import random
 import ui
 import effect
 import sprinkle
+from start import show_logo_screen
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
+
+#start screen
+show_logo_screen(screen)
 
 player = Player(100, 250)
 obstacles = []
