@@ -168,7 +168,7 @@ while running:
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
-                if ( isinstance(o, LaserObstacle) and ( not o.activated or o.expired)):
+                if ( isinstance(o, LaserObstacle) and not o.activated or (isinstance(o, CannonObstacle) and o.expired)):
                     continue  # 預熱中的雷射不造成傷害
                 if prev_obs != o and player.blood > 0:
                     all_pass=False
