@@ -1,37 +1,39 @@
+# tutorial.py
 import pygame
 import sys
+from player import Player
 
-def show_tutorial(screen):
+def tutorial_screen(screen):
+    pygame.display.set_caption("Tutorial")
     clock = pygame.time.Clock()
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-
-    font = pygame.font.SysFont("Arial", 40, bold=True)
-    small_font = pygame.font.SysFont("Arial", 25)
-
-    instructions = [
-        "Controls:",
-        "Arrow Keys - Move",
-        "Shift - Dash",
-        "Avoid obstacles and survive!",
-        "",
-        "Press ENTER to start the game"
-    ]
+    font = pygame.font.SysFont("Arial", 24)
+    
+    player = Player(100, 100)
 
     while True:
+        screen.fill((30, 30, 30))
+        keys = pygame.key.get_pressed()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    return  # Exit tutorial screen
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                return  # proceed to next screen
 
-        screen.fill(BLACK)
+        player.update(keys)
+        player.draw(screen)
 
-        for i, line in enumerate(instructions):
-            text_surface = font.render(line, True, WHITE) if i == 0 else small_font.render(line, True, WHITE)
-            screen.blit(text_surface, (50, 100 + i * 50))
+        # === Tutorial instructions ===
+        lines = [
+            "Arrow Keys: Move",
+            "Shift with Arror Keys: Dash",
+            "Try moving around and dashing!",
+            "Press ENTER to continue"
+        ]
+        for i, text in enumerate(lines):
+            label = font.render(text, True, (255, 255, 255))
+            screen.blit(label, (20, 20 + i * 30))
 
         pygame.display.flip()
         clock.tick(60)
