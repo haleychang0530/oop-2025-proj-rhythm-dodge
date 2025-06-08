@@ -18,8 +18,7 @@ def hurt(o):
         sound = pygame.mixer.Sound("assets/music/bomb.wav")
         sound.play()
 
-    elif ob=="LaserCircleObstacle" or "LaserObstacle":
-        
+    if ob=="LaserCircleObstacle" or "LaserObstacle":
         sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
 
