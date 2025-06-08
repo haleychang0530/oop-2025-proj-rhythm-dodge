@@ -5,7 +5,6 @@ from particle import Particle
 import random
 import ui
 import effect
-import sprinkle
 from start import show_logo_screen
 from tutorial import tutorial_screen
 
@@ -149,26 +148,35 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
-        if isinstance(o, LaserObstacle) and o.expired:
+        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
             obstacles.remove(o)
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
         # 檢查玩家與障礙物碰撞
-
-        if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
-            if isinstance(o, LaserObstacle) and not o.activated:
-                continue  # 預熱中的雷射不造成傷害
-
-             # 0607 小改:血條
-            if prev_obs != o and player.blood >0:
-                all_pass=False
-                player.blood = player.blood - 1
-                prev_obs = o
-                effect.hurt(o)
-            
-            # player.alive = False
-            for _ in range(30):
-                particles.append(Particle(player.rect.centerx, player.rect.centery))
+        if player.alive and not player.dashing:
+            if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) 
+                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
+                # 圓形障礙物的碰撞檢查
+                if o.collide(player):
+                    if isinstance(o, LaserCircleObstacle) and not o.activated:
+                        continue  # 預熱中的雷射不造成傷害
+                    if prev_obs != o and player.blood > 0:
+                        all_pass=False
+                        player.blood = player.blood - 1
+                        prev_obs = o
+                        effect.hurt(o)
+                    for _ in range(30):
+                        particles.append(Particle(player.rect.centerx, player.rect.centery))
+            elif player.rect.colliderect(o.rect):
+                if ( isinstance(o, LaserObstacle) and ( not o.activated or o.expired)):
+                    continue  # 預熱中的雷射不造成傷害
+                if prev_obs != o and player.blood > 0:
+                    all_pass=False
+                    player.blood = player.blood - 1
+                    prev_obs = o
+                    effect.hurt(o)
+                for _ in range(30):
+                    particles.append(Particle(player.rect.centerx, player.rect.centery))
             
     if all_pass:
         prev_obs = None
