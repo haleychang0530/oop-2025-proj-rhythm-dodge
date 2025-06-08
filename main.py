@@ -3,14 +3,29 @@ from player import Player
 from obstacle import *
 from particle import Particle
 import random
+import ui
+import effect
+from start import show_logo_screen
+from tutorial import tutorial_screen
 
+game_state = "playing"  # or "gameover"
+
+# 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
 
-player = Player(300, 400)
+#start screen
+show_logo_screen(screen)
+print("Logo screen done")  # <- debugging line
+
+# tutorial screen
+tutorial_screen(screen)
+print("Tutorial done")
+
+player = Player(100, 250)
 obstacles = []
 
 screen_rect = screen.get_rect()
@@ -18,13 +33,20 @@ screen_rect = screen.get_rect()
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
 pygame.mixer.music.play(start=95)
+pygame.mixer.music.set_volume(0.3)
+
 with open("levels/level1.json", "r") as f:
     events = json.load(f)
 
 spawned = set()
 
-# 初始化粒子系統
+# 初始化
 particles = []
+sprinkles=[]
+
+# prev_obstacles
+prev_obs = None
+
 
 running = True
 while running:
@@ -120,6 +142,7 @@ while running:
             spawned.add(i)
     
     # 更新障礙物
+    all_pass = True
     for o in obstacles:
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
@@ -137,19 +160,33 @@ while running:
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
-                    player.alive = False
+                    if prev_obs != o and player.blood > 0:
+                        all_pass=False
+                        player.blood = player.blood - 1
+                        prev_obs = o
+                        effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
-                if ( isinstance(o, LaserObstacle) and not o.activated ) or o.expired:
+                if ( isinstance(o, LaserObstacle) and ( not o.activated or o.expired)):
                     continue  # 預熱中的雷射不造成傷害
-                player.alive = False
+                if prev_obs != o and player.blood > 0:
+                    all_pass=False
+                    player.blood = player.blood - 1
+                    prev_obs = o
+                    effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
-
+            
+    if all_pass:
+        prev_obs = None
 
     # 繪製畫面
     screen.fill((30, 30, 30))
+    ui.hud(screen,player.blood)
+   
+    
+    #sprinkle.sprinkle(screen,sprinkles,WIDTH, HEIGHT)
 
     # 畫邊界
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
