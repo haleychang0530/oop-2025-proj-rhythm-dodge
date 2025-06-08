@@ -131,7 +131,9 @@ while running:
             obstacles.remove(o)
         # 檢查玩家與障礙物碰撞
         if player.alive and not player.dashing:
-            if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) ):
+            if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) 
+                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
+                # 圓形障礙物的碰撞檢查
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害

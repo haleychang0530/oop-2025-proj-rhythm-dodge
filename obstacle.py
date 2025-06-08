@@ -149,7 +149,7 @@ class LaserCircleObstacle(CircleObstacle):
         pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
         screen.blit(surface, (self.rect.x, self.rect.y))
 
-class GearObstacle():
+class GearObstacle(CircleObstacle):
     def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
         self.x = x + radius
         self.y = y + radius
