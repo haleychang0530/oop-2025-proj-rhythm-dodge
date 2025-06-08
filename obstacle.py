@@ -249,8 +249,9 @@ class CannonObstacle:
 
         self.hitbox_type = "none"
         self.wave_damaged = False
+        self.is_collided = False
 
-    def update(self, screen_rect, player):
+    def update(self, screen_rect, player,screen):
         if self.state == "moving":
             self.x += self.vx
             self.y += self.vy
@@ -318,8 +319,7 @@ class CannonObstacle:
             if player.rect.colliderect(rect):
                 # player.alive = False
                 player.blood = player.blood - 10
-                self.wave_damaged = True
-                break
+                self.wave_damaged = True   
 
     def draw(self, screen):
         if self.state == "moving":

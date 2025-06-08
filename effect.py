@@ -4,6 +4,7 @@ import sprinkle
 def hurt(screen,player,o):
     """Play audio and visual effect when the player gets hurt."""
     ob=o.__class__.__name__
+    print(ob)
     if ob=="FollowGearObstacle":
         sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
@@ -33,7 +34,8 @@ def hurt(screen,player,o):
         sound.play()   
 
     elif ob=="CannonObstacle":
-        sound = pygame.mixer.Sound("assets/music/ding.wav")
+       
+        sound = pygame.mixer.Sound("assets/music/slap.wav")
         sound.play()  
 
 
