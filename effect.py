@@ -1,36 +1,37 @@
 import pygame
 import sprinkle
 
-def hurt(screen,player,o):
+def hurt(o):
     """Play audio and visual effect when the player gets hurt."""
     ob=o.__class__.__name__
-    if ob=="FollowGearObstacle":
+    print(ob)
+    if ob=="FollowObstacle":
         sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
 
-    elif ob=="SinCircleObstacle":
+    elif ob=="SinCircleObstacle" or "SinGearObstacle":
+        #print("ding")
         sound = pygame.mixer.Sound("assets/music/ding.wav")
-        sound.play()
-        sound = pygame.mixer.Sound("assets/music/dong.wav")
         sound.play()
 
     elif ob=="FollowCircleObstacle":
         sound = pygame.mixer.Sound("assets/music/bomb.wav")
         sound.play()
 
-    elif ob=="LaserCircleObstacle":
-        sound = pygame.mixer.Sound("assets/music/bomb.wav")
+    elif ob=="LaserCircleObstacle" or "LaserObstacle":
+        
+        sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
 
-    elif ob=="GearObstacle":
-        #sound = pygame.mixer.Sound("assets/music/slap.wav")
-        #sound.play()
-        sound = pygame.mixer.Sound("assets/music/bomb.wav")
+    elif ob=="GearObstacle" or "FollowGearObstacle" :
+        #print("ding")
+        sound = pygame.mixer.Sound("assets/music/ding.wav")
         sound.play()
 
-    elif ob=="FollowGearObstacle" or "SinGearObstacle":
-        sound = pygame.mixer.Sound("assets/music/gun.wav")
-        sound.play()   
+    if ob=="CannonObstacle":
+        # print("delarn")
+        sound = pygame.mixer.Sound("assets/music/delarn.wav")
+        sound.play()  
 
     elif ob=="Obstacle":
         sound = pygame.mixer.Sound("assets/music/slap.wav")

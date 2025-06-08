@@ -6,12 +6,25 @@ import random
 import ui
 import effect
 import sprinkle
+from start import show_logo_screen
+from tutorial import tutorial_screen
 
+game_state = "playing"  # or "gameover"
+
+# 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
+
+#start screen
+show_logo_screen(screen)
+print("Logo screen done")  # <- debugging line
+
+# tutorial screen
+tutorial_screen(screen)
+print("Tutorial done")
 
 player = Player(100, 250)
 obstacles = []
@@ -21,6 +34,8 @@ screen_rect = screen.get_rect()
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
 pygame.mixer.music.play(start=95)
+pygame.mixer.music.set_volume(0.3)
+
 with open("levels/level1.json", "r") as f:
     events = json.load(f)
 
@@ -128,6 +143,7 @@ while running:
             spawned.add(i)
     
     # 更新障礙物
+    all_pass = True
     for o in obstacles:
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
@@ -145,14 +161,17 @@ while running:
 
              # 0607 小改:血條
             if prev_obs != o and player.blood >0:
+                all_pass=False
                 player.blood = player.blood - 1
                 prev_obs = o
-                effect.hurt(screen,player,o)
+                effect.hurt(o)
             
             # player.alive = False
             for _ in range(30):
                 particles.append(Particle(player.rect.centerx, player.rect.centery))
-
+            
+    if all_pass:
+        prev_obs = None
 
     # 繪製畫面
     screen.fill((30, 30, 30))
