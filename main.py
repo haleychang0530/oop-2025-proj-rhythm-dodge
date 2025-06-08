@@ -7,7 +7,7 @@ import ui
 import effect
 import sprinkle
 from start import show_logo_screen
-from tutorial import show_tutorial
+from tutorial import tutorial_screen
 
 # 初始化 Pygame
 pygame.init()
@@ -20,8 +20,8 @@ clock = pygame.time.Clock()
 show_logo_screen(screen)
 print("Logo screen done")  # <- debugging line
 
-# tutorial 
-show_tutorial(screen)
+# tutorial screen
+tutorial_screen(screen)
 print("Tutorial done")
 
 player = Player(100, 250)
