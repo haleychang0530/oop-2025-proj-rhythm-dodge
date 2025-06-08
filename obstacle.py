@@ -47,38 +47,105 @@ class FollowObstacle(Obstacle):
         self.rect.y += self.vy
 
 class LaserObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=500*1.02564):
+    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=500 * 1.02564):
         super().__init__(x, y, w, h, vx, vy)
-        self.charge_time = charge_time      # 充能時間
-        self.duration = duration            # 激活後持續時間（毫秒）
+        self.charge_time = charge_time
+        self.duration = duration
         self.spawn_time = pygame.time.get_ticks()
         self.activated = False
-        self.expired = False                # 是否應該被移除
+        self.expired = False
+
+        # 預熱階段變數
+        self.stage = 0
+        self.alpha = 0
+        self.line_width = 2
+        self.transition_progress = 0
 
     def update(self):
         now = pygame.time.get_ticks()
+        elapsed = now - self.spawn_time
+        ct = self.charge_time * 1.02564  # 考慮到遊戲速度調整
+        if elapsed < ct * 1.05 + self.duration:
+            if elapsed < ct * 0.9:
+                # 淡入紅色提示（0 → 80)
+                self.stage = 1
+                self.alpha = int(80 * (elapsed / (ct * 0.9)))
 
-        # 判斷是否啟動
-        if not self.activated and now - self.spawn_time >= self.charge_time:
-            self.activated = True
-            self.activate_time = now  # 記錄啟動的時間
+            elif elapsed < ct * 0.92:
+                # 消失階段
+                self.stage = 2
 
-        # 若已啟動，判斷是否超時
-        if self.activated and now - self.activate_time >= self.duration:
+            elif elapsed < ct * 1:
+                # 細白線 → 擴展
+                self.stage = 3
+                progress = (elapsed - ct * 0.92) / (ct * 0.08)
+                max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
+                self.line_width = int(2 + (max_width - 2) * progress)
+
+            elif elapsed < ct * 1.05:
+                # 白線轉紅線 # 正式啟動
+                self.activated = True
+                self.activate_time = now
+                self.stage = 4
+                self.transition_progress = min(1, (elapsed - ct) / (ct * 0.05))
+
+            elif elapsed < ct*1.05 + self.duration:
+                self.stage = 5 # 雷射結束階段
+                progress = (elapsed - ct * 1.05) / self.duration
+                max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
+                self.line_width = int(max_width * (1 - progress))
+
+
+        else:
             self.expired = True
 
-        
-    
     def draw(self, screen):
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
-    
-        if not self.activated:
-            color = (200, 50, 50, 100)  # 未啟動：淡藍透明
-        else:
-            color = (200, 0, 0, 255)      # 啟動：紅色半透明
 
-        pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
-        screen.blit(laser_surface, (self.rect.x, self.rect.y))
+        if self.stage == 1:
+            # 淡入紅色提示（陰影）
+            color = (255, 0, 0, self.alpha)
+            pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
+
+        elif self.stage == 2:
+            # 空白階段（不畫）
+            pass
+
+        elif self.stage == 3:
+            # 白線擴張階段
+            color = (255, 255, 255, 255)
+            rect = self.get_centered_line_rect(self.line_width)
+            pygame.draw.rect(laser_surface, color, rect)
+
+        elif self.stage == 4:
+            # 漸變：白 → 紅
+            r = 255
+            g = int(255 * (1 - self.transition_progress))
+            b = int(255 * (1 - self.transition_progress**(1/2)))
+            color = (r, g, b, 255)
+            rect = self.get_centered_line_rect(self.rect.width if self.rect.width > self.rect.height else self.rect.height)
+            pygame.draw.rect(laser_surface, color, rect)
+
+        elif self.stage == 5:
+            # 雷射收縮階段
+            color = (255, 0, 0, 255)
+            rect = self.get_centered_line_rect(self.line_width)
+            pygame.draw.rect(laser_surface, color, rect)
+
+        screen.blit(laser_surface, self.rect.topleft)
+
+    def get_centered_line_rect(self, width):
+        """在原本範圍中心生成一個長條雷射區塊（可調整寬度）"""
+        if self.rect.width > self.rect.height:
+            # 水平雷射（上下擴張）
+            h = width
+            y = self.rect.centery - h // 2
+            return pygame.Rect(0, y - self.rect.top, self.rect.width, h)
+        else:
+            # 垂直雷射（左右擴張）
+            w = width
+            x = self.rect.centerx - w // 2
+            return pygame.Rect(x - self.rect.left, 0, w, self.rect.height)
 
 class CircleObstacle(Obstacle):
     def __init__(self, x, y, radius, vx, vy):
