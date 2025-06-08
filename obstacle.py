@@ -84,7 +84,18 @@ class CircleObstacle(Obstacle):
     def __init__(self, x, y, radius, vx, vy):
         super().__init__(x, y, radius * 2, radius * 2, vx, vy)
         self.radius = radius
-
+    def collide(self, player):
+        """檢查玩家是否碰撞到圓形障礙物"""
+        left_x = player.rect.centerx - player.rect.width / 2
+        right_x = player.rect.centerx + player.rect.width / 2
+        top_y = player.rect.centery - player.rect.height / 2
+        bottom_y = player.rect.centery + player.rect.height / 2
+        distance_lefttop = math.hypot(left_x - self.rect.centerx, top_y - self.rect.centery)
+        distance_righttop = math.hypot(right_x - self.rect.centerx, top_y - self.rect.centery)
+        distance_leftbottom = math.hypot(left_x - self.rect.centerx, bottom_y - self.rect.centery)
+        distance_rightbottom = math.hypot(right_x - self.rect.centerx, bottom_y - self.rect.centery)
+        distance = min(distance_lefttop, distance_righttop, distance_leftbottom, distance_rightbottom)
+        return distance <= self.radius
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, self.rect.center, self.radius)
 

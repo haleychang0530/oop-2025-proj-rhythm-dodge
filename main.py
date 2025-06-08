@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("JSAB Clone")
 clock = pygame.time.Clock()
 
-player = Player(100, 250)
+player = Player(300, 400)
 obstacles = []
 
 screen_rect = screen.get_rect()
@@ -125,18 +125,25 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
-        if isinstance(o, LaserObstacle) and o.expired:
+        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle) ) and o.expired:
             obstacles.remove(o)
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
         # 檢查玩家與障礙物碰撞
-
-        if player.rect.colliderect(o.rect) and player.alive and not player.dashing:
-            if isinstance(o, LaserObstacle) and not o.activated:
-                continue  # 預熱中的雷射不造成傷害
-            player.alive = False
-            for _ in range(30):
-                particles.append(Particle(player.rect.centerx, player.rect.centery))
+        if player.alive and not player.dashing:
+            if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) ):
+                if o.collide(player):
+                    if isinstance(o, LaserCircleObstacle) and not o.activated:
+                        continue  # 預熱中的雷射不造成傷害
+                    player.alive = False
+                    for _ in range(30):
+                        particles.append(Particle(player.rect.centerx, player.rect.centery))
+            elif player.rect.colliderect(o.rect):
+                if isinstance(o, LaserObstacle) and not o.activated:
+                    continue  # 預熱中的雷射不造成傷害
+                player.alive = False
+                for _ in range(30):
+                    particles.append(Particle(player.rect.centerx, player.rect.centery))
 
 
     # 繪製畫面
