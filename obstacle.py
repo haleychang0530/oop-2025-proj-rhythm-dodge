@@ -47,7 +47,7 @@ class FollowObstacle(Obstacle):
         self.rect.y += self.vy
 
 class LaserObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=500 * 1.02564):
+    def __init__(self, x, y, w, h, vx, vy, charge_time, duration = 300):
         super().__init__(x, y, w, h, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
@@ -65,37 +65,37 @@ class LaserObstacle(Obstacle):
         now = pygame.time.get_ticks()
         elapsed = now - self.spawn_time
         ct = self.charge_time * 1.02564  # 考慮到遊戲速度調整
-        if elapsed < ct * 1.05 + self.duration:
-            if elapsed < ct * 0.9:
+        if elapsed < ct + self.duration + 200:
+            if elapsed < ct - 200:
                 # 淡入紅色提示（0 → 80)
                 self.stage = 1
-                self.alpha = int(80 * (elapsed / (ct * 0.9)))
+                self.alpha = int(80 * (elapsed / (ct - 200)))
 
-            elif elapsed < ct * 0.92:
+            elif elapsed < ct - 160:
                 # 消失階段
                 self.stage = 2
 
-            elif elapsed < ct * 1:
+            elif elapsed < ct:
                 # 細白線 → 擴展
                 self.stage = 3
-                progress = (elapsed - ct * 0.92) / (ct * 0.08)
+                progress = (elapsed - ct + 160) / 160
                 max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
                 self.line_width = int(2 + (max_width - 2) * progress)
 
-            elif elapsed < ct * 1.05:
+            elif elapsed < ct + 100:
                 # 白線轉紅線 # 正式啟動
                 self.activated = True
                 self.activate_time = now
                 self.stage = 4
-                self.transition_progress = min(1, (elapsed - ct) / (ct * 0.05))
+                self.transition_progress = min(1, (elapsed - ct) / 100)
 
-            elif elapsed < ct*1.05 + self.duration:
+            elif elapsed < ct + self.duration + 200:
                 self.stage = 5 # 雷射結束階段
-                progress = (elapsed - ct * 1.05) / self.duration
+                progress = (elapsed - ct - 100) / (self.duration + 100) 
+                if progress > 0.9:
+                    self.activated = False
                 max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
                 self.line_width = int(max_width * (1 - progress))
-
-
         else:
             self.expired = True
 
@@ -119,7 +119,7 @@ class LaserObstacle(Obstacle):
 
         elif self.stage == 4:
             # 漸變：白 → 紅
-            r = 255
+            r = 200
             g = int(255 * (1 - self.transition_progress))
             b = int(255 * (1 - self.transition_progress**(1/2)))
             color = (r, g, b, 255)
@@ -128,7 +128,7 @@ class LaserObstacle(Obstacle):
 
         elif self.stage == 5:
             # 雷射收縮階段
-            color = (255, 0, 0, 255)
+            color = (200, 0, 0, 255)
             rect = self.get_centered_line_rect(self.line_width)
             pygame.draw.rect(laser_surface, color, rect)
 
