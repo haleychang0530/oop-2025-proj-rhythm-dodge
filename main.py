@@ -7,7 +7,9 @@ import ui
 import effect
 import sprinkle
 from start import show_logo_screen
+from tutorial import show_tutorial
 
+# 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -17,6 +19,10 @@ clock = pygame.time.Clock()
 #start screen
 show_logo_screen(screen)
 print("Logo screen done")  # <- debugging line
+
+# tutorial 
+show_tutorial(screen)
+print("Tutorial done")
 
 player = Player(100, 250)
 obstacles = []

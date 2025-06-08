@@ -60,7 +60,7 @@ def show_logo_screen(screen):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    return  # ✅ This exits logo screen to main game
+                    return  
 
         screen.fill(BLACK)
         draw_text()
