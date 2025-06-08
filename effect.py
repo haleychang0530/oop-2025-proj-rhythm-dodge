@@ -19,7 +19,7 @@ def hurt(screen,player,o):
         sound.play()
 
     elif ob=="LaserCircleObstacle":
-        sound = pygame.mixer.Sound("assets/music/bomb.wav")
+        sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
 
     elif ob=="GearObstacle":
@@ -31,6 +31,11 @@ def hurt(screen,player,o):
     elif ob=="FollowGearObstacle" or "SinGearObstacle":
         sound = pygame.mixer.Sound("assets/music/gun.wav")
         sound.play()   
+
+    elif ob=="CannonObstacle":
+        sound = pygame.mixer.Sound("assets/music/ding.wav")
+        sound.play()  
+
 
     elif ob=="Obstacle":
         sound = pygame.mixer.Sound("assets/music/slap.wav")

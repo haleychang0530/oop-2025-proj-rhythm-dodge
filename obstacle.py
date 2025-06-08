@@ -316,7 +316,8 @@ class CannonObstacle:
             return
         for rect in self.wave_rects:
             if player.rect.colliderect(rect):
-                player.alive = False
+                # player.alive = False
+                player.blood = player.blood - 10
                 self.wave_damaged = True
                 break
 
