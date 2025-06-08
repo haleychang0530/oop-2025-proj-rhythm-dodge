@@ -92,7 +92,7 @@ class LaserObstacle(Obstacle):
             elif elapsed < ct + self.duration + 200:
                 self.stage = 5 # 雷射結束階段
                 progress = (elapsed - ct - 100) / (self.duration + 100) 
-                if progress > 0.9:
+                if progress > 0.7:
                     self.activated = False
                 max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
                 self.line_width = int(max_width * (1 - progress))
@@ -403,4 +403,4 @@ class CannonObstacle:
             pygame.draw.rect(screen, (255, 100, 50), self.rect)
         elif self.state == "wave":
             for rect in self.wave_rects:
-                pygame.draw.rect(screen, (255, 0, 0), rect) 
+                pygame.draw.rect(screen, (255, 0, 0), rect)

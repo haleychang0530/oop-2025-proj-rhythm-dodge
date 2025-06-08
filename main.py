@@ -125,7 +125,7 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
-        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle) ) and o.expired:
+        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
             obstacles.remove(o)
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
@@ -141,7 +141,7 @@ while running:
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
-                if isinstance(o, LaserObstacle) and not o.activated:
+                if ( isinstance(o, LaserObstacle) and not o.activated ) or o.expired:
                     continue  # 預熱中的雷射不造成傷害
                 player.alive = False
                 for _ in range(30):
