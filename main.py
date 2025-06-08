@@ -137,7 +137,7 @@ while running:
             if prev_obs != o and player.blood >0:
                 player.blood = player.blood - 1
                 prev_obs = o
-                effect.hurt(screen,player)
+                effect.hurt(screen,player,o)
             
             # player.alive = False
             for _ in range(30):

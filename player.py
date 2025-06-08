@@ -18,7 +18,7 @@ class Player:
         self.dash_speed_multiplier = 5
 
         # 0607 小改:血條
-        self.blood = 20
+        self.blood = 200
 
     def update(self, keys):
 
