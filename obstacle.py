@@ -1,6 +1,6 @@
 import pygame
 import math
-
+import effect
 
 class Obstacle:
     def __init__(self, x, y, w, h, vx, vy):
@@ -251,7 +251,7 @@ class CannonObstacle:
         self.wave_damaged = False
         self.is_collided = False
 
-    def update(self, screen_rect, player,screen):
+    def update(self, screen_rect, player):
         if self.state == "moving":
             self.x += self.vx
             self.y += self.vy
@@ -318,6 +318,7 @@ class CannonObstacle:
         for rect in self.wave_rects:
             if player.rect.colliderect(rect):
                 # player.alive = False
+                effect.hurt(self)
                 player.blood = player.blood - 10
                 self.wave_damaged = True   
 
