@@ -1,70 +1,110 @@
 import pygame
 import math
 
-def draw_logo(screen, time):
-    screen_width, screen_height = screen.get_size()
-    # 漸變顏色函式（從深藍到淺藍漸變）
-    def gradient_color(t):
-        # t 是 0~1 浮點數，返回 RGB
-        start_color = pygame.Color(0, 100, 150)
-        end_color = pygame.Color(0, 200, 255)
-        r = start_color.r + (end_color.r - start_color.r) * t
-        g = start_color.g + (end_color.g - start_color.g) * t
-        b = start_color.b + (end_color.b - start_color.b) * t
-        return (int(r), int(g), int(b))
+pygame.init()
+screen = pygame.display.set_mode((700, 200))
+clock = pygame.time.Clock()
 
-    # 動態顏色變化（0~1 周期變化）
-    pulse = (math.sin(time * 2) + 1) / 2  # 0~1 間震盪
+font = pygame.font.SysFont(None, 80)
 
-    font = pygame.font.SysFont("Arial", 72, bold=True)
-    title_color = gradient_color(pulse)
-    title = font.render("Rhythm Dodge", True, title_color)
+# GearObstacle class (simplified spinning gear)
+class GearObstacle():
+    def __init__(self, x, y, radius, rotation_speed=5, teeth=12, color=(255, 255, 255)):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.rotation = 0
+        self.rotation_speed = rotation_speed
+        self.teeth = teeth
+        self.color = color
 
-    # 文字輕微上下擺動動畫
-    y_offset = 10 * math.sin(time * 3)
+    def update(self):
+        self.rotation = (self.rotation + self.rotation_speed) % 360
 
-    subtitle_font = pygame.font.SysFont("Arial", 32, italic=True)
-    subtitle = subtitle_font.render("Dodge the beat. Feel the rhythm.", True, (255, 255, 255))
+    def draw(self, screen, pos):
+        tooth_len = self.radius * 0.3
+        surface_size = int(self.radius * 2 + tooth_len * 2)
+        surface = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)
+        r = self.radius * 0.7
+        center = (r + tooth_len, r + tooth_len)
+        for i in range(self.teeth):
+            angle_deg = self.rotation + (360 / self.teeth) * i
+            angle_rad = math.radians(angle_deg)
+            base_angle1 = angle_rad - math.radians(360 / (2 * self.teeth))
+            base_angle2 = angle_rad + math.radians(360 / (2 * self.teeth))
+            tip_x = center[0] + math.cos(angle_rad) * (r + tooth_len)
+            tip_y = center[1] + math.sin(angle_rad) * (r + tooth_len)
+            base1_x = center[0] + math.cos(base_angle1) * r * 0.9
+            base1_y = center[1] + math.sin(base_angle1) * r * 0.9
+            base2_x = center[0] + math.cos(base_angle2) * r * 0.9
+            base2_y = center[1] + math.sin(base_angle2) * r * 0.9
+            pygame.draw.polygon(surface, self.color, [(base1_x, base1_y), (tip_x, tip_y), (base2_x, base2_y)])
+        pygame.draw.circle(surface, self.color, center, r)
+        screen.blit(surface, (pos[0] - self.radius - tooth_len, pos[1] - self.radius - tooth_len))
 
-    # 中心置中
-    title_rect = title.get_rect(center=(screen_width // 2, screen_height // 3 + y_offset))
-    subtitle_rect = subtitle.get_rect(center=(screen_width // 2, screen_height // 3 + 80 + y_offset))
+# 文字和对应的绘制风格函数
+def draw_normal(screen, letter, pos, color=(255,255,255)):
+    surf = font.render(letter, True, color)
+    screen.blit(surf, pos)
 
-    # 畫文字陰影（讓字體有點立體感）
-    shadow_offset = 3
-    shadow_color = (20, 20, 20)
-    shadow_title = font.render("Rhythm Dodge", True, shadow_color)
-    shadow_subtitle = subtitle_font.render("Dodge the beat. Feel the rhythm.", True, shadow_color)
+def draw_shadow(screen, letter, pos, color=(255,255,255)):
+    # 先画阴影
+    shadow_surf = font.render(letter, True, (0,200,255))
+    screen.blit(shadow_surf, (pos[0]+3, pos[1]+3))
+    # 再画文字
+    surf = font.render(letter, True, color)
+    screen.blit(surf, pos)
 
-    screen.blit(shadow_title, (title_rect.x + shadow_offset, title_rect.y + shadow_offset))
-    screen.blit(shadow_subtitle, (subtitle_rect.x + shadow_offset, subtitle_rect.y + shadow_offset))
+def draw_gradient(screen, letter, pos):
+    # 简单用渐变色文字（先渲染白色，再用半透明矩形做渐变叠加）
+    surf = font.render(letter, True, (255, 255, 255))
+    grad = pygame.Surface(surf.get_size(), pygame.SRCALPHA)
+    width, height = surf.get_size()
+    for i in range(height):
+        alpha = int(255 * i / height)
+        pygame.draw.line(grad, (200, 0, 0, alpha), (0, i), (width, i))
+    surf.blit(grad, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+    screen.blit(surf, pos)
 
-    screen.blit(title, title_rect)
-    screen.blit(subtitle, subtitle_rect)
+# 创建旋转齿轮实例
+gear = GearObstacle(0, 0, 25, rotation_speed=5, teeth=12, color=(255, 255, 255))
 
-# --- 測試用 ---
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption("Test Logo")
+text = "Rhythm Dodge"
+# 每个字母对应绘制风格id: 0-普通, 1-阴影, 2-渐变, 3-齿轮
+styles = [0, 1, 0, 2, 0, 1, 0, 0, 3, 0, 0, 0]
 
-    clock = pygame.time.Clock()
-    running = True
-    start_time = pygame.time.get_ticks()
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+    screen.fill((20, 20, 20))
 
-        screen.fill((0, 0, 0))
+    gear.update()
 
-        now = pygame.time.get_ticks()
-        elapsed_sec = (now - start_time) / 1000  # 秒
+    x = 50
+    y = 100
+    spacing = 55
 
-        draw_logo(screen, elapsed_sec)
+    for i, letter in enumerate(text):
+        style = styles[i]
+        pos = (x + i * spacing, y)
 
-        pygame.display.flip()
-        clock.tick(60)
+        if style == 0:
+            draw_normal(screen, letter, pos)
+        elif style == 1:
+            draw_shadow(screen, letter, pos)
+        elif style == 2:
+            draw_gradient(screen, letter, pos)
+        elif style == 3:
+            # 齿轮只用来绘制字母O，位置传进去
+            if letter.upper() == "O":
+                gear.draw(screen, (pos[0] + 20, pos[1] + 20))
+            else:
+                draw_normal(screen, letter, pos)
 
-    pygame.quit()
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
