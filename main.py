@@ -21,7 +21,7 @@ screen_rect = screen.get_rect()
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
 pygame.mixer.music.play(start=95)
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.set_volume(0.3)
 
 with open("levels/level1.json", "r") as f:
     events = json.load(f)
