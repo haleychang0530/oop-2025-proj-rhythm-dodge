@@ -6,9 +6,9 @@ from particle import Particle
 def tutorial_screen(screen):
     pygame.display.set_caption("Tutorial")
     clock = pygame.time.Clock()
-    font = pygame.font.SysFont("Arial", 24)
-    
-    player = Player(100, 100)
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
+
+    player = Player(450, 300)
     particles = []
 
     while True:
@@ -47,6 +47,7 @@ def tutorial_screen(screen):
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
             "Try moving around and dashing!",
+            " ",
             "Press ENTER to continue"
         ]
         for i, text in enumerate(lines):

@@ -10,7 +10,8 @@ def show_logo_screen(screen):
     BLUE = (0, 200, 255)
 
     font = pygame.font.SysFont("Arial", 80, bold=True)
-    small_font = pygame.font.SysFont("Arial", 30)
+    small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)
+
 
     gear_center = (167, 253)
     gear_radius = 25

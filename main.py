@@ -9,6 +9,8 @@ import sprinkle
 from start import show_logo_screen
 from tutorial import tutorial_screen
 
+game_state = "playing"  # or "gameover"
+
 # 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
