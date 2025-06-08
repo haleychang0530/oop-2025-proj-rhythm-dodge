@@ -29,16 +29,16 @@ def show_logo_screen(screen):
         screen.blit(font.render("D", True, WHITE), (80, 220))
         screen.blit(font.render("DGE", True, WHITE), (200, 220))
 
-    def draw_triangles():
+    def draw_triangles(offset):
         pygame.draw.polygon(screen, RED, [
-            (200, 100 + triangle_offset),
-            (230, 100 + triangle_offset),
-            (215, 130 + triangle_offset)
+            (200, 100 + offset),
+            (230, 100 + offset),
+            (215, 130 + offset)
         ])
         pygame.draw.polygon(screen, BLUE, [
-            (453, 123 + triangle_offset),
-            (453, 170 + triangle_offset),
-            (438, 170 + triangle_offset)
+            (453, 123 + offset),
+            (453, 170 + offset),
+            (438, 170 + offset)
         ])
 
     def draw_gear(center, radius, teeth, angle):
@@ -51,6 +51,8 @@ def show_logo_screen(screen):
             points.append((x, y))
         pygame.draw.polygon(screen, WHITE, points)
 
+    # === MAIN LOOP ===
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -58,20 +60,20 @@ def show_logo_screen(screen):
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    return  # <-- Continue to main game
+                    return  # ✅ This exits logo screen to main game
 
         screen.fill(BLACK)
         draw_text()
-        draw_triangles()
+        draw_triangles(triangle_offset)
         draw_gear(gear_center, gear_radius, gear_teeth, gear_angle)
 
-        # Press Enter text
+        # "Press ENTER to continue" text
         enter_text = small_font.render("Press ENTER to continue", True, WHITE)
         screen.blit(enter_text, (250, 500))
 
-        nonlocal_vars = locals()
-        nonlocal_vars['triangle_offset'] += triangle_direction * 0.5
-        if nonlocal_vars['triangle_offset'] > 5 or nonlocal_vars['triangle_offset'] < -5:
+        # Proper animation logic
+        triangle_offset += triangle_direction * 0.5
+        if triangle_offset > 5 or triangle_offset < -5:
             triangle_direction *= -1
 
         gear_angle += 0.05

@@ -16,6 +16,7 @@ clock = pygame.time.Clock()
 
 #start screen
 show_logo_screen(screen)
+print("Logo screen done")  # <- debugging line
 
 player = Player(100, 250)
 obstacles = []
