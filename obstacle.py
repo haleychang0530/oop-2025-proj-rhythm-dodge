@@ -51,7 +51,7 @@ class LaserObstacle(Obstacle):
         super().__init__(x, y, w, h, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
-        self.spawn_time = pygame.time.get_ticks()
+        self.spawn_time = pygame.time.get_ticks() 
         self.activated = False
         self.expired = False
         self.effect_playing = False  # 用於控制音效播放
@@ -65,7 +65,7 @@ class LaserObstacle(Obstacle):
     def update(self):
         now = pygame.time.get_ticks()
         elapsed = now - self.spawn_time
-        ct = self.charge_time * 1.02564  # 考慮到遊戲速度調整
+        ct = self.charge_time  # 考慮到遊戲速度調整
         if elapsed < ct + self.duration + 200:
             if elapsed < ct - 200:
                 # 淡入紅色提示（0 → 80)
@@ -199,7 +199,7 @@ class SinCircleObstacle(CircleObstacle):
         self.rect.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
 
 class LaserCircleObstacle(CircleObstacle):
-    def __init__(self, x, y, radius, vx, vy, charge_time, duration=500*1.02564):
+    def __init__(self, x, y, radius, vx, vy, charge_time, duration=500):
         super().__init__(x, y, radius, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
@@ -310,7 +310,7 @@ class SinGearObstacle(GearObstacle):
         self.rect.center = (self.x, self.y)
 
 class CannonObstacle:
-    def __init__(self, x, y, w, h, vx, vy, wave_length=2000, wave_speed=0.05, wave_amplitude=300, num_bars=51):
+    def __init__(self, x, y, w, h, vx, vy, wave_amplitude, wave_length, num_bars, wave_speed=0.05):
         self.x = x
         self.y = y
         self.w = w
@@ -369,7 +369,7 @@ class CannonObstacle:
             dis = abs(i - self.num_bars / 2)
             arrived = (self.wave_progress * 20 / (dis + 1) > 1.5)
             phase = dis / (self.num_bars-1) * math.pi * 5
-            decay = 1 - dis / self.num_bars * 1
+            decay = 1 - dis / self.num_bars
             passed = dis + 10 > self.wave_progress * 8
             height = math.sin(self.wave_progress * math.pi - phase) * self.wave_amplitude * decay * arrived * passed
             bar_length = self.wave_length / self.num_bars

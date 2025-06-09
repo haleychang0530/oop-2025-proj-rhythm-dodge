@@ -30,12 +30,14 @@ obstacles = []
 
 screen_rect = screen.get_rect()
 
+time_skip = 0  # 用於時間跳過 for testing
+
 # 音樂與事件載入
-pygame.mixer.music.load("assets/music/bgm.mp3")
-pygame.mixer.music.play(start=94.94)
+pygame.mixer.music.load("assets/music/level2.mp3")
+pygame.mixer.music.play(start=41.95 + time_skip) #94.94    # 1:30~2:30 for level 2 
 pygame.mixer.music.set_volume(0.3)
 
-with open("levels/level1.json", "r") as f:
+with open("levels/level2.json", "r") as f:
     events = json.load(f)
 
 spawned = set()
@@ -47,11 +49,13 @@ sprinkles=[]
 # prev_obstacles
 prev_obs = None
 
+bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
+bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
 running = True
 while running:
     dt = clock.tick(60)
-    time_now = pygame.mixer.music.get_pos()
+    time_now = pygame.mixer.music.get_pos() * bpm_scale2  # 獲取當前時間，並縮放到 bpm 110 的時間尺度
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -72,13 +76,13 @@ while running:
 
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
-        if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
+        if evt["time"] + 50 > time_now + time_skip * bpm_scale2 * 1000 >= evt["time"] and i not in spawned:
             if evt.get("type") == "sin":
                 obs = SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
             elif evt.get("type") == "follow":
                 obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
             elif evt.get("type") == "laser":
-                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
+                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)/ bpm_scale2) 
             
             # === 圓形類型 ===
             elif evt.get("type") == "circle":
@@ -105,7 +109,7 @@ while running:
                 obs = LaserCircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     evt["vx"], evt["vy"],
-                    charge_time=evt.get("charge", 1000) * 1.02564
+                    charge_time=evt.get("charge", 1000) / bpm_scale2
                 )
             elif evt.get("type") == "gear":
                 obs = GearObstacle(
@@ -133,7 +137,8 @@ while running:
             elif evt.get("type") == "cannon":
                 obs = CannonObstacle(
                     evt["x"], evt["y"], evt["w"], evt["h"],
-                    evt["vx"], evt["vy"],
+                    evt["vx"], evt["vy"], evt.get("amplitude", 300)
+                    ,evt.get("wave", 2000), evt.get("bar", 51)
                     
                 )
             else:
