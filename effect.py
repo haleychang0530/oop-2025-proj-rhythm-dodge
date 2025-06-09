@@ -35,8 +35,12 @@ def hurt(o):
 
     elif ob=="Obstacle":
         sound = pygame.mixer.Sound("assets/music/slap.wav")
-        sound.play()   
+        sound.play()
 
+def lazer():
+    sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_rainbowbeam_1.wav")
+    sound.set_volume(0.3)
+    sound.play()
 
     
     
