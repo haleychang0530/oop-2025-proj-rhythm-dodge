@@ -39,9 +39,9 @@ def hurt(o):
 
 def lazer():
     sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_rainbowbeam_1.wav")
-    sound.set_volume(0.5)
+    sound.set_volume(0.35)
     sound.play(maxtime=1000)  # 播放音效，最大音量为0.3
-    
+
 
     
     
