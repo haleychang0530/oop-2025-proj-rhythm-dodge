@@ -9,7 +9,7 @@ def hurt(o):
         sound = pygame.mixer.Sound("assets/sound_effect/old/biu.wav")
         sound.play()
 
-    elif ob=="SinCircleObstacle" or "SinGearObstacle":
+    elif ob=="SinCircleObstacle" or "SinObstacle" or "SinGearObstacle":
         #print("ding")
         sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
         sound.play()
@@ -28,7 +28,7 @@ def hurt(o):
 
     if ob=="CannonObstacle":
         # print("delarn")
-        sound = pygame.mixer.Sound("assets/sound_effect/old/delarn.wav")
+        sound = pygame.mixer.Sound("assets/sound_effect/snd_damage_c.wav")
         sound.play()  
 
     elif ob=="Obstacle":
