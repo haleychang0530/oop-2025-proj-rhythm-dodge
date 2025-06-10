@@ -1,5 +1,4 @@
 import pygame
-import sprinkle
 
 def hurt(o):
     """Play audio and visual effect when the player gets hurt."""
