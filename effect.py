@@ -2,8 +2,7 @@ import pygame
 
 def hurt(o):
     """Play audio and visual effect when the player gets hurt."""
-    ob=o.__class__.__name__
-    print(ob)
+    ob = o.__class__.__name__
     if ob=="FollowObstacle":
         sound = pygame.mixer.Sound("assets/sound_effect/snd_arrow.wav")
         sound.play()
