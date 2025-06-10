@@ -54,6 +54,7 @@ class LaserObstacle(Obstacle):
         self.spawn_time = pygame.time.get_ticks()
         self.activated = False
         self.expired = False
+        self.effect_playing = False  # 用於控制音效播放
 
         # 預熱階段變數
         self.stage = 0
@@ -98,6 +99,10 @@ class LaserObstacle(Obstacle):
                 self.line_width = int(max_width * (1 - progress))
         else:
             self.expired = True
+        
+        if self.activated and not self.effect_playing:
+            effect.lazer()
+            self.effect_playing = True  # 確保音效只播放一次
 
     def draw(self, screen):
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)

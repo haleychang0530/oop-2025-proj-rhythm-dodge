@@ -32,7 +32,7 @@ screen_rect = screen.get_rect()
 
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/bgm.mp3")
-pygame.mixer.music.play(start=95)
+pygame.mixer.music.play(start=94.94)
 pygame.mixer.music.set_volume(0.3)
 
 with open("levels/level1.json", "r") as f:
@@ -168,7 +168,7 @@ while running:
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
-                if ( isinstance(o, LaserObstacle) and ( not o.activated or o.expired)):
+                if ( isinstance(o, LaserObstacle) and not o.activated or (isinstance(o, CannonObstacle) and o.expired)):
                     continue  # 預熱中的雷射不造成傷害
                 if prev_obs != o and player.blood > 0:
                     all_pass=False
