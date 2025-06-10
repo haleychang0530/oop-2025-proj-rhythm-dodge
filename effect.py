@@ -18,8 +18,7 @@ def hurt(o):
         sound = pygame.mixer.Sound("assets/music/bomb.wav")
         sound.play()
 
-    elif ob=="LaserCircleObstacle" or "LaserObstacle":
-        
+    if ob=="LaserCircleObstacle" or "LaserObstacle":
         sound = pygame.mixer.Sound("assets/music/biu.wav")
         sound.play()
 
@@ -35,7 +34,12 @@ def hurt(o):
 
     elif ob=="Obstacle":
         sound = pygame.mixer.Sound("assets/music/slap.wav")
-        sound.play()   
+        sound.play()
+
+def lazer():
+    sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_rainbowbeam_1.wav")
+    sound.set_volume(0.35)
+    sound.play(maxtime=1000)  # 播放音效，最大音量为0.3
 
 
     
