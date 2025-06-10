@@ -10,7 +10,7 @@ def hud(screen, current_health, max_health = 100):
     # Colors
     bg_color = (40, 40, 40)          # Dark reddish background
     fill_color = (0, 200, 200)      # Cyan fill
-    border_color = (40, 10, 20)     # Darker border
+    border_color = (100, 100, 100)     # Darker border
     tip_color = (160, 160, 160)     # Battery tip (grayish)
     cube_width = 15
 
