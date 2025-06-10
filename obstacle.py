@@ -466,13 +466,13 @@ class CannonObstacle:
                 self.shake_duration=20
 
                 # start to shake
-                self.shake_duration = 1000 
+                self.shake_duration = 20 
                 
     def draw(self, screen):
         # If shaking, apply shake offsets
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            shake_magnitude = 5  # adjust for desired intensity
+            shake_magnitude = 20  # adjust for desired intensity
             offset_x = random.randint(-shake_magnitude, shake_magnitude)
             offset_y = random.randint(-shake_magnitude, shake_magnitude)
 

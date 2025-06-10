@@ -46,7 +46,7 @@ sprinkles=[]
 
 # prev_obstacles
 prev_obs = None
-
+wave_shake=False
 
 running = True
 while running:
@@ -144,6 +144,9 @@ while running:
     # 更新障礙物
     all_pass = True
     for o in obstacles:
+        if wave_shake and isinstance(o, CannonObstacle):
+            o.shake_duration = 10
+
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -216,7 +219,6 @@ while running:
         if isinstance(o, LaserObstacle):
          # shake
             o.shake(screen)
-
         else:
             o.draw(screen)
     pygame.display.flip()
