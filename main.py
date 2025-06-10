@@ -7,6 +7,7 @@ import ui
 import effect
 from start import show_logo_screen
 from tutorial import tutorial_screen
+import shake
 
 game_state = "playing"  # or "gameover"
 
@@ -165,6 +166,7 @@ while running:
                         player.blood = player.blood - 1
                         prev_obs = o
                         effect.hurt(o)
+                        shake.shake_surface(screen,o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -175,6 +177,7 @@ while running:
                     player.blood = player.blood - 1
                     prev_obs = o
                     effect.hurt(o)
+                    shake(screen,o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
