@@ -138,7 +138,7 @@ while running:
                 obs = CannonObstacle(
                     evt["x"], evt["y"], evt["w"], evt["h"],
                     evt["vx"], evt["vy"], evt.get("amplitude", 300)
-                    ,evt.get("wave", 2000), evt.get("bar", 51)
+                    ,evt.get("wave", 2040), evt.get("bar", 51)
                     
                 )
             else:
