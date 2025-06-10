@@ -1,21 +1,20 @@
 import pygame
-import sprinkle
 
 def hurt(o):
     """Play audio and visual effect when the player gets hurt."""
     ob=o.__class__.__name__
     print(ob)
     if ob=="FollowObstacle":
-        sound = pygame.mixer.Sound("assets/sound_effect/old/biu.wav")
+        sound = pygame.mixer.Sound("assets/sound_effect/snd_arrow.wav")
         sound.play()
 
-    elif ob=="SinCircleObstacle" or "SinGearObstacle":
+    elif ob=="SinCircleObstacle" or "SinObstacle" or "SinGearObstacle":
         #print("ding")
         sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
         sound.play()
 
     elif ob=="FollowCircleObstacle":
-        sound = pygame.mixer.Sound("assets/sound_effect/old/bomb.wav")
+        sound = pygame.mixer.Sound("assets/sound_effect/snd_battlefall.wav")
         sound.play()
 
     if ob=="LaserCircleObstacle" or "LaserObstacle":
@@ -28,12 +27,8 @@ def hurt(o):
 
     if ob=="CannonObstacle":
         # print("delarn")
-        sound = pygame.mixer.Sound("assets/sound_effect/old/delarn.wav")
+        sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
         sound.play()  
-
-    elif ob=="Obstacle":
-        sound = pygame.mixer.Sound("assets/sound_effect/old/slap.wav")
-        sound.play()
 
 def lazer():
     sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_rainbowbeam_1.wav")
