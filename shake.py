@@ -5,7 +5,8 @@ import random
 import pygame
 import random
 
-def shake_surface(screen,surface, shake_duration=15, shake_magnitude=10):
+
+def shake_surface(surface, position, shake_duration, shake_magnitude=20):
     """
     Returns the (shaken) position and updated shake duration.
 
@@ -19,6 +20,7 @@ def shake_surface(screen,surface, shake_duration=15, shake_magnitude=10):
         shaken_position: (x + offset, y + offset)
         new_duration: Updated duration (counted down by 1 if > 0)
     """
+    print(shake_duration)
     if shake_duration > 0:
         offset_x = random.randint(-shake_magnitude, shake_magnitude)
         offset_y = random.randint(-shake_magnitude, shake_magnitude)
@@ -28,10 +30,7 @@ def shake_surface(screen,surface, shake_duration=15, shake_magnitude=10):
         offset_y = 0
         new_duration = 0
 
-    surface.draw(screen)
-    # self.rect = pygame.Rect(x, y, w, h)
-    shaken_position = (surface.x + offset_x, surface.y + offset_y)
-    (surface.x,surface.y) = shaken_position
-    surface.draw(screen)
+    shaken_position = (position[0] + offset_x, position[1] + offset_y)
+    return shaken_position, new_duration
 
-    #return new_duration
+

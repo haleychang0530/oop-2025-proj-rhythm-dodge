@@ -7,7 +7,6 @@ import ui
 import effect
 from start import show_logo_screen
 from tutorial import tutorial_screen
-import shake
 
 game_state = "playing"  # or "gameover"
 
@@ -149,8 +148,10 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
+
         if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
             obstacles.remove(o)
+
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
         # 檢查玩家與障礙物碰撞
@@ -161,12 +162,13 @@ while running:
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
+
                     if prev_obs != o and player.blood > 0:
                         all_pass=False
                         player.blood = player.blood - 1
                         prev_obs = o
                         effect.hurt(o)
-                        shake.shake_surface(screen,o)
+                        #shake.shake_surface(screen,obstacles)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -175,9 +177,14 @@ while running:
                 if prev_obs != o and player.blood > 0:
                     all_pass=False
                     player.blood = player.blood - 1
+
+                    if isinstance(o, LaserObstacle):
+                        # shake
+                        o.shake_duration=20
+
                     prev_obs = o
                     effect.hurt(o)
-                    shake(screen,o)
+                    
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
@@ -187,9 +194,7 @@ while running:
     # 繪製畫面
     screen.fill((30, 30, 30))
     ui.hud(screen,player.blood)
-   
-    
-    #sprinkle.sprinkle(screen,sprinkles,WIDTH, HEIGHT)
+
 
     # 畫邊界
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
@@ -201,11 +206,19 @@ while running:
 
     player.draw(screen)
 
+    #畫李子
     for p in particles:
         p.draw(screen)
-
+    
+    # 畫障礙
     for o in obstacles:
-        o.draw(screen)
+        #先做Laser的shake
+        if isinstance(o, LaserObstacle):
+         # shake
+            o.shake(screen)
+
+        else:
+            o.draw(screen)
     pygame.display.flip()
 
 pygame.quit()
