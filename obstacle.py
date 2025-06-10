@@ -158,7 +158,7 @@ class LaserObstacle(Obstacle):
             return pygame.Rect(x - self.rect.left, 0, w, self.rect.height)
 
     def shake(self, screen):
-        shake_magnitude = 20
+        shake_magnitude = 30
 
         if self.shake_duration > 0:
             offset_x = random.randint(-shake_magnitude, shake_magnitude)
