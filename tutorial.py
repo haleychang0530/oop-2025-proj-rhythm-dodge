@@ -34,7 +34,6 @@ def tutorial_screen(screen):
 
         # Check if player collides with triangle
         if player.rect.colliderect(triangle_rect):
-            # If collided, display a message
             pygame.time.delay(500)  
             return  # Exit the tutorial screen
 
