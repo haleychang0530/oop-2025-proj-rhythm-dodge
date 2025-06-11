@@ -2,6 +2,7 @@ import pygame
 import sys
 from player import Player
 from particle import Particle
+from effect import win_ripple_effect
 import math
 import time
 
@@ -55,6 +56,7 @@ def tutorial_screen(screen):
 
         # Collision check with triangle's bounding box
         if player.rect.colliderect(triangle_rect):
+            win_ripple_effect(screen, triangle_center)
             pygame.time.delay(500)
             return  # Exit tutorial and go to next game state
 
