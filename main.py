@@ -7,6 +7,7 @@ import ui
 import effect
 from start import show_logo_screen
 from tutorial import tutorial_screen
+import timeline
 
 game_state = "playing"  # or "gameover"
 
@@ -68,9 +69,10 @@ while running:
     elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
         # 每幀生成粒子拖尾
         particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
-    
 
-    # 障礙物生成（依時間）
+    # 更新生成障礙物
+    # obstacles, spawned = timeline.update_obstacles(events,player,obstacles, spawned,time_now)
+        # 障礙物生成（依時間）
     for i, evt in enumerate(events):
         if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
             if evt.get("type") == "sin":
@@ -140,7 +142,6 @@ while running:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
             spawned.add(i)
-    
     # 更新障礙物
     all_pass = True
     for o in obstacles:
