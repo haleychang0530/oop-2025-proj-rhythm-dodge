@@ -288,7 +288,7 @@ class LaserCircleObstacle(CircleObstacle):
         self.activated = False
         self.expired = False
         #shake
-        self.shake_direction=20
+        self.shake_direction=0
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -501,10 +501,10 @@ class CannonObstacle:
         for rect in self.wave_rects:
             if player.rect.colliderect(rect):
                 effect.hurt(self)
-                player.blood = player.blood - 10
+                player.blood = player.blood - 1
                 self.wave_damaged = True  
                 # start to shake
-                self.shake_duration = 20 
+                self.shake() 
                 
     def draw(self, screen):
         # If shaking, apply shake offsets
@@ -513,6 +513,7 @@ class CannonObstacle:
             shake_magnitude = 20  # adjust for desired intensity
             offset_x = random.randint(-shake_magnitude, shake_magnitude)
             offset_y = random.randint(-shake_magnitude, shake_magnitude)
+            self.shake_duration -= 1
 
         if self.state == "moving":
             shaken_rect = self.rect.copy()
@@ -522,6 +523,8 @@ class CannonObstacle:
 
         elif self.state == "wave":
             for rect in self.wave_rects:
+                rect.x += offset_x
+                rect.y += offset_y
                 pygame.draw.rect(screen, (255, 0, 0), rect)
 
     def shake(self, duration=20):

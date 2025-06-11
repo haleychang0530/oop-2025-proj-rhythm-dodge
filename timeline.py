@@ -2,11 +2,10 @@ import obstacle
 import effect
 from particle import Particle
 from obstacle import CannonObstacle, LaserObstacle, LaserCircleObstacle, CircleObstacle, SinCircleObstacle, FollowCircleObstacle, GearObstacle, SinGearObstacle, FollowGearObstacle
+import random
 
 def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs):
-    # 障礙物生成（依時間）
-    # prev_obstacles
-    
+    # 障礙物生成（依時間） 
     for i, evt in enumerate(events):
         if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
             if evt.get("type") == "sin":
@@ -75,9 +74,14 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 obs = obstacle.Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
             spawned.add(i)
+
     # 更新障礙物
     all_pass = True
     for o in obstacles:
+        # shake
+        if not all_pass:
+            o.shake()
+
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -101,7 +105,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         player.blood = player.blood - 1
                         prev_obs = o
                         effect.hurt(o)
-                        o.shake()
+                        #o.shake()
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -112,7 +116,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     player.blood = player.blood - 1
                     prev_obs = o
                     effect.hurt(o)
-                    o.shake()
+                    #o.shake()
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
