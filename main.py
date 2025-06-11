@@ -8,6 +8,7 @@ from start import show_logo_screen
 from tutorial import tutorial_screen
 from main_menu import main_menu
 import timeline
+import sys
 
 
 game_state = "playing"  # or "gameover"

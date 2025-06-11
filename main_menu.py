@@ -15,7 +15,7 @@ def main_menu(screen):
         screen.fill((10, 10, 30))
 
         # Title
-        title = font_title.render("JSAB Clone", True, (255, 100, 255))
+        title = font_title.render("RHYTHM DODGE", True, (0, 200, 255))
         screen.blit(title, (screen.get_width() // 2 - title.get_width() // 2, 100))
 
         # Menu Options
