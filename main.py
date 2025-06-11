@@ -61,6 +61,7 @@ while True:
         sprinkles=[]
         prev_obs = None
         running = True
+
         while running:
             dt = clock.tick(60)
             time_now = pygame.mixer.music.get_pos()
@@ -102,6 +103,24 @@ while True:
 
             for o in obstacles:
                 o.draw(screen)
-            pygame.display.flip()
 
-        pygame.quit()
+
+            # 玩家死亡判定
+            if not player.alive:
+                print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
+                pygame.mixer.music.stop()
+                game_state = "game_over"
+                pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
+                break
+
+            print("player.alive =", player.alive)
+            pygame.display.flip()
+           
+
+    elif game_state == "game_over":
+        # 顯示 Game Over 畫面
+        import gameover
+        game_state = gameover.show(screen)  # 回傳 "main_menu" 或 "playing" 或 "quit"
+        if game_state == "quit":
+            pygame.quit()
+            sys.exit()
