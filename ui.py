@@ -10,8 +10,8 @@ def hud(screen, current_health, max_health = 100):
 
     # Colors
     bg_color = (60, 30, 30)          # Dark reddish background
-    fill_color = (200, 100, 100)      # Cyan fill
-    border_color = (200, 150, 150)     # Darker border
+    fill_color = (255, 200, 200)      # Cyan fill
+    border_color = (250, 150, 150)     # Darker border
     tip_color = (10, 10, 10)     # Battery tip (grayish)
     cube_width = 15
 
@@ -38,7 +38,7 @@ def hud(screen, current_health, max_health = 100):
     
     # 載入圖片
     image = pygame.image.load("assets/images/boss_2.png")
-    new_width, new_height = 30, 30
+    new_width, new_height = 35, 35
     resized_image = pygame.transform.scale(image, (new_width, new_height))
     # 繪製圖片
     screen.blit(resized_image, (bar_x + bar_width + 7, bar_y - 7))
