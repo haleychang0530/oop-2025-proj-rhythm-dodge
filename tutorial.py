@@ -3,8 +3,10 @@ import sys
 from player import Player
 from particle import Particle
 from effect import win_ripple_effect
+from triangle import Triangle
 import math
 import time
+
 
 def tutorial_screen(screen):
     pygame.display.set_caption("Tutorial")
@@ -14,26 +16,17 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
-    # Triangle properties
-    triangle_center = (700, 500)
-    triangle_size = 12
-    sparkle_start_time = time.time()
-
-    def get_triangle_points(center, size):
-        x, y = center
-        return [
-            (x, y - size),
-            (x - size, y + size),
-            (x + size, y + size)
-        ]
-
-    def get_triangle_rect(points):
-        xs = [p[0] for p in points]
-        ys = [p[1] for p in points]
-        return pygame.Rect(min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys))
+    triangle = Triangle(center=(700, 500), size=12)
 
     while True:
         screen.fill((30, 30, 30))
+        triangle.draw(screen)
+
+        if player.rect.colliderect(triangle.get_rect()):
+            win_ripple_effect(screen, triangle.center)
+            pygame.time.delay(500)
+            return
+
         keys = pygame.key.get_pressed()
 
         for event in pygame.event.get():
@@ -43,22 +36,6 @@ def tutorial_screen(screen):
 
         # === Player Update ===
         player.update(keys)
-
-        # Sparkling effect (brightness pulsing)
-        sparkle_phase = math.sin((time.time() - sparkle_start_time) * 5)  # speed = 5
-        brightness = int(128 + 127 * sparkle_phase)
-        sparkle_color = (brightness, brightness, brightness)
-
-        # Triangle drawing
-        triangle_points = get_triangle_points(triangle_center, triangle_size)
-        pygame.draw.polygon(screen, sparkle_color, triangle_points, width=2)
-        triangle_rect = get_triangle_rect(triangle_points)
-
-        # Collision check with triangle's bounding box
-        if player.rect.colliderect(triangle_rect):
-            win_ripple_effect(screen, triangle_center)
-            pygame.time.delay(500)
-            return  # Exit tutorial and go to next game state
 
         # === Particle Generation ===
         if player.dashing:
