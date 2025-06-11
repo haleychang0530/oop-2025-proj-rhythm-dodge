@@ -15,7 +15,7 @@ def tutorial_screen(screen):
 
     # Triangle properties
     triangle_center = (700, 500)
-    triangle_size = 40
+    triangle_size = 12
     sparkle_start_time = time.time()
 
     def get_triangle_points(center, size):
@@ -50,7 +50,7 @@ def tutorial_screen(screen):
 
         # Triangle drawing
         triangle_points = get_triangle_points(triangle_center, triangle_size)
-        pygame.draw.polygon(screen, sparkle_color, triangle_points)
+        pygame.draw.polygon(screen, sparkle_color, triangle_points, width=2)
         triangle_rect = get_triangle_rect(triangle_points)
 
         # Collision check with triangle's bounding box
