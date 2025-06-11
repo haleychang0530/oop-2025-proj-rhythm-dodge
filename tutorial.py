@@ -2,6 +2,11 @@ import pygame
 import sys
 from player import Player
 from particle import Particle
+from effect import win_ripple_effect
+from triangle import Triangle
+import math
+import time
+
 
 def tutorial_screen(screen):
     pygame.display.set_caption("Tutorial")
@@ -11,17 +16,23 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
+    triangle = Triangle(center=(700, 500), size=12)
+
     while True:
         screen.fill((30, 30, 30))
+        triangle.draw(screen)
+
+        if player.rect.colliderect(triangle.get_rect()):
+            win_ripple_effect(screen, triangle.center)
+            pygame.time.delay(500)
+            return
+
         keys = pygame.key.get_pressed()
 
-        # === Handle Events ===
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                return  # proceed to next screen
 
         # === Player Update ===
         player.update(keys)
@@ -32,23 +43,19 @@ def tutorial_screen(screen):
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
-        # === Particle Update and Draw ===
         for particle in particles[:]:
             particle.update()
             particle.draw(screen)
             if particle.life <= 0:
                 particles.remove(particle)
 
-        # === Draw Player ===
         player.draw(screen)
 
-        # === Tutorial instructions ===
+        # Instructions
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
-            "Try moving around and dashing!",
-            " ",
-            "Press ENTER to continue"
+            "Touch the sparkling triangle to finish tutorial!"
         ]
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
