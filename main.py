@@ -7,6 +7,7 @@ import ui
 import effect
 from start import show_logo_screen
 from tutorial import tutorial_screen
+import timeline
 
 game_state = "playing"  # or "gameover"
 
@@ -46,7 +47,7 @@ sprinkles=[]
 
 # prev_obstacles
 prev_obs = None
-wave_shake=False
+
 
 running = True
 while running:
@@ -69,78 +70,9 @@ while running:
         # 每幀生成粒子拖尾
         particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
     
+    """把[障礙物生成（依時間）]之功能搬到timeline.py"""
+    obstacles, spawned = timeline.update_obstacles(events,player,obstacles, spawned,time_now)
 
-    # 障礙物生成（依時間）
-    for i, evt in enumerate(events):
-        if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
-            if evt.get("type") == "sin":
-                obs = SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
-            elif evt.get("type") == "follow":
-                obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
-            elif evt.get("type") == "laser":
-                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
-            
-            # === 圓形類型 ===
-            elif evt.get("type") == "circle":
-                obs = CircleObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    evt["vx"], evt["vy"]
-                )
-
-            elif evt.get("type") == "circle_sin":
-                obs = SinCircleObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    evt["vx"], evt["vy"],
-                    amplitude=evt.get("amplitude", 50),
-                    frequency=evt.get("frequency", 0.01)
-                )
-
-            elif evt.get("type") == "circle_follow":
-                obs = FollowCircleObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    player, speed=evt.get("speed", 15)
-                )
-
-            elif evt.get("type") == "circle_laser":
-                obs = LaserCircleObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    evt["vx"], evt["vy"],
-                    charge_time=evt.get("charge", 1000) * 1.02564
-                )
-            elif evt.get("type") == "gear":
-                obs = GearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    evt["vx"], evt["vy"],
-                    teeth=evt.get("teeth", 8),
-                    rotation_speed=evt.get("rot_speed", 2)
-            )
-            elif evt.get("type") == "gear_follow":
-                obs = FollowGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    player, speed=evt.get("speed", 15),
-                    teeth=evt.get("teeth", 8),
-                    rotation_speed=evt.get("rot_speed", 2)
-                )
-            elif evt.get("type") == "gear_sin":
-                obs = SinGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
-                    evt["vx"], evt["vy"],
-                    amplitude=evt.get("amplitude", 50),
-                    frequency=evt.get("frequency", 0.01),
-                    teeth=evt.get("teeth", 8),
-                    rotation_speed=evt.get("rot_speed", 2)
-                )
-            elif evt.get("type") == "cannon":
-                obs = CannonObstacle(
-                    evt["x"], evt["y"], evt["w"], evt["h"],
-                    evt["vx"], evt["vy"],
-                    
-                )
-            else:
-                obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
-            obstacles.append(obs)
-            spawned.add(i)
-    
     # 更新障礙物
     all_pass = True
     for o in obstacles:
@@ -148,30 +80,26 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
-
         if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
             obstacles.remove(o)
 
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
+
         # 檢查玩家與障礙物碰撞
         if player.alive and not player.dashing:
             if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) 
                 or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
                 # 圓形障礙物的碰撞檢查
                 if o.collide(player):
-                    if isinstance(o, GearObstacle):
-                        # gear的shake
-                        o.shake()
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
-
                     if prev_obs != o and player.blood > 0:
                         all_pass=False
                         player.blood = player.blood - 1
                         prev_obs = o
-                        o.shake()
                         effect.hurt(o)
+                        o.shake()
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -180,15 +108,9 @@ while running:
                 if prev_obs != o and player.blood > 0:
                     all_pass=False
                     player.blood = player.blood - 1
-
-                    if isinstance(o, LaserObstacle):
-                        # shake
-                        o.shake_duration=20
-
                     prev_obs = o
                     effect.hurt(o)
                     o.shake()
-                    
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
@@ -198,7 +120,6 @@ while running:
     # 繪製畫面
     screen.fill((30, 30, 30))
     ui.hud(screen,player.blood)
-
 
     # 畫邊界
     pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
@@ -210,18 +131,11 @@ while running:
 
     player.draw(screen)
 
-    #畫李子
     for p in particles:
         p.draw(screen)
-    
-    # 畫障礙
+
     for o in obstacles:
-        #先做Laser的shake
-        if isinstance(o, LaserObstacle):
-         # shake
-            o.shake(screen)
-        else:
-            o.draw(screen)
+        o.draw(screen)
     pygame.display.flip()
 
 pygame.quit()

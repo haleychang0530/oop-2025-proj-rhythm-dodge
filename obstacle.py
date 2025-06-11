@@ -80,14 +80,17 @@ class LaserObstacle(Obstacle):
         self.expired = False
         self.effect_playing = False  # 用於控制音效播放
 
+
         # 預熱階段變數
         self.stage = 0
         self.alpha = 0
         self.line_width = 2
         self.transition_progress = 0
 
+
         #shake
-        
+       
+
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -99,9 +102,11 @@ class LaserObstacle(Obstacle):
                 self.stage = 1
                 self.alpha = int(80 * (elapsed / (ct - 200)))
 
+
             elif elapsed < ct - 160:
                 # 消失階段
                 self.stage = 2
+
 
             elif elapsed < ct:
                 # 細白線 → 擴展
@@ -110,6 +115,7 @@ class LaserObstacle(Obstacle):
                 max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
                 self.line_width = int(2 + (max_width - 2) * progress)
 
+
             elif elapsed < ct + 100:
                 # 白線轉紅線 # 正式啟動
                 self.activated = True
@@ -117,19 +123,21 @@ class LaserObstacle(Obstacle):
                 self.stage = 4
                 self.transition_progress = min(1, (elapsed - ct) / 100)
 
+
             elif elapsed < ct + self.duration + 200:
                 self.stage = 5 # 雷射結束階段
-                progress = (elapsed - ct - 100) / (self.duration + 100) 
+                progress = (elapsed - ct - 100) / (self.duration + 100)
                 if progress > 0.7:
                     self.activated = False
                 max_width = self.rect.width if self.rect.width > self.rect.height else self.rect.height
                 self.line_width = int(max_width * (1 - progress))
         else:
             self.expired = True
-        
+       
         if self.activated and not self.effect_playing:
             effect.lazer()
             self.effect_playing = True  # 確保音效只播放一次
+
 
     def get_centered_line_rect(self, width):
         """在原本範圍中心生成一個長條雷射區塊（可調整寬度）"""
@@ -144,8 +152,10 @@ class LaserObstacle(Obstacle):
             x = self.rect.centerx - w // 2
             return pygame.Rect(x - self.rect.left, 0, w, self.rect.height)
 
+
     def draw(self, screen):
         shake_magnitude = 30
+
 
         if self.shake_duration > 0:
             offset_x = random.randint(-shake_magnitude, shake_magnitude)
@@ -155,20 +165,25 @@ class LaserObstacle(Obstacle):
             offset_x = 0
             offset_y = 0
 
+
         # Create a laser_surface exactly as in draw()
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
+
 
         if self.stage == 1:
             color = (255, 0, 0, self.alpha)
             pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
 
+
         elif self.stage == 2:
             pass  # no draw
+
 
         elif self.stage == 3:
             color = (255, 255, 255, 255)
             rect = self.get_centered_line_rect(self.line_width)
             pygame.draw.rect(laser_surface, color, rect)
+
 
         elif self.stage == 4:
             r = 200
@@ -178,13 +193,16 @@ class LaserObstacle(Obstacle):
             rect = self.get_centered_line_rect(self.rect.width if self.rect.width > self.rect.height else self.rect.height)
             pygame.draw.rect(laser_surface, color, rect)
 
+
         elif self.stage == 5:
             color = (200, 0, 0, 255)
             rect = self.get_centered_line_rect(self.line_width)
             pygame.draw.rect(laser_surface, color, rect)
 
+
         # Calculate shaken position
         shaken_pos = (self.rect.x + offset_x, self.rect.y + offset_y)
+
 
         # Blit the laser surface with shake offsets
         screen.blit(laser_surface, shaken_pos)
