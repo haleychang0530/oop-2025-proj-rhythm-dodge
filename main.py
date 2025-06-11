@@ -6,7 +6,9 @@ import random
 import ui
 from start import show_logo_screen
 from tutorial import tutorial_screen
+from main_menu import main_menu
 import timeline
+
 
 game_state = "playing"  # or "gameover"
 
@@ -25,6 +27,21 @@ print("Logo screen done")  # <- debugging line
 tutorial_screen(screen)
 print("Tutorial done")
 
+# main menu
+level = main_menu(screen)
+if not level:
+    pygame.quit()
+    sys.exit()
+
+if level == 1:
+    with open("levels/level1.json", "r") as f:
+        events = json.load(f)
+elif level == 2:
+    with open("levels/level2.json", "r") as f:
+        events = json.load(f)
+
+
+# game start
 player = Player(100, 250)
 obstacles = []
 
