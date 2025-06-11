@@ -8,6 +8,7 @@ import effect
 from start import show_logo_screen
 from tutorial import tutorial_screen
 import timeline
+import timeline
 
 game_state = "playing"  # or "gameover"
 
