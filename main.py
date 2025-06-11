@@ -144,9 +144,6 @@ while running:
     # 更新障礙物
     all_pass = True
     for o in obstacles:
-        if wave_shake and isinstance(o, CannonObstacle):
-            o.shake_duration = 10
-
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -163,6 +160,9 @@ while running:
                 or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
                 # 圓形障礙物的碰撞檢查
                 if o.collide(player):
+                    if isinstance(o, GearObstacle):
+                        # gear的shake
+                        o.shake()
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
 
@@ -170,8 +170,8 @@ while running:
                         all_pass=False
                         player.blood = player.blood - 1
                         prev_obs = o
+                        o.shake()
                         effect.hurt(o)
-                        #shake.shake_surface(screen,obstacles)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -187,6 +187,7 @@ while running:
 
                     prev_obs = o
                     effect.hurt(o)
+                    o.shake()
                     
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
