@@ -12,7 +12,7 @@ def tutorial_screen(screen):
     particles = []
 
     # Load triangle image
-    triangle_img = pygame.image.load("assets/images/tri.png").convert_alpha()
+    triangle_img = pygame.image.load("assets/images/boss.png").convert_alpha()
     triangle_img = pygame.transform.scale(triangle_img, (60, 60))
     triangle_rect = triangle_img.get_rect(center=(700, 500))  # Bottom-right corner-ish
     
