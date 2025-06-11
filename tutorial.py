@@ -11,20 +11,32 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
+    # Load triangle image
+    triangle_img = pygame.image.load("assets/images/tri.png").convert_alpha()
+    triangle_img = pygame.transform.scale(triangle_img, (60, 60))
+    triangle_rect = triangle_img.get_rect(center=(700, 500))  # Bottom-right corner-ish
+    
+
     while True:
         screen.fill((30, 30, 30))
         keys = pygame.key.get_pressed()
 
-        # === Handle Events ===
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-                return  # proceed to next screen
 
         # === Player Update ===
         player.update(keys)
+
+        # Draw triangle image here
+        screen.blit(triangle_img, triangle_rect)    
+
+        # Check if player collides with triangle
+        if player.rect.colliderect(triangle_rect):
+            # If collided, display a message
+            pygame.time.delay(500)  
+            return  # Exit the tutorial screen
 
         # === Particle Generation ===
         if player.dashing:
@@ -46,9 +58,7 @@ def tutorial_screen(screen):
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
-            "Try moving around and dashing!",
-            " ",
-            "Press ENTER to continue"
+            "Try moving around and dashing!"
         ]
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
