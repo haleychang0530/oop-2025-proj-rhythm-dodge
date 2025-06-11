@@ -80,7 +80,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
     for o in obstacles:
         # shake
         if not all_pass:
-            o.shake()
+            o.shake(10)
 
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
@@ -105,7 +105,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         player.blood = player.blood - 1
                         prev_obs = o
                         effect.hurt(o)
-                        #o.shake()
+                        o.shake()
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -116,7 +116,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     player.blood = player.blood - 1
                     prev_obs = o
                     effect.hurt(o)
-                    #o.shake()
+                    o.shake()
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
