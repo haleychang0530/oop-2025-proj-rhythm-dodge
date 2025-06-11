@@ -1,27 +1,22 @@
-import pygame, json
+import pygame, json, sys, random
 from player import Player
 from obstacle import *
 from particle import Particle
-import random
 import ui
-from start import show_logo_screen
+from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
 import timeline
-import sys
-
-
-game_state = "playing"  # or "gameover"
 
 # 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("JSAB Clone")
+pygame.display.set_caption("Rhythm Dodge")
 clock = pygame.time.Clock()
 
 #start screen
-show_logo_screen(screen)
+start(screen)
 print("Logo screen done")  # <- debugging line
 
 # tutorial screen
