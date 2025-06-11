@@ -2,6 +2,8 @@ import pygame
 import sys
 from player import Player
 from particle import Particle
+import math
+import time
 
 def tutorial_screen(screen):
     pygame.display.set_caption("Tutorial")
@@ -11,11 +13,23 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
-    # Load triangle image
-    triangle_img = pygame.image.load("assets/images/boss.png").convert_alpha()
-    triangle_img = pygame.transform.scale(triangle_img, (60, 60))
-    triangle_rect = triangle_img.get_rect(center=(700, 500))  # Bottom-right corner-ish
-    
+    # Triangle properties
+    triangle_center = (700, 500)
+    triangle_size = 40
+    sparkle_start_time = time.time()
+
+    def get_triangle_points(center, size):
+        x, y = center
+        return [
+            (x, y - size),
+            (x - size, y + size),
+            (x + size, y + size)
+        ]
+
+    def get_triangle_rect(points):
+        xs = [p[0] for p in points]
+        ys = [p[1] for p in points]
+        return pygame.Rect(min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys))
 
     while True:
         screen.fill((30, 30, 30))
@@ -29,13 +43,20 @@ def tutorial_screen(screen):
         # === Player Update ===
         player.update(keys)
 
-        # Draw triangle image here
-        screen.blit(triangle_img, triangle_rect)    
+        # Sparkling effect (brightness pulsing)
+        sparkle_phase = math.sin((time.time() - sparkle_start_time) * 5)  # speed = 5
+        brightness = int(128 + 127 * sparkle_phase)
+        sparkle_color = (brightness, brightness, brightness)
 
-        # Check if player collides with triangle
+        # Triangle drawing
+        triangle_points = get_triangle_points(triangle_center, triangle_size)
+        pygame.draw.polygon(screen, sparkle_color, triangle_points)
+        triangle_rect = get_triangle_rect(triangle_points)
+
+        # Collision check with triangle's bounding box
         if player.rect.colliderect(triangle_rect):
-            pygame.time.delay(500)  
-            return  # Exit the tutorial screen
+            pygame.time.delay(500)
+            return  # Exit tutorial and go to next game state
 
         # === Particle Generation ===
         if player.dashing:
@@ -43,21 +64,19 @@ def tutorial_screen(screen):
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
-        # === Particle Update and Draw ===
         for particle in particles[:]:
             particle.update()
             particle.draw(screen)
             if particle.life <= 0:
                 particles.remove(particle)
 
-        # === Draw Player ===
         player.draw(screen)
 
-        # === Tutorial instructions ===
+        # Instructions
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
-            "Try moving around and dashing!"
+            "Touch the sparkling triangle to finish tutorial!"
         ]
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
