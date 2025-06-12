@@ -42,3 +42,8 @@ def hud(screen, current_health, max_health = 100):
     resized_image = pygame.transform.scale(image, (new_width, new_height))
     # 繪製圖片
     screen.blit(resized_image, (bar_x + bar_width , bar_y - 7))
+
+    #寫文字(血量)
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 14)
+    text = font.render(f"HP: {current_health}/{max_health}", True, (255, 255, 255))
+    screen.blit(text, (bar_x + 5, bar_y + 2))

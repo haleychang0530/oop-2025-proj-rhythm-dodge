@@ -6,7 +6,8 @@ import ui
 from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
-import timeline
+import level1
+from level2 import update_obstacles  
 
 # 初始化 Pygame
 pygame.init()
@@ -87,8 +88,11 @@ while True:
                 particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
             
             """把[障礙物生成]之功能搬到timeline.py"""
-            prev_obs = timeline.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
-
+            if level == 1:
+                prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
+            elif level == 2:
+                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2)
+            
             # 繪製畫面
             screen.fill((30, 30, 30))
             ui.hud(screen,player.blood)
@@ -118,7 +122,7 @@ while True:
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
 
-            print("player.alive =", player.alive)
+            #print("player.alive =", player.alive)
             pygame.display.flip()
            
 

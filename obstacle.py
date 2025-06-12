@@ -395,14 +395,20 @@ class SinGearObstacle(GearObstacle):
     def __init__(self, x, y, radius, vx, vy, amplitude, frequency, teeth, rotation_speed=2):
         super().__init__(x, y, radius, vx, vy, teeth, rotation_speed=rotation_speed)
         self.base_y = y + radius
+        self.base_x = x + radius
         self.amplitude = amplitude
         self.frequency = frequency
         self.start_time = pygame.time.get_ticks()
 
     def update(self):
         self.x += self.vx
+        self.y += self.vy
         t = pygame.time.get_ticks() - self.start_time
-        self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
+        #self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
+        if abs(self.vx) > abs(self.vy) : 
+            self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
+        else:
+            self.x = self.base_x + self.amplitude * math.sin(t * self.frequency)
         self.rotation += self.rotation_speed
         self.rect.center = (self.x, self.y)
     
