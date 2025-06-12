@@ -30,11 +30,11 @@ obstacles = []
 
 screen_rect = screen.get_rect()
 
-time_skip = 0  # 用於時間跳過 for testing
+time_skip = 23  # 用於時間跳過 for testing
 
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/level2.mp3")
-pygame.mixer.music.play(start=41.95 + time_skip) #94.94    # 1:30~2:30 for level 2 
+pygame.mixer.music.play(start=15.45 + time_skip) #94.94    
 pygame.mixer.music.set_volume(0.3)
 
 with open("levels/level2.json", "r") as f:
@@ -51,6 +51,7 @@ prev_obs = None
 
 bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
+bpm_scale3 = 1.4583  # 時間縮放因子 for bpm 175
 
 running = True
 while running:

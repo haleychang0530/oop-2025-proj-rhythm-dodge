@@ -199,27 +199,84 @@ class SinCircleObstacle(CircleObstacle):
         self.rect.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
 
 class LaserCircleObstacle(CircleObstacle):
-    def __init__(self, x, y, radius, vx, vy, charge_time, duration=500):
+    def __init__(self, x, y, radius, vx, vy, charge_time, duration=300):
         super().__init__(x, y, radius, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
         self.spawn_time = pygame.time.get_ticks()
         self.activated = False
         self.expired = False
+        self.stage = 0
+        self.alpha = 0
+        self.line_width = 2
+        self.transition_progress = 0
+        self.effect_playing = False
 
     def update(self):
         now = pygame.time.get_ticks()
-        if not self.activated and now - self.spawn_time >= self.charge_time:
-            self.activated = True
-            self.activate_time = now
-        if self.activated and now - self.activate_time >= self.duration:
+        elapsed = now - self.spawn_time
+        ct = self.charge_time
+
+        if elapsed < ct + self.duration + 200:
+            if elapsed < ct - 200:
+                self.stage = 1
+                self.alpha = int(80 * (elapsed / (ct - 200)))
+
+            elif elapsed < ct - 160:
+                self.stage = 2
+
+            elif elapsed < ct:
+                self.stage = 3
+                progress = (elapsed - ct + 160) / 160
+                max_width = self.radius * 2
+                self.line_width = int(2 + (max_width - 2) * progress)
+
+            elif elapsed < ct + self.duration:
+                self.stage = 4
+                self.activated = True
+                self.activate_time = now
+                self.transition_progress = min(1, (elapsed - ct) / self.duration)
+
+            elif elapsed < ct + self.duration + 100:
+                self.stage = 5
+                progress = (elapsed - ct - self.duration ) / 100
+                if progress > 0.7:
+                    self.activated = False
+                max_width = self.radius * 2
+                self.line_width = max_width * (1 - progress)
+        else:
             self.expired = True
+
+        if self.activated and not self.effect_playing:
+            effect.lazer()
+            self.effect_playing = True
 
     def draw(self, screen):
         surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
-        color = (200, 50, 50, 100) if not self.activated else (255, 0, 0, 255)
-        pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
-        screen.blit(surface, (self.rect.x, self.rect.y))
+
+        if self.stage == 1:
+            color = (255, 0, 0, self.alpha)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
+
+        elif self.stage == 2:
+            pass
+
+        elif self.stage == 3:
+            color = (255, 255, 255, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
+
+        elif self.stage == 4:
+            r = 200
+            g = int(255 * (1 - self.transition_progress))
+            b = int(255 * (1 - self.transition_progress**(1/2)))
+            color = (r, g, b, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
+
+        elif self.stage == 5:
+            color = (200, 0, 0, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
+
+        screen.blit(surface, self.rect.topleft)
 
 class GearObstacle(CircleObstacle):
     def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
