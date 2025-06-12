@@ -113,21 +113,21 @@ while running:
                 )
             elif evt.get("type") == "gear":
                 obs = GearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["x"], evt["y"], evt.get("radius",40),
                     evt["vx"], evt["vy"],
                     teeth=evt.get("teeth", 8),
                     rotation_speed=evt.get("rot_speed", 2)
             )
             elif evt.get("type") == "gear_follow":
                 obs = FollowGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["x"], evt["y"], evt.get("radius",40),
                     player, speed=evt.get("speed", 15),
                     teeth=evt.get("teeth", 8),
                     rotation_speed=evt.get("rot_speed", 2)
                 )
             elif evt.get("type") == "gear_sin":
                 obs = SinGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                    evt["x"], evt["y"], evt.get("radius",40),
                     evt["vx"], evt["vy"],
                     amplitude=evt.get("amplitude", 50),
                     frequency=evt.get("frequency", 0.01),
