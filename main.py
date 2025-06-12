@@ -22,6 +22,7 @@ events = []
 time_skip = 0  # 用於時間跳過 for testing
 bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
+bpm_scale3 = 1.4583  # 時間縮放因子 for bpm 175
 
 while True:
     if game_state == "start":
@@ -38,7 +39,7 @@ while True:
             pygame.quit()
             sys.exit()
         if level == 1:
-            pygame.mixer.music.load("assets/music/bgm.mp3")
+            pygame.mixer.music.load("assets/music/level1.mp3")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:

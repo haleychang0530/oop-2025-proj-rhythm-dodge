@@ -8,7 +8,7 @@ class Player:
         self.speed = 5
         self.alive = True
         self.dash_speed = 50
-        self.dash_cooldown = 1000  # 毫秒
+        self.dash_cooldown = 500  # 毫秒
         self.last_dash_time = -self.dash_cooldown
         self.dash_direction = [0, 0]
         self.dashing = False
