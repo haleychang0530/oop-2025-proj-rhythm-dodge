@@ -30,7 +30,7 @@ obstacles = []
 
 screen_rect = screen.get_rect()
 
-time_skip = 23  # 用於時間跳過 for testing
+time_skip = 0 # 用於時間跳過 for testing
 
 # 音樂與事件載入
 pygame.mixer.music.load("assets/music/level2.mp3")
@@ -142,6 +142,14 @@ while running:
                     ,evt.get("wave", 2040), evt.get("bar", 51)
                     
                 )
+            elif evt.get("type") == "ring":
+                obs = RingObstacle(
+                evt["x"],
+                evt["y"],
+                evt.get("radius", 700),        # 適中一點
+                duration=400,                 # 2秒內擴散
+                thickness=30                   # 看得見的粗細
+                )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
@@ -154,7 +162,7 @@ while running:
             o.update(screen_rect, player)
         else:
             o.update()    
-        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
+        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle) or isinstance(o, RingObstacle)) and o.expired:
             obstacles.remove(o)
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)

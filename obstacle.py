@@ -471,3 +471,63 @@ class CannonObstacle:
         elif self.state == "wave":
             for rect in self.wave_rects:
                 pygame.draw.rect(screen, (255, 0, 0), rect)
+
+class RingObstacle(CircleObstacle):
+    def __init__(self, x, y, max_radius, vx=0, vy=0, duration=1000, thickness=20, fade_out=False):
+        super().__init__(x, y, 0, vx, vy)
+        self.center_pos = pygame.Vector2(x, y)
+        self.max_radius = max_radius
+        self.duration = duration
+        self.thickness = thickness
+        self.fade_out = fade_out
+        self.rect = pygame.Rect(x - max_radius, y - max_radius, max_radius * 2, max_radius * 2)
+
+        self.spawn_time = pygame.time.get_ticks()
+        self.expired = False
+        self.alpha = 255
+        self.radius = 1  # 避免初始為 0 無法繪製
+
+    def update(self):
+        now = pygame.time.get_ticks()
+        elapsed = now - self.spawn_time
+
+        if elapsed >= self.duration:
+            self.expired = True
+            return
+
+        progress = elapsed / self.duration
+        self.radius = int(self.max_radius * progress)
+        self.alpha = int(255 * (1 - progress)) if self.fade_out else 255
+
+        # 更新中心位置
+        self.center_pos += pygame.Vector2(self.vx, self.vy)
+
+    def draw(self, screen):
+        if self.radius <= 0:
+            return  # 不畫
+
+        surface_size = self.radius * 2 + self.thickness
+        surface = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)
+        center = (surface.get_width() // 2, surface.get_height() // 2)
+
+        pygame.draw.circle(
+            surface,
+            (255, 0, 0, self.alpha),
+            center,
+            self.radius,
+            self.thickness
+        )
+
+        screen.blit(surface, (
+            self.center_pos.x - center[0],
+            self.center_pos.y - center[1]
+        ))
+
+    def collide(self, player):
+        """圓環與玩家碰撞檢查：只判定是否落在圓環邊界區段內"""
+        player_center = player.rect.center
+        dist = math.hypot(player_center[0] - self.center_pos.x, player_center[1] - self.center_pos.y)
+
+        inner = self.radius - self.thickness // 2
+        outer = self.radius + self.thickness // 2
+        return inner <= dist <= outer
