@@ -75,8 +75,8 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 evt["x"],
                 evt["y"],
                 evt.get("radius", 700),        
-                duration=400,                
-                thickness=40                   
+                evt.get("duration", 400),                
+                evt.get("thickness", 40),              
                 )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
@@ -97,7 +97,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
         # 檢查玩家與障礙物碰撞
         if player.alive and not player.dashing:
             if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) 
-                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
+                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) or isinstance(o, RingObstacle)):
                 # 圓形障礙物的碰撞檢查
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:

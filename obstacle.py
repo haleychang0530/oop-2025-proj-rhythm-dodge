@@ -598,7 +598,7 @@ class CannonObstacle:
         self.wave_damaged = False
 
 class RingObstacle(CircleObstacle):
-    def __init__(self, x, y, max_radius, vx=0, vy=0, duration=1000, thickness=20, fade_out=False):
+    def __init__(self, x, y, max_radius, duration=1000, thickness=20, vx=0, vy=0, fade_out=False):
         super().__init__(x, y, 0, vx, vy)
         self.center_pos = pygame.Vector2(x, y)
         self.max_radius = max_radius
