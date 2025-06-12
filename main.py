@@ -39,7 +39,7 @@ while True:
             sys.exit()
         if level == 1:
             pygame.mixer.music.load("assets/music/bgm.mp3")
-            with open("levels/level1.json", "r") as f:
+            with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
             pygame.mixer.music.load("assets/music/level2.mp3")
@@ -57,8 +57,8 @@ while True:
         pygame.mixer.music.play(start=94.94)
         pygame.mixer.music.set_volume(0.3)
 
-        with open("levels/level1.json", "r") as f:
-            events = json.load(f)
+        #with open("levels/level1.json", "r") as f:
+            #events = json.load(f)
 
         spawned = set()
 
@@ -91,7 +91,7 @@ while True:
             if level == 1:
                 prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
             elif level == 2:
-                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2)
+                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2,time_skip)
             
             # 繪製畫面
             screen.fill((30, 30, 30))

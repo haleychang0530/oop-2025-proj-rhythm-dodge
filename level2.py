@@ -1,4 +1,3 @@
-import pygame
 from obstacle import (
     Obstacle, SinObstacle, FollowObstacle, LaserObstacle,
     CircleObstacle, SinCircleObstacle, FollowCircleObstacle, LaserCircleObstacle,
@@ -7,12 +6,11 @@ from obstacle import (
 )
 from particle import Particle
 import effect
-import random
 
-def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale2):
+def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale2,time_skip):
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
-        if evt["time"] + 50 > time_now * bpm_scale2 * 1000 >= evt["time"] and i not in spawned:
+        if evt["time"] + 50 > time_now + time_skip * bpm_scale2 * 1000 >= evt["time"] and i not in spawned:
             if evt.get("type") == "sin":
                 obs = SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
             elif evt.get("type") == "follow":
