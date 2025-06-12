@@ -6,7 +6,8 @@ import ui
 from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
-import timeline
+import level1
+from level2 import update_obstacles  
 
 # 初始化 Pygame
 pygame.init()
@@ -18,6 +19,9 @@ clock = pygame.time.Clock()
 game_state = "start"
 level = 1
 events = []
+time_skip = 0  # 用於時間跳過 for testing
+bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
+bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
 while True:
     if game_state == "start":
@@ -34,9 +38,11 @@ while True:
             pygame.quit()
             sys.exit()
         if level == 1:
+            pygame.mixer.music.load("assets/music/bgm.mp3")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
+            pygame.mixer.music.load("assets/music/level2.mp3")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         game_state = "playing"
@@ -47,12 +53,12 @@ while True:
         obstacles = []
         screen_rect = screen.get_rect()
         # 音樂與事件載入
-        pygame.mixer.music.load("assets/music/bgm.mp3")
+        
         pygame.mixer.music.play(start=94.94)
         pygame.mixer.music.set_volume(0.3)
 
-        with open("levels/level1.json", "r") as f:
-            events = json.load(f)
+        #with open("levels/level1.json", "r") as f:
+            #events = json.load(f)
 
         spawned = set()
 
@@ -82,8 +88,11 @@ while True:
                 particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
             
             """把[障礙物生成]之功能搬到timeline.py"""
-            prev_obs = timeline.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
-
+            if level == 1:
+                prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
+            elif level == 2:
+                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2,time_skip)
+            
             # 繪製畫面
             screen.fill((30, 30, 30))
             ui.hud(screen,player.blood)
@@ -113,7 +122,7 @@ while True:
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
 
-            print("player.alive =", player.alive)
+            #print("player.alive =", player.alive)
             pygame.display.flip()
            
 
