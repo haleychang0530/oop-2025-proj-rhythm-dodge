@@ -18,6 +18,9 @@ clock = pygame.time.Clock()
 game_state = "start"
 level = 1
 events = []
+time_skip = 0  # 用於時間跳過 for testing
+bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
+bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
 while True:
     if game_state == "start":
