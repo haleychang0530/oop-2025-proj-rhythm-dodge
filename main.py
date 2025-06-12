@@ -6,8 +6,7 @@ import ui
 from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
-import level1
-from level2 import update_obstacles  
+from timeline import update_obstacles  
 
 # 初始化 Pygame
 pygame.init()
@@ -19,10 +18,10 @@ clock = pygame.time.Clock()
 game_state = "start"
 level = 1
 events = []
-time_skip = 0  # 用於時間跳過 for testing
-bpm_scale1 = 0.975  # 時間縮放因子 for bpm 234
+time_skip = 30  # 用於時間跳過 for testing
+bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
+bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
-bpm_scale3 = 1.4583  # 時間縮放因子 for bpm 175
 
 while True:
     if game_state == "start":
@@ -55,7 +54,13 @@ while True:
         screen_rect = screen.get_rect()
         # 音樂與事件載入
         
-        pygame.mixer.music.play(start=94.94)
+        if level == 1:
+            pygame.mixer.music.play(start=0) #未確定
+            bpm_scale = bpm_scale1
+        elif level == 2:
+            pygame.mixer.music.play(start=15.45 + time_skip)
+            bpm_scale = bpm_scale2
+        
         pygame.mixer.music.set_volume(0.3)
 
         #with open("levels/level1.json", "r") as f:
@@ -71,7 +76,7 @@ while True:
 
         while running:
             dt = clock.tick(60)
-            time_now = pygame.mixer.music.get_pos()
+            time_now = pygame.mixer.music.get_pos() * bpm_scale
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -89,11 +94,14 @@ while True:
                 particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
             
             """把[障礙物生成]之功能搬到timeline.py"""
-            if level == 1:
+            '''if level == 1:
                 prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
             elif level == 2:
                 prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2,time_skip)
-            
+            '''
+            '''再次扳回timeline.py'''
+            # 更新障礙物
+            prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)
             # 繪製畫面
             screen.fill((30, 30, 30))
             ui.hud(screen,player.blood)
