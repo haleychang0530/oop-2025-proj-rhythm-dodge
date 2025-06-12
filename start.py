@@ -2,7 +2,7 @@ import pygame
 import math
 import sys
 
-def show_logo_screen(screen):
+def start(screen):
     clock = pygame.time.Clock()
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
