@@ -39,7 +39,7 @@ while True:
             sys.exit()
         if level == 1:
             pygame.mixer.music.load("assets/music/bgm.mp3")
-            with open("levels/level2.json", "r") as f:
+            with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
             pygame.mixer.music.load("assets/music/level2.mp3")
