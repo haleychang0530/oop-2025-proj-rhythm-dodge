@@ -8,13 +8,13 @@ class Player:
         self.speed = 5
         self.alive = True
         self.dash_speed = 50
-        self.dash_cooldown = 500  # 毫秒
+        self.dash_cooldown = 500  # 500 毫秒
         self.last_dash_time = -self.dash_cooldown
         self.dash_direction = [0, 0]
         self.dashing = False
         self.dash_vector = [0, 0]
         self.dash_start_time = 0
-        self.dash_duration = 200  # 0.5 秒
+        self.dash_duration = 200  # 0.2 秒
         self.dash_speed_multiplier = 5
 
         # 0612 改:血條
