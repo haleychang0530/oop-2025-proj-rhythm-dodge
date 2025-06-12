@@ -440,7 +440,7 @@
     { "time": 48500, "x": 400, "y": 300, "type": "ring"},
     { "time": 49000, "x": 400, "y": 300, "type": "ring"},
     { "time": 49500, "x": 400, "y": 300, "type": "ring"},
-    { "time": 50000, "x": 400, "y": 300, "duration": 100000, "type": "ring"},
+    { "time": 50000, "x": 400, "y": 300, "duration": 30000, "type": "ring"},
 
 
 

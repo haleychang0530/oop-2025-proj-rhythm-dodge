@@ -650,10 +650,19 @@ class RingObstacle(CircleObstacle):
 
     def collide(self, player):
         """圓環與玩家碰撞檢查：只判定是否落在圓環邊界區段內"""
-        player_center = player.rect.center
-        dist = math.hypot(player_center[0] - self.center_pos.x, player_center[1] - self.center_pos.y)
+        player_corner1 = (player.rect.left, player.rect.top)
+        player_corner2 = (player.rect.right, player.rect.bottom)
+        player_corner3 = (player.rect.left, player.rect.bottom)
+        player_corner4 = (player.rect.right, player.rect.top)
+        dist1 = pygame.math.Vector2(player_corner1).distance_to(self.center_pos)
+        dist2 = pygame.math.Vector2(player_corner2).distance_to(self.center_pos)
+        dist3 = pygame.math.Vector2(player_corner3).distance_to(self.center_pos)
+        dist4 = pygame.math.Vector2(player_corner4).distance_to(self.center_pos)
+        dist_min = min(dist1, dist2, dist3, dist4)
+        dist_max = max(dist1, dist2, dist3, dist4)
+        # 檢查是否在圓環的內外半徑之間
 
-        inner = self.radius - self.thickness // 2
-        outer = self.radius + self.thickness // 2
-        return inner <= dist <= outer
+        inner = self.radius - self.thickness
+        outer = self.radius
+        return inner <= dist_min <= outer or inner <= dist_max <= outer 
 
