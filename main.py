@@ -105,7 +105,7 @@ while True:
             prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)
             # 繪製畫面
             screen.fill((30, 30, 30))
-            ui.hud(screen,player.blood)
+            
 
             # 畫邊界/玩家/粒子/障礙
             pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
@@ -132,7 +132,7 @@ while True:
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
 
-            #print("player.alive =", player.alive)
+            ui.hud(screen,player.blood)
             pygame.display.flip()
            
 
