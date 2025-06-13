@@ -13,7 +13,7 @@ tempo = aubio.tempo("default", win_s, hop_s, samplerate)
 # === Pygame setup ===
 pygame.init()
 pygame.mixer.init(frequency=samplerate)
-pygame.mixer.music.load("000.wav")
+pygame.mixer.music.load("level1.wav")
 pygame.mixer.music.play()
 
 # === Beat detection loop ===
@@ -38,7 +38,7 @@ print("Done! Total beats:", len(beats))
 import json
 
 # 儲存 beat 資料成 JSON 檔
-with open("tutorial_beats.json", "w") as f:
+with open("level1_beats.json", "w") as f:
     json.dump(beats, f, indent=2)
 
-print("Saved to tutorial_beats.json")
+print("Saved to level1_beats.json")
