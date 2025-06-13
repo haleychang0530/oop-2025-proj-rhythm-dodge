@@ -75,7 +75,7 @@ class LaserObstacle(Obstacle):
         super().__init__(x, y, w, h, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
-        self.spawn_time = pygame.time.get_ticks()
+        self.spawn_time = pygame.time.get_ticks() 
         self.activated = False
         self.expired = False
         self.effect_playing = False  # 用於控制音效播放
@@ -95,7 +95,7 @@ class LaserObstacle(Obstacle):
     def update(self):
         now = pygame.time.get_ticks()
         elapsed = now - self.spawn_time
-        ct = self.charge_time * 1.02564  # 考慮到遊戲速度調整
+        ct = self.charge_time  # 考慮到遊戲速度調整
         if elapsed < ct + self.duration + 200:
             if elapsed < ct - 200:
                 # 淡入紅色提示（0 → 80)
@@ -280,29 +280,88 @@ class SinCircleObstacle(CircleObstacle):
         self.rect.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
 
 class LaserCircleObstacle(CircleObstacle):
-    def __init__(self, x, y, radius, vx, vy, charge_time, duration=500*1.02564):
+    def __init__(self, x, y, radius, vx, vy, charge_time, duration=300):
         super().__init__(x, y, radius, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
         self.spawn_time = pygame.time.get_ticks()
         self.activated = False
         self.expired = False
+        self.stage = 0
+        self.alpha = 0
+        self.line_width = 2
+        self.transition_progress = 0
+        self.effect_playing = False
+
         #shake
         self.shake_direction=0
 
+
     def update(self):
         now = pygame.time.get_ticks()
-        if not self.activated and now - self.spawn_time >= self.charge_time:
-            self.activated = True
-            self.activate_time = now
-        if self.activated and now - self.activate_time >= self.duration:
+        elapsed = now - self.spawn_time
+        ct = self.charge_time
+
+        if elapsed < ct + self.duration + 200:
+            if elapsed < ct - 200:
+                self.stage = 1
+                self.alpha = int(80 * (elapsed / (ct - 200)))
+
+            elif elapsed < ct - 160:
+                self.stage = 2
+
+            elif elapsed < ct:
+                self.stage = 3
+                progress = (elapsed - ct + 160) / 160
+                max_width = self.radius * 2
+                self.line_width = int(2 + (max_width - 2) * progress)
+
+            elif elapsed < ct + self.duration:
+                self.stage = 4
+                self.activated = True
+                self.activate_time = now
+                self.transition_progress = min(1, (elapsed - ct) / self.duration)
+
+            elif elapsed < ct + self.duration + 100:
+                self.stage = 5
+                progress = (elapsed - ct - self.duration ) / 100
+                if progress > 0.7:
+                    self.activated = False
+                max_width = self.radius * 2
+                self.line_width = max_width * (1 - progress)
+        else:
             self.expired = True
+
+        if self.activated and not self.effect_playing:
+            effect.lazer()
+            self.effect_playing = True
 
     def draw(self, screen):
         surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
-        color = (200, 50, 50, 100) if not self.activated else (255, 0, 0, 255)
-        pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
-        screen.blit(surface, (self.rect.x, self.rect.y))
+
+        if self.stage == 1:
+            color = (255, 0, 0, self.alpha)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
+
+        elif self.stage == 2:
+            pass
+
+        elif self.stage == 3:
+            color = (255, 255, 255, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
+
+        elif self.stage == 4:
+            r = 200
+            g = int(255 * (1 - self.transition_progress))
+            b = int(255 * (1 - self.transition_progress**(1/2)))
+            color = (r, g, b, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
+
+        elif self.stage == 5:
+            color = (200, 0, 0, 255)
+            pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
+
+        screen.blit(surface, self.rect.topleft)
 
 class GearObstacle(CircleObstacle):
     def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
@@ -395,20 +454,25 @@ class SinGearObstacle(GearObstacle):
     def __init__(self, x, y, radius, vx, vy, amplitude, frequency, teeth, rotation_speed=2):
         super().__init__(x, y, radius, vx, vy, teeth, rotation_speed=rotation_speed)
         self.base_y = y + radius
+        self.base_x = x + radius
         self.amplitude = amplitude
         self.frequency = frequency
         self.start_time = pygame.time.get_ticks()
 
     def update(self):
         self.x += self.vx
+        self.y += self.vy
         t = pygame.time.get_ticks() - self.start_time
-        self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
+        if abs(self.vx) > abs(self.vy) : 
+            self.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
+        else:
+            self.x = self.base_x + self.amplitude * math.sin(t * self.frequency)
         self.rotation += self.rotation_speed
         self.rect.center = (self.x, self.y)
     
 
 class CannonObstacle:
-    def __init__(self, x, y, w, h, vx, vy, wave_length=2000, wave_speed=0.05, wave_amplitude=300, num_bars=51):
+    def __init__(self, x, y, w, h, vx, vy, wave_amplitude, wave_length, num_bars, wave_speed=0.05):
         self.x = x
         self.y = y
         self.w = w
@@ -470,7 +534,7 @@ class CannonObstacle:
             dis = abs(i - self.num_bars / 2)
             arrived = (self.wave_progress * 20 / (dis + 1) > 1.5)
             phase = dis / (self.num_bars-1) * math.pi * 5
-            decay = 1 - dis / self.num_bars * 1
+            decay = 1 - dis / self.num_bars
             passed = dis + 10 > self.wave_progress * 8
             height = math.sin(self.wave_progress * math.pi - phase) * self.wave_amplitude * decay * arrived * passed
             bar_length = self.wave_length / self.num_bars
@@ -526,9 +590,79 @@ class CannonObstacle:
                 rect.x += offset_x
                 rect.y += offset_y
                 pygame.draw.rect(screen, (255, 0, 0), rect)
-
+                
     def shake(self, duration=20):
         """開始震動，持續duration幀"""
         self.shake_duration = duration
         # 震動時也要更新wave_damaged狀態
         self.wave_damaged = False
+
+class RingObstacle(CircleObstacle):
+    def __init__(self, x, y, max_radius, duration=1000, thickness=20, vx=0, vy=0, fade_out=False):
+        super().__init__(x, y, 0, vx, vy)
+        self.center_pos = pygame.Vector2(x, y)
+        self.max_radius = max_radius
+        self.duration = duration
+        self.thickness = thickness
+        self.fade_out = fade_out
+        self.rect = pygame.Rect(x - max_radius, y - max_radius, max_radius * 2, max_radius * 2)
+
+        self.spawn_time = pygame.time.get_ticks()
+        self.expired = False
+        self.alpha = 255
+        self.radius = 1  # 避免初始為 0 無法繪製
+
+    def update(self):
+        now = pygame.time.get_ticks()
+        elapsed = now - self.spawn_time
+
+        if elapsed >= self.duration:
+            self.expired = True
+            return
+
+        progress = elapsed / self.duration
+        self.radius = int(self.max_radius * progress)
+        self.alpha = int(255 * (1 - progress)) if self.fade_out else 255
+
+        # 更新中心位置
+        self.center_pos += pygame.Vector2(self.vx, self.vy)
+
+    def draw(self, screen):
+        if self.radius <= 0:
+            return  # 不畫
+
+        surface_size = self.radius * 2 + self.thickness
+        surface = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)
+        center = (surface.get_width() // 2, surface.get_height() // 2)
+
+        pygame.draw.circle(
+            surface,
+            (255, 0, 0, self.alpha),
+            center,
+            self.radius,
+            self.thickness
+        )
+
+        screen.blit(surface, (
+            self.center_pos.x - center[0],
+            self.center_pos.y - center[1]
+        ))
+
+    def collide(self, player):
+        """圓環與玩家碰撞檢查：只判定是否落在圓環邊界區段內"""
+        player_corner1 = (player.rect.left, player.rect.top)
+        player_corner2 = (player.rect.right, player.rect.bottom)
+        player_corner3 = (player.rect.left, player.rect.bottom)
+        player_corner4 = (player.rect.right, player.rect.top)
+        dist1 = pygame.math.Vector2(player_corner1).distance_to(self.center_pos)
+        dist2 = pygame.math.Vector2(player_corner2).distance_to(self.center_pos)
+        dist3 = pygame.math.Vector2(player_corner3).distance_to(self.center_pos)
+        dist4 = pygame.math.Vector2(player_corner4).distance_to(self.center_pos)
+        dist_min = min(dist1, dist2, dist3, dist4)
+        dist_max = max(dist1, dist2, dist3, dist4)
+        # 檢查是否在圓環的內外半徑之間
+
+        inner = self.radius - self.thickness
+        outer = self.radius
+        return inner <= dist_min <= outer or inner <= dist_max <= outer 
+

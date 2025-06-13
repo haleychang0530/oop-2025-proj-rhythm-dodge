@@ -10,8 +10,8 @@ def hud(screen, current_health, max_health = 100):
 
     # Colors
     bg_color = (60, 30, 30)          # Dark reddish background
-    fill_color = (200, 100, 100)      # Cyan fill
-    border_color = (200, 150, 150)     # Darker border
+    fill_color = (255, 0, 0)      # Cyan fill
+    border_color = (250, 100, 100)     # Darker border
     tip_color = (10, 10, 10)     # Battery tip (grayish)
     cube_width = 15
 
@@ -25,7 +25,7 @@ def hud(screen, current_health, max_health = 100):
     # Fill level
     fill_ratio = max(0, min(1, current_health / max_health))
     fill_width = int(bar_width * fill_ratio)
-    pygame.draw.rect(screen, fill_color, ( bar_x + bar_width - fill_width, bar_y, cube_width , bar_height))
+    pygame.draw.rect(screen, fill_color, ( bar_x, bar_y, fill_width , bar_height))
 
     # Border
     pygame.draw.rect(screen, border_color, (bar_x , bar_y, bar_width + tip_width, bar_height), 2)
@@ -38,7 +38,12 @@ def hud(screen, current_health, max_health = 100):
     
     # 載入圖片
     image = pygame.image.load("assets/images/boss_2.png")
-    new_width, new_height = 30, 30
+    new_width, new_height = 35, 35
     resized_image = pygame.transform.scale(image, (new_width, new_height))
     # 繪製圖片
-    screen.blit(resized_image, (bar_x + bar_width + 7, bar_y - 7))
+    screen.blit(resized_image, (bar_x + bar_width , bar_y - 7))
+
+    #寫文字(血量)
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 14)
+    text = font.render(f"HP: {current_health}/{max_health}", True, (255, 255, 255))
+    screen.blit(text, (bar_x + 5, bar_y + 2))
