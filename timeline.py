@@ -113,6 +113,8 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         player.blood = player.blood - damage
                         prev_obs.append(o)
                         o.shake(30,30)
+                    elif player.blood > 0 and isinstance(o, LaserCircleObstacle):
+                        player.blood = player.blood - effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -120,10 +122,11 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     continue  # 預熱中的雷射不造成傷害
                 if o not in prev_obs and player.blood > 0:
                     all_pass=False
-                    damage = effect.hurt(o)
-                    player.blood = player.blood - damage
+                    player.blood = player.blood - effect.hurt(o)
                     prev_obs.append(o)
                     o.shake(30,30)
+                elif player.blood > 0 and isinstance(o, LaserObstacle):
+                    player.blood = player.blood - effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
 

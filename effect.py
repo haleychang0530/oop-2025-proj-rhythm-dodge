@@ -16,12 +16,15 @@ def hurt(o):
         damage = 2
 
     elif ob=="LaserCircleObstacle" or ob=="LaserObstacle":
-        damage = 0.5
+        damage = 0.4
 
     elif ob=="CannonObstacle":
         damage = 5
         #sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
         #sound.play()'''
+
+    elif ob=="CircleObstacle" or ob=="Obstacle" or ob=="GearObstacle":
+        damage = 2
 
     sound.set_volume(0.32)
     sound.play()
