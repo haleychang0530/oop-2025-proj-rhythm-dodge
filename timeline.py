@@ -113,7 +113,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         prev_obs.append(o)
                         o.shake()
                         effect.hurt(o)
-                        print(o)
+                        #print(o)
 
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -126,7 +126,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     prev_obs.append(o)
                     o.shake()
                     effect.hurt(o)
-                    print(o)
+                    #print(o)
 
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
