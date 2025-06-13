@@ -1,29 +1,27 @@
-import obstacle
-import effect
+from obstacle import *
 from particle import Particle
-from obstacle import CannonObstacle, LaserObstacle, LaserCircleObstacle, CircleObstacle, SinCircleObstacle, FollowCircleObstacle, GearObstacle, SinGearObstacle, FollowGearObstacle
-import random
+import effect
 
-def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs):
-    # 障礙物生成（依時間） 
+def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip):
+    # 障礙物生成（依時間）
     for i, evt in enumerate(events):
-        if time_now >= evt["time"]*1.02564 and i not in spawned: # 1.02564 是時間縮放因子 for bpm 234
+        if evt["time"] + 50 > time_now + time_skip * bpm_scale * 1000 >= evt["time"] and i not in spawned:
             if evt.get("type") == "sin":
-                obs = obstacle.SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
+                obs = SinObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], amplitude=evt.get("amplitude", 50), frequency=evt.get("frequency", 0.01))
             elif evt.get("type") == "follow":
-                obs = obstacle.FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
+                obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
             elif evt.get("type") == "laser":
-                obs = obstacle.LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)*1.02564)
-
+                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)/ bpm_scale) 
+            
             # === 圓形類型 ===
             elif evt.get("type") == "circle":
-                obs = obstacle.CircleObstacle(
+                obs = CircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     evt["vx"], evt["vy"]
                 )
 
             elif evt.get("type") == "circle_sin":
-                obs = obstacle.SinCircleObstacle(
+                obs = SinCircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     evt["vx"], evt["vy"],
                     amplitude=evt.get("amplitude", 50),
@@ -31,34 +29,34 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 )
 
             elif evt.get("type") == "circle_follow":
-                obs = obstacle.FollowCircleObstacle(
+                obs = FollowCircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     player, speed=evt.get("speed", 15)
                 )
 
             elif evt.get("type") == "circle_laser":
-                obs = obstacle.LaserCircleObstacle(
+                obs = LaserCircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     evt["vx"], evt["vy"],
-                    charge_time=evt.get("charge", 1000) * 1.02564
+                    charge_time=evt.get("charge", 1000) / bpm_scale
                 )
             elif evt.get("type") == "gear":
-                obs = obstacle.GearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                obs = GearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",40),
                     evt["vx"], evt["vy"],
                     teeth=evt.get("teeth", 8),
                     rotation_speed=evt.get("rot_speed", 2)
             )
             elif evt.get("type") == "gear_follow":
-                obs = obstacle.FollowGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                obs = FollowGearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",40),
                     player, speed=evt.get("speed", 15),
                     teeth=evt.get("teeth", 8),
                     rotation_speed=evt.get("rot_speed", 2)
                 )
             elif evt.get("type") == "gear_sin":
-                obs = obstacle.SinGearObstacle(
-                    evt["x"], evt["y"], evt.get("radius",25),
+                obs = SinGearObstacle(
+                    evt["x"], evt["y"], evt.get("radius",40),
                     evt["vx"], evt["vy"],
                     amplitude=evt.get("amplitude", 50),
                     frequency=evt.get("frequency", 0.01),
@@ -66,36 +64,40 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     rotation_speed=evt.get("rot_speed", 2)
                 )
             elif evt.get("type") == "cannon":
-                obs = obstacle.CannonObstacle(
+                obs = CannonObstacle(
                     evt["x"], evt["y"], evt["w"], evt["h"],
-                    evt["vx"], evt["vy"]
+                    evt["vx"], evt["vy"], evt.get("amplitude", 300)
+                    ,evt.get("wave", 2040), evt.get("bar", 51)
+                    
+                )
+            elif evt.get("type") == "ring":
+                obs = RingObstacle(
+                evt["x"],
+                evt["y"],
+                evt.get("radius", 700),        
+                evt.get("duration", 400),                
+                evt.get("thickness", 40),              
                 )
             else:
-                obs = obstacle.Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
+                obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
             obstacles.append(obs)
             spawned.add(i)
-
+    
     # 更新障礙物
     all_pass = True
     for o in obstacles:
-        # shake
-        if not all_pass:
-            o.shake(10)
-
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
             o.update()    
-        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle)) and o.expired:
+        if ( isinstance(o, LaserObstacle) or isinstance(o, LaserCircleObstacle) or isinstance(o, RingObstacle)) and o.expired:
             obstacles.remove(o)
-
         if not screen.get_rect().colliderect(o.rect):
             obstacles.remove(o)
-
         # 檢查玩家與障礙物碰撞
         if player.alive and not player.dashing:
             if ( isinstance(o,CircleObstacle) or isinstance(o, SinCircleObstacle) or isinstance(o, FollowCircleObstacle) or isinstance(o, LaserCircleObstacle) 
-                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) ):
+                or isinstance(o, GearObstacle) or isinstance(o, SinGearObstacle) or isinstance(o, FollowGearObstacle) or isinstance(o, RingObstacle)):
                 # 圓形障礙物的碰撞檢查
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
@@ -105,7 +107,6 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         player.blood = player.blood - 1
                         prev_obs = o
                         effect.hurt(o)
-                        o.shake()
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -116,10 +117,10 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     player.blood = player.blood - 1
                     prev_obs = o
                     effect.hurt(o)
-                    o.shake()
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
     if all_pass:
         prev_obs = None
+    
     return prev_obs

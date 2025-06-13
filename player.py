@@ -8,21 +8,19 @@ class Player:
         self.speed = 5
         self.alive = True
         self.dash_speed = 50
-        self.dash_cooldown = 1000  # 毫秒
+        self.dash_cooldown = 500  # 500 毫秒
         self.last_dash_time = -self.dash_cooldown
         self.dash_direction = [0, 0]
         self.dashing = False
         self.dash_vector = [0, 0]
         self.dash_start_time = 0
-        self.dash_duration = 200  # 0.5 秒
-        self.dash_speed_multiplier = 5
+        self.dash_duration = 150  # 0.15 秒
+        self.dash_speed_multiplier = 1000 / self.dash_duration
 
-        # 0608 小改:血條
-        self.blood = 100
+        self.blood = 20
 
     def update(self, keys):
 
-        # 0607 小改:血條
         if self.blood <= 0:
             self.alive = False
 
@@ -61,7 +59,7 @@ class Player:
             else:
                 # 計算速度衰減（線性衰減）
                 t = elapsed / self.dash_duration  # 0.0 ~ 1.0
-                speed = self.speed * (self.dash_speed_multiplier * (1 - t) + t)  # 10x → 1x
+                speed = self.speed * (self.dash_speed_multiplier * (1 - t) + t) 
                 # 更新位置
                 self.rect.x += self.dash_vector[0] * speed
                 self.rect.y += self.dash_vector[1] * speed
