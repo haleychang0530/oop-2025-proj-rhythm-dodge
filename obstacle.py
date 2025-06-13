@@ -565,8 +565,8 @@ class CannonObstacle:
         for rect in self.wave_rects:
             if player.rect.colliderect(rect):
                 effect.hurt(self)
-                player.blood = player.blood - 1
-                self.wave_damaged = True  
+                player.blood -= 1
+                self.wave_damaged = True
                 # start to shake
                 self.shake() 
                 
@@ -630,6 +630,14 @@ class RingObstacle(CircleObstacle):
     def draw(self, screen):
         if self.radius <= 0:
             return  # 不畫
+        
+        # Make it shake
+        # Apply shake offset if active
+        offset_x, offset_y = 0, 0
+        if self.shake_duration > 0:
+            magnitude = 10  # Shake intensity
+            offset_x = random.randint(-magnitude, magnitude)
+            offset_y = random.randint(-magnitude, magnitude)
 
         surface_size = self.radius * 2 + self.thickness
         surface = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)
@@ -644,8 +652,8 @@ class RingObstacle(CircleObstacle):
         )
 
         screen.blit(surface, (
-            self.center_pos.x - center[0],
-            self.center_pos.y - center[1]
+            self.center_pos.x - center[0] + offset_x ,
+            self.center_pos.y - center[1] + offset_y
         ))
 
     def collide(self, player):
