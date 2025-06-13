@@ -88,8 +88,8 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
 
     for o in obstacles:
         # 如果有碰撞，讓全部障礙物震動
-        if  not all_pass:
-            o.shake(10)  
+        if  not all_pass and o!=prev_obs[-1]:
+            o.shake(10,10)  
             ###################
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
@@ -111,7 +111,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         all_pass=False
                         player.blood = player.blood - 1
                         prev_obs.append(o)
-                        o.shake()
+                        o.shake(30,30)
                         effect.hurt(o)
                         #print(o)
 
@@ -124,7 +124,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     all_pass=False
                     player.blood = player.blood - 1
                     prev_obs.append(o)
-                    o.shake()
+                    o.shake(30,30)
                     effect.hurt(o)
                     #print(o)
 
