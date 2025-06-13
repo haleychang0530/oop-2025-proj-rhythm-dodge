@@ -6,14 +6,14 @@ import time
 # === Aubio setup ===
 win_s = 1024  # window size for FFT
 hop_s = 512   # hop size
-source = aubio.source("level1.wav", 0, hop_s)  # 0 means autodetect sample rate
+source = aubio.source("level2.wav", 0, hop_s)  # 0 means autodetect sample rate
 samplerate = source.samplerate
 tempo = aubio.tempo("default", win_s, hop_s, samplerate)
 
 # === Pygame setup ===
 pygame.init()
 pygame.mixer.init(frequency=samplerate)
-pygame.mixer.music.load("level1.wav")
+pygame.mixer.music.load("level2.wav")
 pygame.mixer.music.play()
 
 # === Beat detection loop ===
@@ -38,7 +38,7 @@ print("Done! Total beats:", len(beats))
 import json
 
 # 儲存 beat 資料成 JSON 檔
-with open("level1_beats.json", "w") as f:
+with open("level2_beats.json", "w") as f:
     json.dump(beats, f, indent=2)
 
-print("Saved to level1_beats.json")
+print("Saved to level2_beats.json")
