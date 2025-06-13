@@ -6,7 +6,7 @@ import time
 # === Aubio setup ===
 win_s = 1024  # window size for FFT
 hop_s = 512   # hop size
-source = aubio.source("000.wav", 0, hop_s)  # 0 means autodetect sample rate
+source = aubio.source("level1.wav", 0, hop_s)  # 0 means autodetect sample rate
 samplerate = source.samplerate
 tempo = aubio.tempo("default", win_s, hop_s, samplerate)
 
