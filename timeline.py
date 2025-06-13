@@ -124,7 +124,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         o.shake()
                         effect.hurt(o)
                         lx, ly = o.rect.center
-                        lightning_duration = 100
+                        lightning_duration = 150
 
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -138,7 +138,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     o.shake()
                     effect.hurt(o)
                     lx, ly = o.rect.center
-                    lightning_duration = 100
+                    lightning_duration = 150
 
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
