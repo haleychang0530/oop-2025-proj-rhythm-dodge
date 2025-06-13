@@ -1,14 +1,21 @@
 import pygame
+from lightning import Lightning
+
+def lightning_effect(screen, start_pos, end_pos):
+    """Create a lightning effect between two points."""
+    lightning = Lightning(start_pos, end_pos, color=(255, 255, 0), thickness=2, segments=10, offset=20)
+    lightning.draw(screen)
+    pygame.display.flip()
 
 def hurt(o):
     """Play audio and visual effect when the player gets hurt."""
     ob = o.__class__.__name__
+    
     if ob=="FollowObstacle":
         sound = pygame.mixer.Sound("assets/sound_effect/snd_arrow.wav")
         sound.play()
 
     elif ob=="SinCircleObstacle" or "SinObstacle" or "SinGearObstacle":
-        #print("ding")
         sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
         sound.play()
 
@@ -20,7 +27,6 @@ def hurt(o):
         lazer()
 
     elif ob=="GearObstacle" or "FollowGearObstacle" :
-        #print("ding")
         sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
         sound.play()
 

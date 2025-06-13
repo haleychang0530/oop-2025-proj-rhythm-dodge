@@ -106,6 +106,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         all_pass=False
                         player.blood = player.blood - 1
                         prev_obs = o
+                        o.shake()
                         effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -116,6 +117,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     all_pass=False
                     player.blood = player.blood - 1
                     prev_obs = o
+                    o.shake()
                     effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
