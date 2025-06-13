@@ -16,6 +16,10 @@ class Player:
         self.dash_start_time = 0
         self.dash_duration = 150  # 0.15 秒
         self.dash_speed_multiplier = 1000 / self.dash_duration
+        self.damage_cooldown = 100
+        self.damaged = 0
+        self.allow_damage = 1
+        self.damage_time = 0
 
         self.blood = 100
 
@@ -66,6 +70,17 @@ class Player:
                 self.color = (255, 255, 255)
                 self.rect.clamp_ip(pygame.Rect(5, 5, 790, 590))
                 return  # dash 中不接受其他移動輸入
+
+        #damage    
+        if self.damaged:
+            self.damage_time = now
+            self.damaged = 0
+        
+        if self.damage_cooldown < now - self.damage_time:
+            self.allow_damage = 1
+        else:
+            self.allow_damage = 0
+
                 
 
         # 一般移動（未衝刺時）
