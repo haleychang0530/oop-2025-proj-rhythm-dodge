@@ -324,6 +324,8 @@ class GearObstacle(CircleObstacle):
         self.rotation_speed = rotation_speed
         self.hitbox_type = "circle"
         self.rect = pygame.Rect(x - radius, y - radius, radius * 2, radius * 2)
+        self.shake_duration = 0
+        self.shake_magnitude = 0
 
     def update(self):
         self.x += self.vx
