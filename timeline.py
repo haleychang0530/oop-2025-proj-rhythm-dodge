@@ -88,7 +88,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
 
     for o in obstacles:
         # 如果有碰撞，讓全部障礙物震動
-        if  not all_pass and o!=prev_obs[-1]:
+        if not all_pass:
             o.shake(20,10)  # (10,10)是(震動時長,震動幅度)
             ###################
         if isinstance(o, CannonObstacle):
@@ -110,10 +110,12 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     if o not in prev_obs and player.blood > 0:
                         all_pass=False
                         damage = effect.hurt(o)
+                        o.shake(20,10)
                         player.blood = player.blood - damage
                         prev_obs.append(o)
-                        o.shake(30,30)
                     elif player.blood > 0 and isinstance(o, LaserCircleObstacle):
+                        all_pass=False
+                        o.shake(20,10)
                         player.blood = player.blood - effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -122,10 +124,12 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     continue  # 預熱中的雷射不造成傷害
                 if o not in prev_obs and player.blood > 0:
                     all_pass=False
+                    o.shake(20,10)
                     player.blood = player.blood - effect.hurt(o)
                     prev_obs.append(o)
-                    o.shake(30,30)
                 elif player.blood > 0 and isinstance(o, LaserObstacle):
+                    all_pass=False
+                    o.shake(20,10)
                     player.blood = player.blood - effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
