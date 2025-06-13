@@ -72,11 +72,11 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 )
             elif evt.get("type") == "ring":
                 obs = RingObstacle(
-                evt["x"],
-                evt["y"],
+                evt["x"],evt["y"],
                 evt.get("radius", 700),        
                 evt.get("duration", 400),                
-                evt.get("thickness", 40),              
+                evt.get("thickness", 40),
+                evt.get("vx", 0), evt.get("vy", 0), evt.get("fade", 1)
                 )
             else:
                 obs = Obstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"])
