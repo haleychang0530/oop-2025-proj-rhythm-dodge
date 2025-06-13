@@ -87,8 +87,10 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
     all_pass = True
 
     for o in obstacles:
+        # 如果有碰撞，讓全部障礙物震動
         if  not all_pass:
-            o.shake()  # 如果有碰撞，讓障礙物震動
+            o.shake(10)  
+            ###################
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
