@@ -7,7 +7,7 @@ from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
 from timeline import update_obstacles  
-from lightning import Lightning
+from worklog.lightning import Lightning
 # 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -72,7 +72,7 @@ while True:
         # 初始化
         particles = []
         sprinkles=[]
-        prev_obs = None
+        prev_obs = []
         running = True
 
         while running:

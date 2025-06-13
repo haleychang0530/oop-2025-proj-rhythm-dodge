@@ -85,7 +85,12 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
     
     # 更新障礙物
     all_pass = True
+
     for o in obstacles:
+        # 如果有碰撞，讓全部障礙物震動
+        if  not all_pass and o!=prev_obs[-1]:
+            o.shake(20,10)  # (10,10)是(震動時長,震動幅度)
+            ###################
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -102,27 +107,25 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
-                    if prev_obs != o and player.blood > 0:
+                    if o not in prev_obs and player.blood > 0:
                         all_pass=False
                         damage = effect.hurt(o)
                         player.blood = player.blood - damage
-                        prev_obs = o
-                        o.shake()
+                        prev_obs.append(o)
+                        o.shake(30,30)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
                 if ( isinstance(o, LaserObstacle) and not o.activated or (isinstance(o, CannonObstacle) and o.expired)):
                     continue  # 預熱中的雷射不造成傷害
-                if prev_obs != o and player.blood > 0:
+                if o not in prev_obs and player.blood > 0:
                     all_pass=False
                     damage = effect.hurt(o)
                     player.blood = player.blood - damage
-                    prev_obs = o
-                    o.shake()
+                    prev_obs.append(o)
+                    o.shake(30,30)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
-            
-    if all_pass:
-        prev_obs = None
-    
+
+ 
     return prev_obs
