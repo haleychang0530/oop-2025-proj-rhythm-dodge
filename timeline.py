@@ -104,9 +104,9 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         continue  # 預熱中的雷射不造成傷害
                     if prev_obs != o and player.blood > 0:
                         all_pass=False
-                        player.blood = player.blood - 1
+                        damage = effect.hurt(o)
+                        player.blood = player.blood - damage
                         prev_obs = o
-                        effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -114,9 +114,9 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     continue  # 預熱中的雷射不造成傷害
                 if prev_obs != o and player.blood > 0:
                     all_pass=False
-                    player.blood = player.blood - 1
+                    damage = effect.hurt(o)
+                    player.blood = player.blood - damage
                     prev_obs = o
-                    effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             

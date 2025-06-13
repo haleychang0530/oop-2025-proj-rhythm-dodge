@@ -1,33 +1,32 @@
 import pygame
 
 def hurt(o):
+    sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
     """Play audio and visual effect when the player gets hurt."""
+    damage = 0
     ob = o.__class__.__name__
-    if ob=="FollowObstacle":
-        sound = pygame.mixer.Sound("assets/sound_effect/snd_arrow.wav")
-        sound.play()
+    if ob=="FollowObstacle" or ob=="FollowCircleObstacle" or ob=="FollowGearObstacle":
+        #sound = pygame.mixer.Sound("assets/sound_effect/snd_arrow.wav")
+        #sound.play()
+        damage = 1
 
-    elif ob=="SinCircleObstacle" or "SinObstacle" or "SinGearObstacle":
-        #print("ding")
-        sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
-        sound.play()
+    elif ob=="SinCircleObstacle" or ob=="SinObstacle" or ob=="SinGearObstacle" or ob=="RingObstacle":
+        #sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
+        #sound.play()
+        damage = 2
 
-    elif ob=="FollowCircleObstacle":
-        sound = pygame.mixer.Sound("assets/sound_effect/snd_battlefall.wav")
-        sound.play()
+    elif ob=="LaserCircleObstacle" or ob=="LaserObstacle":
+        damage = 0.5
 
-    if ob=="LaserCircleObstacle" or "LaserObstacle":
-        lazer()
+    elif ob=="CannonObstacle":
+        damage = 5
+        #sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
+        #sound.play()'''
 
-    elif ob=="GearObstacle" or "FollowGearObstacle" :
-        #print("ding")
-        sound = pygame.mixer.Sound("assets/sound_effect/old/ding.wav")
-        sound.play()
-
-    if ob=="CannonObstacle":
-        # print("delarn")
-        sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
-        sound.play()  
+    sound.set_volume(0.32)
+    sound.play()
+    return damage
+     
 
 def lazer():
     sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.wav")
