@@ -1,8 +1,17 @@
 from obstacle import *
 from particle import Particle
 import effect
+from lightning import Lightning
 
 def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip):
+    def lightning_effect(screen,start_pos, end_pos,duration):
+        """Create a lightning effect between two points."""
+        if(duration <= 0):
+            return
+        lightning = Lightning(start_pos, end_pos, color=(255, 255, 0), thickness=10, segments=10, offset=20)
+        lightning.path = lightning.generate_path()
+        lightning.draw(screen)
+        print(f"Lightning effect from {start_pos} to {end_pos} with duration {duration}")
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
         if evt["time"] + 50 > time_now + time_skip * bpm_scale * 1000 >= evt["time"] and i not in spawned:
@@ -85,7 +94,13 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
     
     # 更新障礙物
     all_pass = True
+    lx = 0
+    ly = 0
+    lightning_duration = 0  # 閃電持續時間
+
     for o in obstacles:
+        if  not all_pass:
+            o.shake()  # 如果有碰撞，讓障礙物震動
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -108,6 +123,9 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         prev_obs = o
                         o.shake()
                         effect.hurt(o)
+                        lx, ly = o.rect.center
+                        lightning_duration = 100
+
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -119,10 +137,16 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     prev_obs = o
                     o.shake()
                     effect.hurt(o)
+                    lx, ly = o.rect.center
+                    lightning_duration = 100
+
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
-            
+        # 繪製閃電
+        lightning_duration = max(lightning_duration - 1, 0)  # 減少閃電持續時間
+        lightning_effect(screen, (lx, ly), (lx + 50, ly-10),lightning_duration)
+        pygame.display.flip()
     if all_pass:
         prev_obs = None
-    
+ 
     return prev_obs
