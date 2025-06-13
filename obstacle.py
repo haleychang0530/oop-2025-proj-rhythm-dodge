@@ -19,7 +19,7 @@ class Obstacle:
         # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            magnitude = 10  # Shake intensity
+            magnitude = 20  # Shake intensity
             offset_x = random.randint(-magnitude, magnitude)
             offset_y = random.randint(-magnitude, magnitude)
             self.shake_duration -= 1
@@ -293,9 +293,6 @@ class LaserCircleObstacle(CircleObstacle):
         self.transition_progress = 0
         self.effect_playing = False
 
-        #shake
-        self.shake_direction=0
-
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -339,6 +336,13 @@ class LaserCircleObstacle(CircleObstacle):
     def draw(self, screen):
         surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
+        # Apply shake offset if active
+        offset_x, offset_y = 0, 0
+        if self.shake_duration > 0:
+            magnitude = 20  # Shake intensity
+            offset_x = random.randint(-magnitude, magnitude)
+            offset_y = random.randint(-magnitude, magnitude)
+
         if self.stage == 1:
             color = (255, 0, 0, self.alpha)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
@@ -361,7 +365,10 @@ class LaserCircleObstacle(CircleObstacle):
             color = (200, 0, 0, 255)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
 
-        screen.blit(surface, self.rect.topleft)
+        draw_x = self.rect.x - self.radius + offset_x
+        draw_y = self.rect.y - self.radius + offset_y
+        screen.blit(surface, (draw_x, draw_y))
+        #screen.blit(surface, self.rect.topleft)
 
 class GearObstacle(CircleObstacle):
     def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
@@ -395,7 +402,7 @@ class GearObstacle(CircleObstacle):
         # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            magnitude = 10  # Shake intensity
+            magnitude = 20  # Shake intensity
             offset_x = random.randint(-magnitude, magnitude)
             offset_y = random.randint(-magnitude, magnitude)
 
@@ -635,7 +642,7 @@ class RingObstacle(CircleObstacle):
         # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            magnitude = 10  # Shake intensity
+            magnitude = 20  # Shake intensity
             offset_x = random.randint(-magnitude, magnitude)
             offset_y = random.randint(-magnitude, magnitude)
 
