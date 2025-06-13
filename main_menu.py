@@ -15,12 +15,12 @@ def main_menu(screen):
     selected = 0
 
     # === Load beat data ===
-    with open("levels/main_menu.json") as f:
+    with open("levels/menu_level1_beats.json") as f:
         beats = json.load(f)
 
     # === Music setup ===
     pygame.mixer.init()
-    pygame.mixer.music.load("assets/music/main_menu.wav")
+    pygame.mixer.music.load("assets/music/level1.mp3")
     pygame.mixer.music.play()
     start_time = time.time()
 
