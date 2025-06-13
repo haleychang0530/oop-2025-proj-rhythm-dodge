@@ -1,7 +1,6 @@
 import pygame
 
 def hud(screen, current_health, max_health = 100):
-
     # Bar dimensions
     bar_x, bar_y = 290, 20
     bar_width, bar_height = 200, 20

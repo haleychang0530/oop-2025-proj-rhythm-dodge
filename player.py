@@ -17,7 +17,7 @@ class Player:
         self.dash_duration = 150  # 0.15 秒
         self.dash_speed_multiplier = 1000 / self.dash_duration
 
-        self.blood = 100
+        self.blood = 1000
 
     def update(self, keys):
 
