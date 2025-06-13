@@ -107,28 +107,29 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 if o.collide(player):
                     if isinstance(o, LaserCircleObstacle) and not o.activated:
                         continue  # 預熱中的雷射不造成傷害
-                    if prev_obs != o and player.blood > 0:
+                    if o not in prev_obs and player.blood > 0:
                         all_pass=False
                         player.blood = player.blood - 1
-                        prev_obs = o
+                        prev_obs.append(o)
                         o.shake()
                         effect.hurt(o)
+                        print(o)
 
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
                 if ( isinstance(o, LaserObstacle) and not o.activated or (isinstance(o, CannonObstacle) and o.expired)):
                     continue  # 預熱中的雷射不造成傷害
-                if prev_obs != o and player.blood > 0:
+                if o not in prev_obs and player.blood > 0:
                     all_pass=False
                     player.blood = player.blood - 1
-                    prev_obs = o
+                    prev_obs.append(o)
                     o.shake()
                     effect.hurt(o)
+                    print(o)
 
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
-    if all_pass:
-        prev_obs = None
+
  
     return prev_obs

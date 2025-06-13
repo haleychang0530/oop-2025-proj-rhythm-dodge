@@ -72,7 +72,7 @@ while True:
         # 初始化
         particles = []
         sprinkles=[]
-        prev_obs = None
+        prev_obs = []
         running = True
 
         while running:
