@@ -16,7 +16,7 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
-    triangle = Triangle(center=(700, 500), size=12)
+    triangle = Triangle(center=(600, 400), size=12)
 
     while True:
         screen.fill((30, 30, 30))
@@ -24,7 +24,7 @@ def tutorial_screen(screen):
 
         if player.rect.colliderect(triangle.get_rect()):
             win_ripple_effect(screen, triangle.center)
-            pygame.time.delay(500)
+            pygame.time.delay(100)
             return
 
         keys = pygame.key.get_pressed()
@@ -55,7 +55,6 @@ def tutorial_screen(screen):
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
-            "Touch the sparkling triangle to finish tutorial!"
         ]
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
