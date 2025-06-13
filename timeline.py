@@ -107,6 +107,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         damage = effect.hurt(o)
                         player.blood = player.blood - damage
                         prev_obs = o
+                        o.shake()
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             elif player.rect.colliderect(o.rect):
@@ -117,6 +118,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     damage = effect.hurt(o)
                     player.blood = player.blood - damage
                     prev_obs = o
+                    o.shake()
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
