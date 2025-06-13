@@ -11,7 +11,7 @@ with open("tutorial_beats.json") as f:
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Waveform Beat Visualizer")
+pygame.display.set_caption("Waveform Vertical Line Visualizer")
 clock = pygame.time.Clock()
 
 # === Music setup ===
@@ -20,11 +20,11 @@ pygame.mixer.music.load("000.wav")
 pygame.mixer.music.play()
 start_time = time.time()
 
-# === Waveform setup ===
-NUM_POINTS = 200  # Number of points in the waveform
-point_spacing = WIDTH / NUM_POINTS
-wave_heights = [HEIGHT // 2] * NUM_POINTS  # Start flat at middle
-wave_speeds = [0] * NUM_POINTS
+# === Line setup ===
+NUM_LINES = 150
+spacing = WIDTH / NUM_LINES
+line_heights = [0] * NUM_LINES
+line_speeds = [0] * NUM_LINES
 
 # === Beat pointer ===
 beat_index = 0
@@ -35,37 +35,38 @@ while running:
     screen.fill((0, 0, 0))
     now = time.time() - start_time
 
-    # Handle exit
+    # Event handler
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-    # Trigger beat ripple on waveform
+    # Beat trigger
     if beat_index < len(beats) and now >= beats[beat_index]:
-        center = random.randint(10, NUM_POINTS - 10)
-        for offset in range(-8, 9):
+        center = random.randint(10, NUM_LINES - 10)
+        for offset in range(-6, 7):
             i = center + offset
-            if 0 <= i < NUM_POINTS:
-                height_offset = max(60 - abs(offset) * 6, 10)
-                direction = random.choice([-1, 1])
-                wave_speeds[i] = direction * height_offset * 0.3
+            if 0 <= i < NUM_LINES:
+                height_offset = max(80 - abs(offset) * 8, 10)
+                line_speeds[i] = -height_offset  # upward
         beat_index += 1
 
-    # Update waveform points
-    for i in range(NUM_POINTS):
-        if abs(wave_speeds[i]) > 0.1:
-            wave_heights[i] += wave_speeds[i]
-            # spring-back effect
-            diff = HEIGHT // 2 - wave_heights[i]
-            wave_speeds[i] += diff * 0.05  # spring pull
-            wave_speeds[i] *= 0.9  # damping
+    # Update lines
+    for i in range(NUM_LINES):
+        if abs(line_speeds[i]) > 0.1:
+            line_heights[i] += line_speeds[i]
+            diff = 0 - line_heights[i]  # pull back to center
+            line_speeds[i] += diff * 0.2  # spring
+            line_speeds[i] *= 0.85  # damping
         else:
-            wave_heights[i] = HEIGHT // 2
-            wave_speeds[i] = 0
+            line_heights[i] = 0
+            line_speeds[i] = 0
 
-    # Draw waveform
-    points = [(i * point_spacing, wave_heights[i]) for i in range(NUM_POINTS)]
-    pygame.draw.lines(screen, (255, 255, 255), False, points, 2)
+    # Draw vertical lines
+    for i in range(NUM_LINES):
+        x = i * spacing
+        y1 = HEIGHT // 2 - line_heights[i]
+        y2 = HEIGHT // 2 + line_heights[i]
+        pygame.draw.line(screen, (255, 255, 255), (x, y1), (x, y2), 2)
 
     pygame.display.flip()
     clock.tick(60)
