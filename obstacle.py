@@ -571,7 +571,7 @@ class RingObstacle(CircleObstacle):
 
         progress = elapsed / self.duration
         self.radius = int(self.max_radius * progress)
-        self.alpha = int(255 * (1 - progress)) if self.fade_out else 255
+        self.alpha = int(255 * (1 - 0.9*progress**2)) if self.fade_out else 255
 
         # 更新中心位置
         self.center_pos += pygame.Vector2(self.vx, self.vy)
