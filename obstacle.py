@@ -306,8 +306,8 @@ class LaserCircleObstacle(CircleObstacle):
             color = (200, 0, 0, 255)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
 
-        draw_x = self.rect.x - self.radius + offset_x
-        draw_y = self.rect.y - self.radius + offset_y
+        draw_x = self.rect.x + offset_x
+        draw_y = self.rect.y + offset_y
         screen.blit(surface, (draw_x, draw_y))
         #screen.blit(surface, self.rect.topleft)
 

@@ -16,7 +16,7 @@ def hurt(o):
         damage = 2
 
     elif ob=="LaserCircleObstacle" or ob=="LaserObstacle":
-        damage = 0.4
+        damage = 0.3
 
     elif ob=="CannonObstacle":
         damage = 5
@@ -33,7 +33,7 @@ def hurt(o):
 
 def lazer():
     sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.wav")
-    sound.set_volume(0.25)
+    sound.set_volume(0.35)
     sound.play(maxtime=1000)
 
 
