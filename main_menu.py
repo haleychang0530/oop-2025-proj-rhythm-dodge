@@ -79,8 +79,12 @@ def main_menu(screen):
             line_speeds = [0.0] * NUM_LINES
             prev_selected = selected
 
-        
-         # 顯示選定關卡的資訊
+
+
+        # 背景清除
+        screen.fill((10, 10, 30))
+
+        # 顯示選定關卡的資訊
         info_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
         info = level_info[selected]
 
@@ -92,10 +96,6 @@ def main_menu(screen):
         screen.blit(name_text, (info_x, 400))
         screen.blit(author_text, (info_x, 430))
         screen.blit(time_text, (info_x, 460))
-
-
-        # 背景清除
-        screen.fill((10, 10, 30))
 
         # 觸發節拍波形
         if beat_index < len(beats) and now >= beats[beat_index]:
