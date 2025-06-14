@@ -6,6 +6,7 @@ from triangle import Triangle
 from player import Player
 from particle import Particle
 from effect import win_ripple_effect
+import math
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -48,7 +49,6 @@ notes = [Note() for _ in range(50)]
 # pygame.mixer.Sound("assets/sfx/victory.wav").play()
 
 def victory_screen(screen):
-    import math  # for animation
     pygame.mixer.music.stop()
 
     start_time = time.time()
@@ -81,9 +81,10 @@ def victory_screen(screen):
         player.update(keys)
 
         # background notes
-        for note in notes:
-            note.update()
-            note.draw(screen)
+        if show_victory:
+            for note in notes:
+                note.update()
+                note.draw(screen)
 
         if not reached:
             triangle.draw(screen)
