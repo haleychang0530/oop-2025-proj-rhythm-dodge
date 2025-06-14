@@ -79,23 +79,22 @@ def main_menu(screen):
             line_speeds = [0.0] * NUM_LINES
             prev_selected = selected
 
-
-
         # 背景清除
         screen.fill((10, 10, 30))
 
         # 顯示選定關卡的資訊
-        info_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
+        info_font_name = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 26)
+        info_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 22)
         info = level_info[selected]
 
-        name_text = info_font.render(f"Name: {info['name']}", True, (200, 200, 255))
-        author_text = info_font.render(f"Author: {info['author']}", True, (200, 200, 255))
-        time_text = info_font.render(f"Time: {info['time']}", True, (200, 200, 255))
+        name_text = info_font_name.render(f"{info['name']}", True, (200, 200, 255))
+        author_text = info_font.render(f"{info['author']}", True, (200, 200, 255))
+        time_text = info_font.render(f"{info['time']}", True, (200, 200, 255))
 
         info_x = WIDTH // 2 - name_text.get_width() // 2
-        screen.blit(name_text, (info_x, 400))
-        screen.blit(author_text, (info_x, 430))
-        screen.blit(time_text, (info_x, 460))
+        screen.blit(name_text, (info_x + 100, 250))
+        screen.blit(author_text, (info_x + 100, 300))
+        screen.blit(time_text, (info_x + 100, 330))
 
         # 觸發節拍波形
         if beat_index < len(beats) and now >= beats[beat_index]:
@@ -143,7 +142,7 @@ def main_menu(screen):
         for i, text in enumerate(options):
             color = (255, 255, 255) if i == selected else (150, 150, 150)
             label = font_option.render(text, True, color)
-            screen.blit(label, (WIDTH // 2 - label.get_width() // 2, 250 + i * 60))
+            screen.blit(label, (WIDTH // 2 - label.get_width() // 2 - 150, 250 + i * 60))
 
         pygame.display.flip()
         clock.tick(60)
