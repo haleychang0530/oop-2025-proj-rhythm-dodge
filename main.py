@@ -25,7 +25,9 @@ bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
+# for pause during game
 music_was_paused = False
+level_initialized = False
 
 
 while True:
