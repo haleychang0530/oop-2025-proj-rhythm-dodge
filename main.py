@@ -56,36 +56,39 @@ while True:
         game_state = "playing"
 
     elif game_state == "playing":
-        # game start
-        player = Player(100, 250)
-        obstacles = []
-        screen_rect = screen.get_rect()
+        if not level_initialized:
+            # game start
+            player = Player(100, 250)
+            obstacles = []
+            screen_rect = screen.get_rect()
+            music_was_paused = False  # 放在 if not level_initialized 裡面
 
-        # 音樂與事件載入
-        if level == 1:
-            pygame.mixer.music.play(start=0, fade_ms=1000) #未確定
-            bpm_scale = bpm_scale1
-        elif level == 2:
-            pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
-            bpm_scale = bpm_scale2
-        
-        pygame.mixer.music.set_volume(0.5)
+            # 音樂與事件載入
+            if level == 1:
+                pygame.mixer.music.play(start=0, fade_ms=1000) #未確定
+                bpm_scale = bpm_scale1
+            elif level == 2:
+                pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
+                bpm_scale = bpm_scale2
+            
+            pygame.mixer.music.set_volume(0.5)
 
-        #with open("levels/level1.json", "r") as f:
-            #events = json.load(f)
+            #with open("levels/level1.json", "r") as f:
+                #events = json.load(f)
 
-        spawned = set()
+            spawned = set()
 
-        # 初始化
-        particles = []
-        sprinkles=[]
-        prev_obs = []
+            # 初始化
+            particles = []
+            sprinkles=[]
+            prev_obs = []
+            level_initialized = True
+
         running = True
 
         while running:
             dt = clock.tick(60)
             time_now = pygame.mixer.music.get_pos() * bpm_scale
-
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -142,12 +145,14 @@ while True:
             if not player.alive:
                 print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
                 pygame.mixer.music.stop()
+                level_initialized = False
                 game_state = "game_over"
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
 
             if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
                 print("玩家通關成功！")
+                level_initialized = False
                 game_state = "victory"
                 break
 
