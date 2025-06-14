@@ -13,22 +13,23 @@ def main_menu(screen):
 
     options = ["Level 1", "Level 2"]
     selected = 0
+    level_beat_paths = [
+        "levels/menu_level1_beats.json",
+        "levels/menu_level2_beats.json"
+    ]
 
-    # === Load beat data ===
-    with open("levels/menu_level1_beats.json") as f:
-        beats = json.load(f)
-
-    # === Music setup ===
-    pygame.mixer.init()
-    pygame.mixer.music.load("assets/music/level1.mp3")
-    pygame.mixer.music.play()
-    start_time = time.time()
+    all_beats = []
+    for path in level_beat_paths:
+        with open(path) as f:
+            all_beats.append(json.load(f))
 
     # === Line setup ===
     NUM_LINES = 200
     spacing = WIDTH / NUM_LINES
     line_heights = [0.0] * NUM_LINES
     line_speeds = [0.0] * NUM_LINES
+    beat_index = 0
+    start_time = time.time()
 
     # === Beat pointer ===
     beat_index = 0
@@ -36,6 +37,7 @@ def main_menu(screen):
     running = True
     while running:
         now = time.time() - start_time
+        beats = all_beats[selected]  # Preview the selected level's waveform
 
         # 事件處理
         for event in pygame.event.get():
