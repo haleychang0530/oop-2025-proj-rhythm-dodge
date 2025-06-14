@@ -143,7 +143,6 @@ while True:
                 game_state = "victory"
                 break
 
-
             ui.hud(screen,player.blood)
             pygame.display.flip()
            

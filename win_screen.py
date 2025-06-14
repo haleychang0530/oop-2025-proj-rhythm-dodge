@@ -2,6 +2,11 @@ import pygame
 import random
 import sys
 import time
+from triangle import Triangle
+from player import Player
+from particle import Particle
+from effect import win_ripple_effect
+import math
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -43,39 +48,89 @@ notes = [Note() for _ in range(50)]
 # pygame.mixer.init()
 # pygame.mixer.Sound("assets/sfx/victory.wav").play()
 
-def victory_screen():
+def victory_screen(screen):
+    pygame.mixer.music.stop()
+
     start_time = time.time()
-    timer = 0
-    running = True
-    while running:
+    clock = pygame.time.Clock()
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)
+    sub_font = pygame.font.Font(None, 24)
+    WHITE = (255, 255, 255)
+    BG_COLOR = (10, 10, 30)
+
+    notes = [Note() for _ in range(60)]
+    player = Player(450, 300)
+    triangle = Triangle(center=(400, 300), size=15)
+    particles = []
+
+    reached = False
+    show_victory = False
+    ripple_triggered = False
+    ripple_time = 0
+
+    while True:
+        dt = clock.tick(60)
         screen.fill(BG_COLOR)
-        timer += 1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                running = False
 
-        # 自動跳轉：顯示 2 秒後返回
-        if time.time() - start_time > 5:
-            return  # 自動返回主選單
+        keys = pygame.key.get_pressed()
+        player.update(keys)
 
-        # 更新與畫出音符
-        for note in notes:
-            note.update()
-            note.draw(screen)
+        # background notes
+        if show_victory:
+            for note in notes:
+                note.update()
+                note.draw(screen)
 
-        # 顯示主文字
-        if timer < 60:
-            alpha = min(255, timer * 5)
-        else:
-            alpha = 255
-        title_surf = font.render("victory!", True, WHITE)
-        title_surf.set_alpha(alpha)
-        screen.blit(title_surf, (WIDTH // 2 - title_surf.get_width() // 2, HEIGHT // 2 - 50))
+        if not reached:
+            triangle.draw(screen)
+            player.draw(screen)
+
+            # particles
+            if player.dashing:
+                particles.append(Particle(player.rect.centerx, player.rect.centery, color=(255, 255, 255), size=8, life=25))
+            elif player.alive and any(keys):
+                particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
+
+            for p in particles[:]:
+                p.update()
+                p.draw(screen)
+                if p.life <= 0:
+                    particles.remove(p)
+
+            # check collision
+            if player.rect.colliderect(triangle.get_rect()):
+                reached = True
+                ripple_triggered = True
+                ripple_time = time.time()
+                win_ripple_effect(screen, triangle.center)
+
+        elif ripple_triggered:
+            if time.time() - ripple_time > 0.6:
+                show_victory = True
+                ripple_triggered = False
+
+        elif show_victory:
+            # animated text
+            scale = 1 + 0.05 * math.sin(pygame.time.get_ticks() / 200)
+            font_scaled = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", int(64 * scale))
+            text_surf = font_scaled.render("VICTORY!", True, WHITE)
+            screen.blit(text_surf, (WIDTH // 2 - text_surf.get_width() // 2, HEIGHT // 2 - 60))
+
+            # return hint
+            tip = sub_font.render("Press any key to return", True, (180, 180, 180))
+            screen.blit(tip, (WIDTH // 2 - tip.get_width() // 2, HEIGHT - 50))
+
+            if any(keys):
+                return
 
         pygame.display.flip()
-        clock.tick(60)
 
+# === 呼叫勝利畫面（測試用）===
+if __name__ == "__main__":
+    victory_screen()
+    print("Back to menu!")
