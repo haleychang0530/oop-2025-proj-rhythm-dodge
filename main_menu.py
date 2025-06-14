@@ -13,15 +13,27 @@ def main_menu(screen):
 
     options = ["Level 1", "Level 2"]
     selected = 0
+    prev_selected = -1  # to detect changes
+
     level_beat_paths = [
         "levels/menu_level1_beats.json",
         "levels/menu_level2_beats.json"
     ]
 
+    level_music_paths = [
+        "assets/music/level1.mp3",
+        "assets/music/level2.mp3"
+    ]
+    
+    pygame.mixer.music.load(level_music_paths[selected])
+    pygame.mixer.music.play(-1)  # Loop the music
+
     all_beats = []
     for path in level_beat_paths:
         with open(path) as f:
             all_beats.append(json.load(f))
+
+    pygame.mixer.init()
 
     # === Line setup ===
     NUM_LINES = 200
@@ -50,6 +62,18 @@ def main_menu(screen):
                     selected = (selected + 1) % len(options)
                 elif event.key == pygame.K_RETURN:
                     return selected + 1
+                
+                # Detect level selection change
+        if selected != prev_selected:
+            pygame.mixer.music.stop()
+            pygame.mixer.music.load(level_music_paths[selected])
+            pygame.mixer.music.play(-1)  # loop
+            start_time = time.time()
+            beat_index = 0
+            line_heights = [0.0] * NUM_LINES
+            line_speeds = [0.0] * NUM_LINES
+            prev_selected = selected
+
 
         # 背景清除
         screen.fill((10, 10, 30))
