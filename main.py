@@ -25,6 +25,11 @@ bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
+# for pause during game
+music_was_paused = False
+level_initialized = False
+
+
 while True:
     if game_state == "start":
         start(screen)
@@ -49,37 +54,36 @@ while True:
                 events = json.load(f)
         pygame.time.delay(500)
         game_state = "playing"
-    
-    elif game_state == "victory":
-        victory_screen()
-        game_state = "main_menu"  #去選單
-
 
     elif game_state == "playing":
-        # game start
-        player = Player(100, 250)
-        obstacles = []
-        screen_rect = screen.get_rect()
-        # 音樂與事件載入
-        
-        if level == 1:
-            pygame.mixer.music.play(start=0, fade_ms=1000) #未確定
-            bpm_scale = bpm_scale1
-        elif level == 2:
-            pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
-            bpm_scale = bpm_scale2
-        
-        pygame.mixer.music.set_volume(0.5)
+        if not level_initialized:
+            # game start
+            player = Player(100, 250)
+            obstacles = []
+            screen_rect = screen.get_rect()
+            music_was_paused = False  # 放在 if not level_initialized 裡面
 
-        #with open("levels/level1.json", "r") as f:
-            #events = json.load(f)
+            # 音樂與事件載入
+            if level == 1:
+                pygame.mixer.music.play(start=0, fade_ms=1000) #未確定
+                bpm_scale = bpm_scale1
+            elif level == 2:
+                pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
+                bpm_scale = bpm_scale2
+            
+            pygame.mixer.music.set_volume(0.5)
 
-        spawned = set()
+            #with open("levels/level1.json", "r") as f:
+                #events = json.load(f)
 
-        # 初始化
-        particles = []
-        sprinkles=[]
-        prev_obs = []
+            spawned = set()
+
+            # 初始化
+            particles = []
+            sprinkles=[]
+            prev_obs = []
+            level_initialized = True
+
         running = True
 
         while running:
@@ -89,6 +93,12 @@ while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        pygame.mixer.music.pause()
+                        game_state = "pause"
+                        music_was_paused = True
+                        running = False
 
             # 玩家控制
             keys = pygame.key.get_pressed()
@@ -135,18 +145,49 @@ while True:
             if not player.alive:
                 print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
                 pygame.mixer.music.stop()
+                level_initialized = False
                 game_state = "game_over"
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
 
-            if not pygame.mixer.music.get_busy() and player.alive:
+            if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
                 print("玩家通關成功！")
+                level_initialized = False
                 game_state = "victory"
                 break
 
             ui.hud(screen,player.blood)
             pygame.display.flip()
-           
+    
+
+    elif game_state == "pause":
+    # Show pause overlay
+        paused = True
+        pause_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
+        small_font = pygame.font.Font(None, 28)
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:  # Press ESC again to resume
+                        pygame.mixer.music.unpause()
+                        music_was_paused = False
+                        game_state = "playing"
+                        paused = False
+
+            screen.fill((10, 10, 30))
+            pause_text = pause_font.render("PAUSED", True, (255, 255, 255))
+            tip = small_font.render("Press ESC to resume", True, (180, 180, 180))
+            screen.blit(pause_text, (WIDTH // 2 - pause_text.get_width() // 2, HEIGHT // 2 - 50))
+            screen.blit(tip, (WIDTH // 2 - tip.get_width() // 2, HEIGHT // 2 + 20))
+            pygame.display.flip()
+            clock.tick(30)
+        
+    elif game_state == "victory":
+        victory_screen(screen)
+        game_state = "main_menu"  #  去選單
 
     elif game_state == "game_over":
         # 顯示 Game Over 畫面
