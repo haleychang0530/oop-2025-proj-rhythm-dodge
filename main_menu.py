@@ -88,7 +88,7 @@ def main_menu(screen):
         info = level_info[selected]
 
         name_text = info_font_name.render(f"{info['name']}", True, (200, 200, 255))
-        author_text = info_font.render(f"{info['author']}", True, (200, 200, 255))
+        author_text = info_font.render(f"by: {info['author']}", True, (200, 200, 255))
         time_text = info_font.render(f"{info['time']}", True, (200, 200, 255))
 
         info_x = WIDTH // 2 - name_text.get_width() // 2
