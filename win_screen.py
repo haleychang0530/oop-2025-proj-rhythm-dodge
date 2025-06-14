@@ -1,6 +1,7 @@
 import pygame
 import random
 import sys
+import time
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
@@ -13,7 +14,7 @@ font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)
 WHITE = (255, 255, 255)
 BG_COLOR = (10, 10, 30)
 
-# === 音符資料結構 ===
+# === 資料結構 ===
 class Note:
     def __init__(self):
         self.x = random.randint(0, WIDTH)
@@ -43,6 +44,7 @@ notes = [Note() for _ in range(50)]
 # pygame.mixer.Sound("assets/sfx/victory.wav").play()
 
 def victory_screen():
+    start_time = time.time()
     timer = 0
     running = True
     while running:
@@ -55,6 +57,10 @@ def victory_screen():
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 running = False
+
+        # 自動跳轉：顯示 2 秒後返回
+        if time.time() - start_time > 5:
+            return  # 自動返回主選單
 
         # 更新與畫出音符
         for note in notes:
@@ -73,6 +79,3 @@ def victory_screen():
         pygame.display.flip()
         clock.tick(60)
 
-# === 呼叫勝利畫面 ===
-if __name__ == "__main__":
-    victory_screen()

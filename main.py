@@ -6,6 +6,7 @@ import ui
 from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
+from win_screen import victory_screen
 from timeline import update_obstacles  
 from worklog.lightning import Lightning
 # 初始化 Pygame
@@ -47,6 +48,11 @@ while True:
                 events = json.load(f)
         pygame.time.delay(500)
         game_state = "playing"
+    
+    elif game_state == "victory":
+        victory_screen()
+        game_state = "main_menu"  #去選單
+
 
     elif game_state == "playing":
         # game start
@@ -131,6 +137,12 @@ while True:
                 game_state = "game_over"
                 pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
                 break
+
+            if not pygame.mixer.music.get_busy() and player.alive:
+                print("玩家通關成功！")
+                game_state = "victory"
+                break
+
 
             ui.hud(screen,player.blood)
             pygame.display.flip()
