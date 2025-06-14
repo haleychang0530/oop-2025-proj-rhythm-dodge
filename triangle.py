@@ -1,4 +1,3 @@
-# triangle.py
 import pygame
 import math
 import time
