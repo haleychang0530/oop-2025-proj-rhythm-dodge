@@ -6,7 +6,7 @@ import random
 class Obstacle:
     def __init__(self, x, y, w, h, vx, vy, magnitude=20):
         self.rect = pygame.Rect(x, y, w, h)
-        self.color = (255, 50, 50)
+        self.color = (255, 58, 111) #original:(255, 50, 50) 
         self.vx = vx
         self.vy = vy
         self.shake_duration = 0
@@ -132,7 +132,7 @@ class LaserObstacle(Obstacle):
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
         if self.stage == 1:
-            color = (255, 0, 0, self.alpha)
+            color = (255, 58, 111, self.alpha) # original:(255, 0, 0) 
             pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
         elif self.stage == 2:
             pass
@@ -285,7 +285,7 @@ class LaserCircleObstacle(CircleObstacle):
             offset_y = random.randint(-magnitude, magnitude)
 
         if self.stage == 1:
-            color = (255, 0, 0, self.alpha)
+            color = (255, 58, 111, self.alpha) #original:(255, 0, 0)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
 
         elif self.stage == 2:
@@ -312,7 +312,7 @@ class LaserCircleObstacle(CircleObstacle):
         #screen.blit(surface, self.rect.topleft)
 
 class GearObstacle(CircleObstacle):
-    def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 0, 0), rotation_speed=2):
+    def __init__(self, x, y, radius, vx, vy, teeth=12, color=(255, 58, 111), rotation_speed=2): #original: (255, 0 ,0)
         self.x = x + radius
         self.y = y + radius
         self.radius = radius
@@ -537,7 +537,7 @@ class CannonObstacle:
             for rect in self.wave_rects:
                 rect.x += offset_x
                 rect.y += offset_y
-                pygame.draw.rect(screen, (255, 0, 0), rect)
+                pygame.draw.rect(screen, (255, 58, 111), rect) # original:(255, 0, 0)
                 
     def shake(self, duration=20, magnitude=20):
         """開始震動，持續duration幀"""
@@ -594,7 +594,7 @@ class RingObstacle(CircleObstacle):
 
         pygame.draw.circle(
             surface,
-            (255, 0, 0, self.alpha),
+            (255, 58, 111, self.alpha), # original: (255, 0, 0)
             center,
             self.radius,
             self.thickness
