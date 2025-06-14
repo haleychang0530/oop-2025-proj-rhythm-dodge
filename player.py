@@ -4,7 +4,7 @@ import math
 class Player:
     def __init__(self, x, y):
         self.rect = pygame.Rect(x, y, 30, 30)
-        self.color = (0, 200, 255)
+        self.color = (0, 215, 237) # original: (0, 200, 255)
         self.speed = 5
         self.alive = True
         self.dash_speed = 50
@@ -59,7 +59,7 @@ class Player:
             elapsed = now - self.dash_start_time
             if elapsed >= self.dash_duration:
                 self.dashing = False
-                self.color = (0, 200, 255)  # 恢復原色
+                self.color = (0, 215, 237)  # 恢復原色 # original: (0, 200, 255) 
             else:
                 # 計算速度衰減（線性衰減）
                 t = elapsed / self.dash_duration  # 0.0 ~ 1.0

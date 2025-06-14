@@ -6,8 +6,8 @@ def start(screen):
     clock = pygame.time.Clock()
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
-    RED = (200, 0, 0)
-    BLUE = (0, 200, 255)
+    RED = (255, 58, 111) # origianl: (200, 0, 0)
+    BLUE = (0, 215, 237) #original; (0, 200, 255)
 
     font = pygame.font.SysFont("Arial", 80, bold=True)
     small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)

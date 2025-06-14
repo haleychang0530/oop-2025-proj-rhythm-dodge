@@ -9,6 +9,7 @@ from main_menu import main_menu
 from win_screen import victory_screen
 from timeline import update_obstacles  
 from worklog.lightning import Lightning
+
 # 初始化 Pygame
 pygame.init()
 WIDTH, HEIGHT = 800, 600
