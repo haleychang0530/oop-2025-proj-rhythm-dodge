@@ -25,7 +25,7 @@ bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
 
-# for pause during game
+# variables for pause during game
 music_was_paused = False
 level_initialized = False
 
@@ -61,7 +61,7 @@ while True:
             player = Player(100, 250)
             obstacles = []
             screen_rect = screen.get_rect()
-            music_was_paused = False  # 放在 if not level_initialized 裡面
+            music_was_paused = False  
 
             # 音樂與事件載入
             if level == 1:
@@ -76,9 +76,8 @@ while True:
             #with open("levels/level1.json", "r") as f:
                 #events = json.load(f)
 
-            spawned = set()
-
             # 初始化
+            spawned = set()
             particles = []
             sprinkles=[]
             prev_obs = []
@@ -179,8 +178,8 @@ while True:
 
             screen.fill((10, 10, 30))
             pause_text = pause_font.render("PAUSED", True, (255, 255, 255))
-            tip = small_font.render("Press ESC to resume", True, (180, 180, 180))
-            screen.blit(pause_text, (WIDTH // 2 - pause_text.get_width() // 2, HEIGHT // 2 - 50))
+            tip = small_font.render("Press ESC to restart", True, (180, 180, 180))
+            screen.blit(pause_text, (WIDTH // 2 - pause_text.get_width() // 2, HEIGHT // 2 - 80))
             screen.blit(tip, (WIDTH // 2 - tip.get_width() // 2, HEIGHT // 2 + 20))
             pygame.display.flip()
             clock.tick(30)
