@@ -15,6 +15,11 @@ def main_menu(screen):
     selected = 0
     prev_selected = -1  # to detect changes
 
+    level_info = [
+    {"name": "level1 song", "author": "author1", "time": "xx:xx"},
+    {"name": "level2 song", "author": "author2", "time": "xx:xx"}
+    ]
+
     level_beat_paths = [
         "levels/menu_level1_beats.json",
         "levels/menu_level2_beats.json"
@@ -63,7 +68,7 @@ def main_menu(screen):
                 elif event.key == pygame.K_RETURN:
                     return selected + 1
                 
-                # Detect level selection change
+        # Detect level selection change
         if selected != prev_selected:
             pygame.mixer.music.stop()
             pygame.mixer.music.load(level_music_paths[selected])
@@ -73,6 +78,20 @@ def main_menu(screen):
             line_heights = [0.0] * NUM_LINES
             line_speeds = [0.0] * NUM_LINES
             prev_selected = selected
+
+        
+         # 顯示選定關卡的資訊
+        info_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
+        info = level_info[selected]
+
+        name_text = info_font.render(f"Name: {info['name']}", True, (200, 200, 255))
+        author_text = info_font.render(f"Author: {info['author']}", True, (200, 200, 255))
+        time_text = info_font.render(f"Time: {info['time']}", True, (200, 200, 255))
+
+        info_x = WIDTH // 2 - name_text.get_width() // 2
+        screen.blit(name_text, (info_x, 400))
+        screen.blit(author_text, (info_x, 430))
+        screen.blit(time_text, (info_x, 460))
 
 
         # 背景清除
