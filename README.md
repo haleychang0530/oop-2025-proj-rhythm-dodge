@@ -7,7 +7,7 @@ Players control a character to dodge obstacles and survive the beat!
 
 # 📂 Project Structure
 
-Rhythm Dodge/
+```Rhythm Dodge/
 ├── main.py              # Main game loop
 ├── player.py            # Player class
 ├── obstacle.py          # Obstacle classes
@@ -28,6 +28,7 @@ Rhythm Dodge/
 │   ├── sound_effect/    # Sound effects
 │   ├── images/          # Sprites (optional)
 ├── README.md            # Project documentation
+```
 
 ## 🗂️ JSON Level Format
 Each level has a .json that defines the sequence of events.
@@ -42,17 +43,12 @@ Each level has a .json that defines the sequence of events.
 ```
 
 ## 🎮 How to Play
-Control the player with arrow keys:
 
-← ↑ ↓ → : Move
-
-Dash: (implemented inside Player class)
-
-Avoid incoming obstacles synced to the music.
-
-Survive until the end of the song to win.
-
-Press ESC anytime during a level to pause.
+- **Arrow keys** to move.
+- **Dash**: (depends on your `Player` implementation)
+- Survive by dodging obstacles in sync with the music.
+- Press **ESC** to pause the game.
+- Reach the end of the song to win!
 
 ### 💡 Steps
 
