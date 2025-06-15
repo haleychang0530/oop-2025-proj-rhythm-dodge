@@ -4,7 +4,7 @@ import sys
 
 def show_pause_menu(screen, clock, WIDTH, HEIGHT):
     pause_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
-    option_font = pygame.font.Font(None, 36)
+    option_font = pygame.font.Font(None, 40)
 
     options = ["Resume", "Retry", "Quit"]
     selected = 0
@@ -27,11 +27,11 @@ def show_pause_menu(screen, clock, WIDTH, HEIGHT):
         screen.blit(pause_text, (WIDTH // 2 - pause_text.get_width() // 2, HEIGHT // 2 - 120))
 
         for i, option in enumerate(options):
-            color = (255, 255, 0) if i == selected else (180, 180, 180)
+            color = (255, 255, 255) if i == selected else (180, 180, 180)
             text_surface = option_font.render(option, True, color)
             screen.blit(text_surface, (
                 WIDTH // 2 - text_surface.get_width() // 2,
-                HEIGHT // 2 - 30 + i * 50
+                HEIGHT // 2 - 30 + i * 50 + 70
             ))
 
         pygame.display.flip()

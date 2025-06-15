@@ -171,7 +171,7 @@ while True:
             game_state = "playing"
         elif result == "quit":
             game_state = "main_menu"
-            
+            level_initialized = False
 
         
     elif game_state == "victory":
