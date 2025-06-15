@@ -2,6 +2,7 @@
 *Inspired by the rhythm game genre, [Just Shape & Beats](https://www.youtube.com/watch?v=1jPOfZdNdCk)*
 
 ## Introduction
+<img src=""https://raw.githubusercontent.com/yourusername/rhythm-dodge/main/assets/screenshot.png" alt="Rhythm Dodge Screenshot" width="600">
 Rhythm Dodge is a rhythm game where you dodge obstacles to the beat of the music.
 
 It is built using Python and the Pygame library, providing a fun and engaging way to test your reflexes and timing.
