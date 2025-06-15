@@ -505,7 +505,37 @@
     { "time": 83000, "x": -100, "y": 170, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 83000, "x": -100, "y": 320, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 83500, "x": 540, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
-    { "time": 83500, "x": 140, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0}
+    { "time": 83500, "x": 140, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+
+    { "time": 84000, "x": 30, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
+    { "time": 84000, "x": -100, "y": 180, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 84000, "x": 560, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+
+    { "time": 85000, "x": -100, "y": 30, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
+    { "time": 85000, "x": -100, "y": 330, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 85000, "x": 295, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+
+    { "time": 86000, "x": -100, "y": 30, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
+    { "time": 86000, "x": 425, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 86000, "x": 125, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+   
+    { "time": 87000, "x": 540, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 87000, "x": -100, "y": 330, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 87000, "x": 10, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
+
+    { "time": 88000, "x": -100, "y": 30, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 88500, "x": -100, "y": 230, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 88750, "x": -100, "y": 430, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 89000, "x": -100, "y": 130, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 89250, "x": -100, "y": 330, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 89500, "x": 40, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 89750, "x": 240, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 90000, "x": 440, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 90500, "x": 640, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 90750, "x": -100, "y": 30, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 91000, "x": -100, "y": 180, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 91250, "x": -100, "y": 330, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 91500, "x": -100, "y": 480, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0}
 
 
 

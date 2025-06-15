@@ -18,7 +18,7 @@ def hurt(o):
         damage = 2
 
     elif ob=="LaserCircleObstacle" or ob=="LaserObstacle":
-        damage = 0.3
+        damage = 0.2
         sound.set_volume(0.5)
 
     elif ob=="CannonObstacle":
