@@ -443,7 +443,7 @@
     { "time": 66750, "x": 0, "y": 0, "w": 50, "h": 50, "vx": -2, "vy": 0 , "type": "circle_follow"},
     { "time": 66875, "x": 0, "y": 0, "w": 50, "h": 50, "vx": -2, "vy": 0 , "type": "circle_follow"},
 
-    { "time": 67000, "x": 375, "y": 10, "w": 50, "h": 50, "vx": 0, "vy": 15 , "type": "cannon", "amplitude": 800}
+    { "time": 67000, "x": 375, "y": 10, "w": 50, "h": 50, "vx": 0, "vy": 15 , "type": "cannon", "amplitude": 800, "wave": 4080, "bar":102}
 
 
 
