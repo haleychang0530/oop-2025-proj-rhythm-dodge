@@ -7,6 +7,7 @@ from start import start
 from tutorial import tutorial_screen
 from main_menu import main_menu
 from win_screen import victory_screen
+from pause import show_pause_menu
 from timeline import update_obstacles  
 from worklog.lightning import Lightning
 
@@ -160,29 +161,18 @@ while True:
     
 
     elif game_state == "pause":
-    # Show pause overlay
-        paused = True
-        pause_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
-        small_font = pygame.font.Font(None, 28)
-        while paused:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:  # Press ESC again to resume
-                        pygame.mixer.music.unpause()
-                        music_was_paused = False
-                        game_state = "playing"
-                        paused = False
+        result = show_pause_menu(screen, clock, WIDTH, HEIGHT)
+        if result == "resume":
+            pygame.mixer.music.unpause()
+            music_was_paused = False
+            game_state = "playing"
+        elif result == "retry":
+            level_initialized = False
+            game_state = "playing"
+        elif result == "quit":
+            game_state = "main_menu"
+            level_initialized = False
 
-            screen.fill((10, 10, 30))
-            pause_text = pause_font.render("PAUSED", True, (255, 255, 255))
-            tip = small_font.render("Press ESC to restart", True, (180, 180, 180))
-            screen.blit(pause_text, (WIDTH // 2 - pause_text.get_width() // 2, HEIGHT // 2 - 80))
-            screen.blit(tip, (WIDTH // 2 - tip.get_width() // 2, HEIGHT // 2 + 20))
-            pygame.display.flip()
-            clock.tick(30)
         
     elif game_state == "victory":
         victory_screen(screen)

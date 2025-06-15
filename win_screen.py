@@ -104,6 +104,8 @@ def victory_screen(screen):
 
             # check collision
             if player.rect.colliderect(triangle.get_rect()):
+                sound = pygame.mixer.Sound("assets/sound_effect/old/dong.wav")
+                sound.play()
                 reached = True
                 ripple_triggered = True
                 ripple_time = time.time()
