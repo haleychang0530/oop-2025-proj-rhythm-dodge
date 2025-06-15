@@ -3,21 +3,27 @@ import sys
 
 def show(screen):
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
-    small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
+    option_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 28)
     clock = pygame.time.Clock()
+
+    options = ["Retry", "Main Menu", "Quit"]
+    selected = 0
 
     while True:
         screen.fill((0, 0, 0))
+        
+        # Title
         title = font.render("Game Over", True, (255, 0, 0))
-        screen.blit(title, (screen.get_width()//2 - title.get_width()//2, 150))
+        screen.blit(title, (screen.get_width() // 2 - title.get_width() // 2, 150))
 
-        retry = small_font.render("Press R to Retry", True, (255, 255, 255))
-        menu = small_font.render("Press M for Main Menu", True, (255, 255, 255))
-        quit_msg = small_font.render("Press Q to Quit", True, (255, 255, 255))
-
-        screen.blit(retry, (screen.get_width()//2 - retry.get_width()//2, 300))
-        screen.blit(menu, (screen.get_width()//2 - menu.get_width()//2, 340))
-        screen.blit(quit_msg, (screen.get_width()//2 - quit_msg.get_width()//2, 380))
+        # Options
+        for i, option in enumerate(options):
+            color = (255, 255, 255) if i == selected else (180, 180, 180)
+            option_surface = option_font.render(option, True, color)
+            screen.blit(option_surface, (
+                screen.get_width() // 2 - option_surface.get_width() // 2,
+                280 + i * 50
+            ))
 
         pygame.display.flip()
         clock.tick(60)
@@ -25,10 +31,15 @@ def show(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "quit"
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    return "playing"
-                if event.key == pygame.K_m:
-                    return "main_menu"
-                if event.key == pygame.K_q:
-                    return "quit"
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected = (selected - 1) % len(options)
+                elif event.key == pygame.K_DOWN:
+                    selected = (selected + 1) % len(options)
+                elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+                    if options[selected] == "Retry":
+                        return "playing"
+                    elif options[selected] == "Main Menu":
+                        return "main_menu"
+                    elif options[selected] == "Quit":
+                        return "quit"
