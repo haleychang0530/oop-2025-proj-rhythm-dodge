@@ -25,7 +25,7 @@ time_skip = 0 # 用於時間跳過 for testing
 bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
-
+duration = 0  # 用於光線效果的持續時間
 # variables for pause during game
 music_was_paused = False
 level_initialized = False
@@ -119,27 +119,27 @@ while True:
             '''
             '''再次扳回timeline.py'''
             # 更新障礙物
-            prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)
+            prev_obs, duration = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip, duration)
+            
             # 繪製畫面
             screen.fill((30, 30, 30))
             
-
             # 畫邊界/玩家/粒子/障礙
             pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
+
+            for o in obstacles:
+                o.draw(screen)  
 
             for p in particles[:]:
                 p.update()
                 if p.life <= 0:
                     particles.remove(p)
-
+            if duration > 0:
+                effect.draw_radial_beams(screen, player.rect.center,duration)
             player.draw(screen)
 
             for p in particles:
                 p.draw(screen)
-
-            for o in obstacles:
-                o.draw(screen)
-
 
             # 玩家死亡判定
             if not player.alive:

@@ -2,7 +2,7 @@ from obstacle import *
 from particle import Particle
 import effect
 
-def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip):
+def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip,duration):
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
         if evt["time"] + 50 > time_now + time_skip * bpm_scale * 1000 >= evt["time"] and i not in spawned:
@@ -88,10 +88,6 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
     all_pass = True
 
     for o in obstacles:
-        # 如果有碰撞，讓全部障礙物震動
-        if not all_pass:
-            o.shake(20,10)  # (10,10)是(震動時長,震動幅度)
-            ###################
         if isinstance(o, CannonObstacle):
             o.update(screen_rect, player)
         else:
@@ -112,7 +108,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                         all_pass=False
                         damage = effect.hurt(o)
                         o.shake(20,10)
-                        player.blood = player.blood - damage
+                        player.blood = player.blood - damage               
                         prev_obs.append(o)
                     elif player.blood > 0 and isinstance(o, LaserCircleObstacle):
                         all_pass=False
@@ -134,6 +130,11 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     player.blood = player.blood - effect.hurt(o)
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
-
- 
-    return prev_obs
+            
+        if not all_pass:
+            o.shake(20,10)
+            duration = 30 
+        else:
+            duration = max(0, duration - 1)
+                       
+    return prev_obs,duration
