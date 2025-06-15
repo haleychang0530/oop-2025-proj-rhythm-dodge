@@ -16,7 +16,7 @@ def main_menu(screen):
     prev_selected = -1  # to detect changes
 
     level_info = [
-    {"name": "Time Leaper", "author": "Hinkik", "time": "xx:xx"},
+    {"name": "Time Leaper", "author": "Hinkik", "time": "01:08"},
     {"name": "Highscore", "author": "Teminite & Panda Eyes", "time": "01:10"}
     ]
 
