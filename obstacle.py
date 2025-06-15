@@ -132,7 +132,7 @@ class LaserObstacle(Obstacle):
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
         if self.stage == 1:
-            color = (255, 58, 111, self.alpha) # original:(255, 0, 0) 
+            color = (255, 0, 0, self.alpha) # original:(255, 0, 0) 
             pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
         elif self.stage == 2:
             pass
@@ -148,7 +148,7 @@ class LaserObstacle(Obstacle):
             rect = self.get_centered_line_rect(max(self.rect.width, self.rect.height))
             pygame.draw.rect(laser_surface, color, rect)
         elif self.stage == 5:
-            color = (200, 0, 0, 255)
+            color = (255, 0, 0, 255)
             rect = self.get_centered_line_rect(self.line_width)
             pygame.draw.rect(laser_surface, color, rect)
 
@@ -285,7 +285,7 @@ class LaserCircleObstacle(CircleObstacle):
             offset_y = random.randint(-magnitude, magnitude)
 
         if self.stage == 1:
-            color = (255, 58, 111, self.alpha) #original:(255, 0, 0)
+            color = (255, 0, 0, self.alpha)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
 
         elif self.stage == 2:
@@ -296,14 +296,14 @@ class LaserCircleObstacle(CircleObstacle):
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
 
         elif self.stage == 4:
-            r = 200
+            r = 255
             g = int(255 * (1 - self.transition_progress))
             b = int(255 * (1 - self.transition_progress**(1/2)))
             color = (r, g, b, 255)
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.radius)
 
         elif self.stage == 5:
-            color = (255, 58, 111) # original: (200, 0, 0, 255)
+            color = (255, 0, 0, 255) 
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
 
         draw_x = self.rect.x + offset_x
@@ -531,13 +531,13 @@ class CannonObstacle:
             shaken_rect = self.rect.copy()
             shaken_rect.x += offset_x
             shaken_rect.y += offset_y
-            pygame.draw.rect(screen, (255, 58, 111), shaken_rect) # original: (255, 50, 50)
+            pygame.draw.rect(screen, (200, 100, 250), shaken_rect) # original: (255, 50, 50)
 
         elif self.state == "wave":
             for rect in self.wave_rects:
                 rect.x += offset_x
                 rect.y += offset_y
-                pygame.draw.rect(screen, (255, 58, 111), rect) # original:(255, 0, 0)
+                pygame.draw.rect(screen, (200, 100, 250), rect) # original:(255, 0, 0)
                 
     def shake(self, duration=20, magnitude=20):
         """開始震動，持續duration幀"""

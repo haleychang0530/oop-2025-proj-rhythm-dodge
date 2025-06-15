@@ -16,8 +16,8 @@ def main_menu(screen):
     prev_selected = -1  # to detect changes
 
     level_info = [
-    {"name": "level1 song", "author": "author1", "time": "xx:xx"},
-    {"name": "level2 song", "author": "author2", "time": "xx:xx"}
+    {"name": "Time Leaper", "author": "Hinkik", "time": "xx:xx"},
+    {"name": "Highscore", "author": "Teminite & Panda Eyes", "time": "01:10"}
     ]
 
     level_beat_paths = [
@@ -89,12 +89,12 @@ def main_menu(screen):
 
         name_text = info_font_name.render(f"{info['name']}", True, (200, 200, 255))
         author_text = info_font.render(f"by: {info['author']}", True, (200, 200, 255))
-        time_text = info_font.render(f"{info['time']}", True, (200, 200, 255))
+        time_text = info_font.render(f"length: {info['time']}", True, (200, 200, 255))
 
-        info_x = WIDTH // 2 - name_text.get_width() // 2
-        screen.blit(name_text, (info_x + 100, 250))
-        screen.blit(author_text, (info_x + 100, 300))
-        screen.blit(time_text, (info_x + 100, 330))
+        #info_x = WIDTH // 2 - name_text.get_width() // 2
+        screen.blit(name_text, (400, 250)) #+info_x
+        screen.blit(author_text, (400, 300))
+        screen.blit(time_text, (400, 330))
 
         # 觸發節拍波形
         if beat_index < len(beats) and now >= beats[beat_index]:
