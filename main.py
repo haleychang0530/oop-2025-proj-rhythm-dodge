@@ -144,6 +144,7 @@ while True:
             # 玩家死亡判定
             if not player.alive:
                 if inclock < 1:
+                    pygame.mixer.stop()
                     pygame.mixer.music.stop()
                     level_initialized = False
                     game_state = "game_over"
