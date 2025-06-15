@@ -1,7 +1,7 @@
 import pygame
 
 def hurt(o):
-    sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
+    sound = pygame.mixer.Sound("assets\sound_effect\snd_break1.wav")
     """Play audio and visual effect when the player gets hurt."""
     damage = 0
     ob = o.__class__.__name__
@@ -17,6 +17,7 @@ def hurt(o):
 
     elif ob=="LaserCircleObstacle" or ob=="LaserObstacle":
         damage = 0.3
+        sound.set_volume(0.5)
 
     elif ob=="CannonObstacle":
         damage = 5
@@ -25,8 +26,6 @@ def hurt(o):
 
     elif ob=="CircleObstacle" or ob=="Obstacle" or ob=="GearObstacle":
         damage = 2
-
-    sound.set_volume(0.32)
     sound.play()
     return damage
      
