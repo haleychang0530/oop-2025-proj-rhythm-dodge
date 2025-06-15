@@ -531,13 +531,13 @@ class CannonObstacle:
             shaken_rect = self.rect.copy()
             shaken_rect.x += offset_x
             shaken_rect.y += offset_y
-            pygame.draw.rect(screen, (200, 100, 250), shaken_rect) # original: (255, 50, 50)
+            pygame.draw.rect(screen, (255, 0, 0), shaken_rect) # original: (255, 50, 50)
 
         elif self.state == "wave":
             for rect in self.wave_rects:
                 rect.x += offset_x
                 rect.y += offset_y
-                pygame.draw.rect(screen, (200, 100, 250), rect) # original:(255, 0, 0)
+                pygame.draw.rect(screen, (255, 0, 0), rect) # original:(255, 0, 0)
                 
     def shake(self, duration=20, magnitude=20):
         """開始震動，持續duration幀"""
