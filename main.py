@@ -157,7 +157,7 @@ while True:
                     inclock += 1
                 if inclock > 19:
                     print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
-                    pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
+                    pygame.time.delay(500)  # 停一秒，讓玩家有時間看到死掉
                     break
 
             if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
