@@ -148,7 +148,7 @@ while True:
                     pygame.mixer.music.stop()
                     level_initialized = False
                     game_state = "game_over"
-                    sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_a_lithit.wav")
+                    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.wav")
                     sound.set_volume(0.3)
                     sound.play()
                     inclock += 1

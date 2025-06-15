@@ -3,7 +3,7 @@ import math
 import random
 
 def hurt(o):
-    sound = pygame.mixer.Sound("assets\sound_effect\snd_break1.wav")
+    sound = pygame.mixer.Sound("assets/sound_effect/snd_break1.wav")
     """Play audio and visual effect when the player gets hurt."""
     damage = 0
     ob = o.__class__.__name__

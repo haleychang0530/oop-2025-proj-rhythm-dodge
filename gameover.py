@@ -6,7 +6,7 @@ def show(screen):
     option_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 28)
     clock = pygame.time.Clock()
 
-    options = ["Retry", "Main Menu", "Quit"]
+    options = ["Retry", "Main Menu", "Exit Game"]
     selected = 0
 
     while True:
@@ -41,5 +41,5 @@ def show(screen):
                         return "playing"
                     elif options[selected] == "Main Menu":
                         return "main_menu"
-                    elif options[selected] == "Quit":
+                    elif options[selected] == "Exit Game":
                         return "quit"

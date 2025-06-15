@@ -6,11 +6,12 @@ def show_pause_menu(screen, clock, WIDTH, HEIGHT):
     pause_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
     option_font = pygame.font.Font(None, 40)
 
-    options = ["Resume", "Retry", "Quit"]
+    options = ["Resume", "Retry", "Main Menu"]
     selected = 0
     paused = True
 
     while paused:
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return "quit"
