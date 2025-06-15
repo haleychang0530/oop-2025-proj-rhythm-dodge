@@ -83,6 +83,7 @@ while True:
             sprinkles=[]
             prev_obs = []
             level_initialized = True
+            inclock = 0
 
         running = True
 
@@ -143,12 +144,20 @@ while True:
 
             # 玩家死亡判定
             if not player.alive:
-                print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
-                pygame.mixer.music.stop()
-                level_initialized = False
-                game_state = "game_over"
-                pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
-                break
+                if inclock < 1:
+                    pygame.mixer.music.stop()
+                    level_initialized = False
+                    game_state = "game_over"
+                    sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_a_lithit.wav")
+                    sound.set_volume(0.3)
+                    sound.play()
+                    inclock += 1
+                else:
+                    inclock += 1
+                if inclock > 19:
+                    print("玩家死亡，切換到 game_over 畫面")  # <--- 新增
+                    pygame.time.delay(1000)  # 停一秒，讓玩家有時間看到死掉
+                    break
 
             if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
                 print("玩家通關成功！")
