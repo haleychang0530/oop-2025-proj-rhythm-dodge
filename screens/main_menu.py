@@ -5,7 +5,7 @@ import random
 
 def main_menu(screen):
     WIDTH, HEIGHT = screen.get_size()
-    pygame.display.set_caption("Main Menu")
+    #pygame.display.set_caption("Main Menu")
     clock = pygame.time.Clock()
 
     font_title = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)

@@ -9,7 +9,7 @@ import time
 
 
 def tutorial_screen(screen):
-    pygame.display.set_caption("Tutorial")
+    #pygame.display.set_caption("Tutorial")
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
 

@@ -33,6 +33,7 @@ def hurt(o):
     else:
         sound.set_volume(0.1)
     sound.play()
+    
     return damage
      
 

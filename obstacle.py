@@ -446,25 +446,25 @@ class CannonObstacle:
         # 0610
         self.shake_duration = 0
 
-    def update(self, screen_rect, player):
+    def update(self, screen, player):
         if self.state == "moving":
             self.x += self.vx
             self.y += self.vy
             self.rect.topleft = (self.x, self.y)
 
-            if not screen_rect.contains(self.rect):
+            if not screen.contains(self.rect):
                 self.state = "wave"
-                if self.rect.right > screen_rect.right:
-                    self.wave_origin = (screen_rect.right, self.rect.centery)
+                if self.rect.right > screen.right:
+                    self.wave_origin = (screen.right, self.rect.centery)
                     self.wave_dir = "left"
-                elif self.rect.left < screen_rect.left:
-                    self.wave_origin = (screen_rect.left, self.rect.centery)
+                elif self.rect.left < screen.left:
+                    self.wave_origin = (screen.left, self.rect.centery)
                     self.wave_dir = "right"
-                elif self.rect.bottom > screen_rect.bottom:
-                    self.wave_origin = (self.rect.centerx, screen_rect.bottom)
+                elif self.rect.bottom > screen.bottom:
+                    self.wave_origin = (self.rect.centerx, screen.bottom)
                     self.wave_dir = "up"
-                elif self.rect.top < screen_rect.top:
-                    self.wave_origin = (self.rect.centerx, screen_rect.top)
+                elif self.rect.top < screen.top:
+                    self.wave_origin = (self.rect.centerx, screen.top)
                     self.wave_dir = "down"
 
         elif self.state == "wave":
@@ -517,6 +517,7 @@ class CannonObstacle:
                 self.wave_damaged = True  
                 # start to shake
                 self.shake() 
+
                 
     def draw(self, screen):
         # If shaking, apply shake offsets
