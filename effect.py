@@ -20,12 +20,16 @@ def hurt(o):
         sound.set_volume(0.5)
 
     elif ob=="CannonObstacle":
+        sound.set_volume(0.4)
         damage = 5
         #sound = pygame.mixer.Sound("assets/sound_effect/snd_buyitem.wav")
         #sound.play()'''
 
     elif ob=="CircleObstacle" or ob=="Obstacle" or ob=="GearObstacle":
         damage = 2
+
+    else:
+        sound.set_volume(0.1)
     sound.play()
     return damage
      

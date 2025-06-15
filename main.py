@@ -72,7 +72,7 @@ while True:
                 pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
                 bpm_scale = bpm_scale2
             
-            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.set_volume(0.4)
 
             #with open("levels/level1.json", "r") as f:
                 #events = json.load(f)
