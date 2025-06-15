@@ -21,7 +21,7 @@ def show_pause_menu(screen, clock, WIDTH, HEIGHT):
                 elif event.key == pygame.K_DOWN:
                     selected = (selected + 1) % len(options)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
-                    return options[selected].lower()  # "resume", "retry", "quit"
+                    return options[selected].lower()  # "resume", "retry", "main menu"
 
         screen.fill((10, 10, 30))
         pause_text = pause_font.render("PAUSED", True, (255, 255, 255))

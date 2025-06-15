@@ -3,11 +3,12 @@ from player import Player
 from obstacle import *
 from particle import Particle
 import ui
-from start import start
-from tutorial import tutorial_screen
-from main_menu import main_menu
-from win_screen import victory_screen
-from pause import show_pause_menu
+from screens.start import start
+from screens.tutorial import tutorial_screen
+from screens.main_menu import main_menu
+from screens.win_screen import victory_screen
+from screens.pause import show_pause_menu
+from screens import gameover
 from timeline import update_obstacles  
 
 # 初始化 Pygame
@@ -178,7 +179,7 @@ while True:
         elif result == "retry":
             level_initialized = False
             game_state = "playing"
-        elif result == "quit":
+        elif result == "main menu":
             game_state = "main_menu"
             level_initialized = False
 
@@ -189,7 +190,7 @@ while True:
 
     elif game_state == "game_over":
         # 顯示 Game Over 畫面
-        import gameover
+   
         game_state = gameover.show(screen)  # 回傳 "main_menu" 或 "playing" 或 "quit"
         if game_state == "quit":
             pygame.quit()
