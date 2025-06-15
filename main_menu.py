@@ -62,10 +62,16 @@ def main_menu(screen):
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
+                    sound = pygame.mixer.Sound("assets\sound_effect\snd_select.wav")
+                    sound.play()
                     selected = (selected - 1) % len(options)
                 elif event.key == pygame.K_DOWN:
+                    sound = pygame.mixer.Sound("assets\sound_effect\snd_select.wav")
+                    sound.play()
                     selected = (selected + 1) % len(options)
                 elif event.key == pygame.K_RETURN:
+                    sound = pygame.mixer.Sound("assets\sound_effect\snd_select.wav")
+                    sound.play()
                     return selected + 1
                 
         # Detect level selection change
