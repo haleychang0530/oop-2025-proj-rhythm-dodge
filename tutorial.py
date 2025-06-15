@@ -23,6 +23,8 @@ def tutorial_screen(screen):
         triangle.draw(screen)
 
         if player.rect.colliderect(triangle.get_rect()):
+            sound = pygame.mixer.Sound("assets/sound_effect/old/dong.wav")
+            sound.play()
             win_ripple_effect(screen, triangle.center)
             pygame.time.delay(100)
             return
