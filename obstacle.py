@@ -221,7 +221,7 @@ class SinCircleObstacle(CircleObstacle):
         self.rect.y = self.base_y + self.amplitude * math.sin(t * self.frequency)
 
 class LaserCircleObstacle(CircleObstacle):
-    def __init__(self, x, y, radius, vx, vy, charge_time, duration=300):
+    def __init__(self, x, y, radius, vx, vy, charge_time, duration=300, sound = True):
         super().__init__(x, y, radius, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
@@ -233,7 +233,7 @@ class LaserCircleObstacle(CircleObstacle):
         self.line_width = 2
         self.transition_progress = 0
         self.effect_playing = False
-
+        self.sound = sound
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -270,7 +270,7 @@ class LaserCircleObstacle(CircleObstacle):
         else:
             self.expired = True
 
-        if self.activated and not self.effect_playing:
+        if self.activated and not self.effect_playing and self.sound:
             effect.lazer()
             self.effect_playing = True
 

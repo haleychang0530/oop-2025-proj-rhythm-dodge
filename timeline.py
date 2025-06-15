@@ -38,7 +38,8 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 obs = LaserCircleObstacle(
                     evt["x"], evt["y"], evt.get("radius",25),
                     evt["vx"], evt["vy"],
-                    charge_time=evt.get("charge", 1000) / bpm_scale
+                    charge_time= evt.get("charge", 1000) / bpm_scale,
+                    sound = evt.get("sound", True)
                 )
             elif evt.get("type") == "gear":
                 obs = GearObstacle(
