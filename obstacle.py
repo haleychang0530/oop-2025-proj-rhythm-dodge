@@ -513,7 +513,7 @@ class CannonObstacle:
         for rect in self.wave_rects:
             if player.rect.colliderect(rect):
                 effect.hurt(self)
-                player.blood = player.blood - 0.1
+                player.blood = player.blood - (0.001*self.wave_amplitude)**2
                 self.wave_damaged = True  
                 # start to shake
                 self.shake() 

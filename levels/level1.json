@@ -443,8 +443,12 @@
     { "time": 66750, "x": 0, "y": 0, "w": 50, "h": 50, "vx": -2, "vy": 0 , "type": "circle_follow"},
     { "time": 66875, "x": 0, "y": 0, "w": 50, "h": 50, "vx": -2, "vy": 0 , "type": "circle_follow"},
 
-    { "time": 67000, "x": 375, "y": 10, "w": 50, "h": 50, "vx": 0, "vy": 15 , "type": "cannon", "amplitude": 800, "wave": 4080, "bar":102}
+    { "time": 67000, "x": 375, "y": 10, "w": 50, "h": 50, "vx": 0, "vy": 15 , "type": "cannon", "amplitude": 800, "wave": 4080, "bar":102},
 
+
+    { "time": 68000, "x": 30, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000},
+    { "time": 68000, "x": 295, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000},
+    { "time": 68000, "x": 560, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000}
 
 
 
