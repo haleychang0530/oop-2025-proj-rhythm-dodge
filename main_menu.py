@@ -79,6 +79,7 @@ def main_menu(screen):
             pygame.mixer.music.stop()
             pygame.mixer.music.load(level_music_paths[selected])
             pygame.mixer.music.play(-1)  # loop
+            pygame.mixer.music.set_volume(0.4)
             start_time = time.time()
             beat_index = 0
             line_heights = [0.0] * NUM_LINES
