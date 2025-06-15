@@ -1,4 +1,6 @@
 import pygame
+import math
+import random
 
 def hurt(o):
     sound = pygame.mixer.Sound("assets\sound_effect\snd_break1.wav")
@@ -68,3 +70,20 @@ def win_ripple_effect(screen, center):
 
         pygame.display.flip()
         clock.tick(60)
+
+def draw_radial_beams(surface, position, duration, color=(255, 255, 0), width=8):
+    """
+    radius: 光線長度
+    beam_count: 光線數
+    width: 光線寬度
+    """
+    radius = 100 - duration * 2  # 光線長度隨時間變化
+    beam_count = 8  
+    cx, cy = position
+    angle_step = 360 / beam_count
+    for i in range(beam_count):
+        angle_deg = i * angle_step + duration * 12
+        angle_rad = math.radians(angle_deg)
+        end_x = cx + radius * math.cos(angle_rad)
+        end_y = cy + radius * math.sin(angle_rad)
+        pygame.draw.line(surface, color, (cx, cy), (end_x, end_y), width)
