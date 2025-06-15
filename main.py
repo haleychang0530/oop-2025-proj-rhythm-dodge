@@ -9,7 +9,6 @@ from main_menu import main_menu
 from win_screen import victory_screen
 from pause import show_pause_menu
 from timeline import update_obstacles  
-from worklog.lightning import Lightning
 
 # 初始化 Pygame
 pygame.init()
