@@ -1,11 +1,11 @@
 # 🎵 Rhythm Dodge
-A dynamic rhythm-based dodge game built with Pygame!
+**A dynamic rhythm-based dodge game built with Pygame!**
 
-Players control a character to dodge obstacles and survive the beat!
+**Players control a character to dodge obstacles and survive the beat!**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="600">
 
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```Rhythm Dodge/
 ├── main.py              # Main game loop
@@ -52,23 +52,23 @@ Each level has a .json that defines the sequence of events.
 
 ### 💡 Steps
 
-1. Enter the tutorial to learn how to play the game.
+1. **Enter the tutorial to learn how to play the game.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="600">
 
-2. Select a song to play.
+2. **Select a song to play.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="600">
 
-3. Use the arrow keys to move the player left and right.
+3. **Use the arrow keys to move the player left and right.**
 
-4. Dodge the obstacles that spawn at the top of the screen.
+4. **Dodge the obstacles that spawn at the top of the screen.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play.png" width="600">
 
-5. Player's blood decreases when the player collides with an obstacle.
+5. **Player's blood decreases when the player collides with an obstacle.**
 
-6. The game ends when the player's blood reaches zero.
+6. **The game ends when the player's blood reaches zero.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="600">
 
