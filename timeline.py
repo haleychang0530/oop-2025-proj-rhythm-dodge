@@ -11,7 +11,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
             elif evt.get("type") == "follow":
                 obs = FollowObstacle(evt["x"], evt["y"], evt["w"], evt["h"],player , speed=evt.get("speed", 15))
             elif evt.get("type") == "laser":
-                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)/ bpm_scale) 
+                obs = LaserObstacle(evt["x"], evt["y"], evt["w"], evt["h"], evt["vx"], evt["vy"], charge_time=evt.get("charge", 1000)/ bpm_scale, sound = evt.get("sound", True), shaker = evt.get("shake", False)) 
             
             # === 圓形類型 ===
             elif evt.get("type") == "circle":

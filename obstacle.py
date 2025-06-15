@@ -65,7 +65,7 @@ class FollowObstacle(Obstacle):
 
 
 class LaserObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, magnitude=30):
+    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, magnitude=30, sound = True, shaker = False):
         super().__init__(x, y, w, h, vx, vy, magnitude)
         self.charge_time = charge_time
         self.duration = duration
@@ -77,6 +77,8 @@ class LaserObstacle(Obstacle):
         self.alpha = 0
         self.line_width = 2
         self.transition_progress = 0
+        self.sound = sound
+        self.shaker = shaker
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -108,7 +110,7 @@ class LaserObstacle(Obstacle):
         else:
             self.expired = True
 
-        if self.activated and not self.effect_playing:
+        if self.activated and not self.effect_playing and self.sound:
             effect.lazer()
             self.effect_playing = True
 
@@ -124,7 +126,9 @@ class LaserObstacle(Obstacle):
 
     def draw(self, screen):
         offset_x, offset_y = 0, 0
-        if self.shake_duration > 0:
+        if self.shaker:
+            offset_x, offset_y = random.randint(-7, 7), random.randint(-7, 7)
+        elif self.shake_duration > 0:
             offset_x = random.randint(-self.magnitude, self.magnitude)
             offset_y = random.randint(-self.magnitude, self.magnitude)
             self.shake_duration -= 1
@@ -152,7 +156,7 @@ class LaserObstacle(Obstacle):
             rect = self.get_centered_line_rect(self.line_width)
             pygame.draw.rect(laser_surface, color, rect)
 
-        shaken_pos = (self.rect.x + offset_x, self.rect.y + offset_y)
+        shaken_pos = (self.rect.x + offset_x*(self.stage >= 3), self.rect.y + offset_y*(self.stage >= 3))
         screen.blit(laser_surface, shaken_pos)
 
 
@@ -306,8 +310,8 @@ class LaserCircleObstacle(CircleObstacle):
             color = (255, 0, 0, 255) 
             pygame.draw.circle(surface, color, (self.radius, self.radius), self.line_width // 2)
 
-        draw_x = self.rect.x + offset_x
-        draw_y = self.rect.y + offset_y
+        draw_x = self.rect.x + offset_x*(self.stage >= 3)
+        draw_y = self.rect.y + offset_y*(self.stage >= 3)
         screen.blit(surface, (draw_x, draw_y))
         #screen.blit(surface, self.rect.topleft)
 
