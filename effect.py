@@ -72,7 +72,7 @@ def win_ripple_effect(screen, center):
         pygame.display.flip()
         clock.tick(60)
 
-def draw_radial_beams(surface, position, duration, color=(255, 255, 0), width=8):
+def draw_radial_beams(surface, position, duration, color=(255, 0, 0), width=8):
     """
     radius: 光線長度
     beam_count: 光線數

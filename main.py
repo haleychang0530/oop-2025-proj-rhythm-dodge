@@ -66,13 +66,14 @@ while True:
 
             # 音樂與事件載入
             if level == 1:
-                pygame.mixer.music.play(start=0, fade_ms=1000) #未確定
+                pygame.mixer.music.play(start=40.94, fade_ms=1000) #未確定
                 bpm_scale = bpm_scale1
+                pygame.mixer.music.set_volume(0.45)
             elif level == 2:
                 pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
                 bpm_scale = bpm_scale2
+                pygame.mixer.music.set_volume(0.4)
             
-            pygame.mixer.music.set_volume(0.4)
 
             #with open("levels/level1.json", "r") as f:
                 #events = json.load(f)
