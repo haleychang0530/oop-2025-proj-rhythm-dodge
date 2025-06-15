@@ -1,25 +1,67 @@
-# Rhythm Dodge
-*Inspired by the rhythm game genre, [Just Shape & Beats](https://www.youtube.com/watch?v=1jPOfZdNdCk)*
-*Keywords: Rhythm, Dodge, Beat*
+# 🎵 Rhythm Dodge
+A dynamic rhythm-based dodge game built with Pygame!
 
-## Introduction
+Players control a character to dodge obstacles and survive the beat!
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="600">
 
-Rhythm Dodge is a rhythm game where you dodge obstacles to the beat of the music.
+# 📂 Project Structure
 
-It is built using Python and the Pygame library, providing a fun and engaging way to test your reflexes and timing.
+Rhythm Dodge/
+├── main.py              # Main game loop
+├── player.py            # Player class
+├── obstacle.py          # Obstacle classes
+├── timeline.py          # Timeline and obstacle spawner
+├── particle.py          # Particle effects
+├── ui.py                # HUD and UI functions
+├── start.py             # Start screen
+├── tutorial.py          # Tutorial screen
+├── main_menu.py         # Main menu
+├── win_screen.py        # Victory screen
+├── pause.py             # Pause menu
+├── gameover.py          # Game over screen
+├── levels/
+│   ├── level1.json      # Level 1 event timeline
+│   ├── level2.json      # Level 2 event timeline
+├── assets/
+│   ├── music/           # Level music tracks
+│   ├── sound_effect/    # Sound effects
+│   ├── images/          # Sprites (optional)
+├── README.md            # Project documentation
 
-The game features a player that can move left and right, obstacles that spawn at the top of the screen,
+## 🗂️ JSON Level Format
+Each level has a .json that defines the sequence of events.
 
-and a scoring system that rewards the player for dodging obstacles.
+*Example:*
 
-## Guide
+```json
+[
+  {"time": 1000, "type": "obstacle_type", "params": {...}},
+  {"time": 2000, "type": "another_obstacle", "params": {...}}
+]
+```
+
+## 🎮 How to Play
+Control the player with arrow keys:
+
+← ↑ ↓ → : Move
+
+Dash: (implemented inside Player class)
+
+Avoid incoming obstacles synced to the music.
+
+Survive until the end of the song to win.
+
+Press ESC anytime during a level to pause.
+
+### 💡 Steps
 
 1. Enter the tutorial to learn how to play the game.
+
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="600">
 
 2. Select a song to play.
+
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="600">
 
 3. Use the arrow keys to move the player left and right.
@@ -34,6 +76,16 @@ and a scoring system that rewards the player for dodging obstacles.
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="600">
 
-### Controls
+## 🏆 To Do / Ideas
+
+✅ Custom levels
+
+✅ Particle effects
+
+✅ Pause & resume
+
+✅ Victory and game over screens
+
+✅ Radial beams visual effect
 
 
