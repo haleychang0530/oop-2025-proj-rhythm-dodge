@@ -57,10 +57,16 @@ def victory_screen(screen):
     sub_font = pygame.font.Font(None, 24)
     WHITE = (255, 255, 255)
     BG_COLOR = (10, 10, 30)
-
+    x, y = 400, 300
+    while True:
+        x = random.randint(100, 700)
+        y = random.randint(100, 500)
+        if 300 < x < 500 and 200 < y < 400:
+            continue
+        break
     notes = [Note() for _ in range(60)]
     player = Player(450, 300)
-    triangle = Triangle(center=(400, 300), size=15)
+    triangle = Triangle(center=(x, y), size=20)
     particles = []
 
     reached = False
