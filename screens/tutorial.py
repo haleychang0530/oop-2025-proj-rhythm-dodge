@@ -26,7 +26,7 @@ def tutorial_screen(screen):
                 pygame.quit()
                 sys.exit()
 
-        # ✅ 更新並繪製單一 triangle（不需要 for 迴圈）
+        # 更新並繪製單一 triangle
         triangle.update(screen_rect)
         triangle.draw(screen)
 
