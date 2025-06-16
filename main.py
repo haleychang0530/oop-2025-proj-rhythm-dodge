@@ -136,12 +136,14 @@ while True:
                 p.update()
                 if p.life <= 0:
                     particles.remove(p)
-            if duration > 0:
-                effect.draw_radial_beams(screen, player.rect.center,duration)
-            player.draw(screen)
 
             for p in particles:
                 p.draw(screen)
+
+            if duration > 0:
+                effect.draw_radial_beams(screen, player.rect.center,duration)
+                
+            player.draw(screen)
 
             # 玩家死亡判定
             if not player.alive:
