@@ -98,26 +98,28 @@ class Player:
             
             # 計算眼睛位置
             eye_size = 5
-            padding_x = 4
-            padding_y = 13
+            padding_x = 5
+            padding_y = 12
 
             center_x = self.rect.centerx
             center_y = self.rect.centery
 
             # 眼睛水平偏移（根據是否往右移動）
             keys = pygame.key.get_pressed()
-            eye_offset = 2 if keys[pygame.K_RIGHT] else (-2 if keys[pygame.K_LEFT] else 0)
+            eye_offset_x = 2 if keys[pygame.K_RIGHT] else (-2 if keys[pygame.K_LEFT] else 0)
+            eye_offset_y = 2 if keys[pygame.K_DOWN] else (-2 if keys[pygame.K_UP] else 0)
 
             # 左眼位置
-            eye1_x = self.rect.x + padding_x + eye_offset
-            eye1_y = self.rect.y + padding_y
+            eye1_x = self.rect.x + padding_x + eye_offset_x
+            eye1_y = self.rect.y + padding_y + eye_offset_y
 
             # 右眼位置
-            eye2_x = self.rect.x + self.rect.width - eye_size - padding_x + eye_offset
+            eye2_x = self.rect.x + self.rect.width - eye_size - padding_x + eye_offset_x
             eye2_y = eye1_y
 
+
             # 畫眼睛
-            pygame.draw.rect(screen, (0, 0, 0), (eye1_x, eye1_y, eye_size, eye_size))
-            pygame.draw.rect(screen, (0, 0, 0), (eye2_x, eye2_y, eye_size, eye_size))
+            pygame.draw.rect(screen, (50, 50, 50), (eye1_x, eye1_y, eye_size, eye_size))
+            pygame.draw.rect(screen, (50, 50, 50), (eye2_x, eye2_y, eye_size, eye_size))
         else:
             pygame.draw.rect(screen, (100, 100, 100), self.rect)
