@@ -66,7 +66,7 @@ Rhythm Dodge/
 
 ## Class Diagram
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.jpg" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.jpg" width="800">
 
 ## 🗂️ JSON Level Format
 Each level has a .json that defines the sequence of events.
@@ -89,27 +89,27 @@ Each level has a .json that defines the sequence of events.
 - Reach the end of the song to win!
 
 ### 💡 Steps
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="800">
 
 1. **Enter the tutorial to learn how to play the game.**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="800">
 
 2. **Select a song to play.**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="800">
 
 3. **Use the arrow keys to move the player left and right.**
 
 4. **Dodge the obstacles that spawn at the top of the screen.**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play.png" width="800">
 
 5. **Player's blood decreases when the player collides with an obstacle.**
 
 6. **The game ends when the player's blood reaches zero.**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
 ## 🏆 To Do / Ideas
 
