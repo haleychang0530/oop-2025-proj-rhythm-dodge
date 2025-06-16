@@ -110,7 +110,12 @@ Each level has a .json that defines the sequence of events.
 
 #### 3️⃣ **Use the arrow keys to move the player left and right.**
 
-`Example : Particle effect. Move right and particles will follow!`
+```
+Example : Particle effect. Move right and particles will follow!
+
+Obstacles shake the screen when the player is hit.
+
+```
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/particle.jpg" width="800">
 
