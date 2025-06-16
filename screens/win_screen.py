@@ -87,6 +87,7 @@ def victory_screen(screen):
                 note.draw(screen)
 
         if not reached:
+            triangle.update(screen.get_rect()) 
             triangle.draw(screen)
             player.draw(screen)
 
