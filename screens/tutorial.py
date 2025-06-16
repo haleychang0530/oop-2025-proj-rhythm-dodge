@@ -6,6 +6,7 @@ from effect import win_ripple_effect
 from triangle import Triangle
 import math
 import time
+import random
 
 
 def tutorial_screen(screen):
@@ -16,7 +17,9 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
-    triangle = Triangle(center=(600, 400), size=12)
+    # triangle = Triangle(center=(600, 400), size=12)
+    triangle = [Triangle((random.randint(100, 700), random.randint(100, 500)), 20) for _ in range(5)]
+    screen_rect = screen.get_rect()
 
     while True:
         screen.fill((30, 30, 30))
@@ -35,6 +38,10 @@ def tutorial_screen(screen):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        for triangle in triangle:
+            triangle.update(screen_rect)
+            triangle.draw(screen)
 
         # === Player Update ===
         player.update(keys)
