@@ -6,6 +6,10 @@ from effect import win_ripple_effect
 from triangle import Triangle
 import random
 
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 def tutorial_screen(screen):
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
@@ -16,6 +20,8 @@ def tutorial_screen(screen):
     triangle = Triangle((random.randint(100, 700), random.randint(100, 500)), 20)
     screen_rect = screen.get_rect()
 
+    skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
+
     while True:
         screen.fill((30, 30, 30))
 
@@ -25,6 +31,9 @@ def tutorial_screen(screen):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    return "main_menu"  # 跳過教學，進入遊戲
 
         # 更新並繪製單一 triangle
         triangle.update(screen_rect)
@@ -59,9 +68,12 @@ def tutorial_screen(screen):
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
         ]
+
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
             screen.blit(label, (20, 20 + i * 30))
+
+        screen.blit(skip_tutorial, (WIDTH // 2 - skip_tutorial.get_width() // 2, 500))
 
         pygame.display.flip()
         clock.tick(60)
