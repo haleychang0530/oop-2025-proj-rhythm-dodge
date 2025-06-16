@@ -2,6 +2,7 @@ import pygame
 import json
 import time
 import random
+import sys
 
 def main_menu(screen):
     WIDTH, HEIGHT = screen.get_size()
@@ -75,6 +76,11 @@ def main_menu(screen):
                     sound = pygame.mixer.Sound("assets/sound_effect/snd_select.wav")
                     sound.play()
                     return selected + 1
+                elif event.key == pygame.K_ESCAPE:
+                    sound = pygame.mixer.Sound("assets/sound_effect/snd_select.wav")
+                    sound.play()
+                    running = False
+                    return None
                 
         # Detect level selection change
         if selected != prev_selected:
@@ -104,6 +110,8 @@ def main_menu(screen):
         screen.blit(name_text, (400, 250)) #+info_x
         screen.blit(author_text, (400, 300))
         screen.blit(time_text, (400, 330))
+
+        esc_to_exit = info_font.render("Press ESC to exit", True, (200, 200, 200))
 
         # 觸發節拍波形
         if beat_index < len(beats) and now >= beats[beat_index]:
@@ -146,6 +154,7 @@ def main_menu(screen):
         # 繪製標題
         title = font_title.render("RHYTHM DODGE", True, (0, 200, 255))
         screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
+        screen.blit(esc_to_exit, (WIDTH // 2 - esc_to_exit.get_width() // 2, 500))
 
         # 繪製選單選項
         for i, text in enumerate(options):
