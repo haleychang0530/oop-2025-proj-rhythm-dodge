@@ -13,8 +13,7 @@ def tutorial_screen(screen):
     player = Player(450, 300)
     particles = []
 
-    # 多個 triangle
-    triangles = [Triangle((random.randint(100, 700), random.randint(100, 500)), 20) for _ in range(5)]
+    triangle = Triangle((random.randint(100, 700), random.randint(100, 500)), 20)
     screen_rect = screen.get_rect()
 
     while True:
@@ -27,20 +26,19 @@ def tutorial_screen(screen):
                 pygame.quit()
                 sys.exit()
 
-        # 更新並繪製三角形
-        for triangle in triangles:
-            triangle.update(screen_rect)
-            triangle.draw(screen)
+        # ✅ 更新並繪製單一 triangle（不需要 for 迴圈）
+        triangle.update(screen_rect)
+        triangle.draw(screen)
 
-            # 撞到其中一個三角形就觸發勝利效果
-            if player.rect.colliderect(triangle.get_rect()):
-                sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
-                sound.play()
-                win_ripple_effect(screen, triangle.center)
-                pygame.time.delay(100)
-                return
+        # 撞到三角形就觸發勝利效果
+        if player.rect.colliderect(triangle.get_rect()):
+            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+            sound.play()
+            win_ripple_effect(screen, triangle.center)
+            pygame.time.delay(100)
+            return
 
-        # 更新玩家
+        # 玩家更新
         player.update(keys)
 
         # 粒子拖尾
@@ -49,17 +47,14 @@ def tutorial_screen(screen):
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
-        # 更新粒子
         for particle in particles[:]:
             particle.update()
             particle.draw(screen)
             if particle.life <= 0:
                 particles.remove(particle)
 
-        # 繪製玩家
         player.draw(screen)
 
-        # 教學說明文字
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",

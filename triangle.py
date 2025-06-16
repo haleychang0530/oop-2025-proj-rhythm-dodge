@@ -1,50 +1,53 @@
 import pygame
 import math
-import time
 import random
+import time
 
 class Triangle:
     def __init__(self, center, size):
-        self.center = list(center)  # 需要可修改的座標
+        self.center = list(center)
         self.size = size
         self.sparkle_start_time = time.time()
-        self.angle = random.uniform(0, 2 * math.pi)
-        self.rotation_speed = random.uniform(-0.05, 0.05)
-
-        # 隨機速度向量
-        self.velocity = [random.uniform(-1, 1), random.uniform(-1, 1)]
+        self.angle = 0  # 初始旋轉角度
+        self.rotation_speed = random.uniform(-2, 2)  # 每幀旋轉角度 (度數)
+        self.vx = random.uniform(-1.5, 1.5)  # x方向速度
+        self.vy = random.uniform(-1.5, 1.5)  # y方向速度
 
     def update(self, screen_rect):
-        # 移動
-        self.center[0] += self.velocity[0]
-        self.center[1] += self.velocity[1]
+        # 更新位置
+        self.center[0] += self.vx
+        self.center[1] += self.vy
 
-        # 旋轉
+        # 邊界反彈
+        if self.center[0] < 50 or self.center[0] > screen_rect.width - 50:
+            self.vx *= -1
+        if self.center[1] < 50 or self.center[1] > screen_rect.height - 50:
+            self.vy *= -1
+
+        # 更新角度（旋轉）
         self.angle += self.rotation_speed
-
-        # 碰到邊緣就反彈
-        if not screen_rect.contains(self.get_rect()):
-            if self.center[0] < screen_rect.left or self.center[0] > screen_rect.right:
-                self.velocity[0] *= -1
-            if self.center[1] < screen_rect.top or self.center[1] > screen_rect.bottom:
-                self.velocity[1] *= -1
+        self.angle %= 360
 
     def get_points(self):
         x, y = self.center
         size = self.size
-        # 定義等邊三角形的三個頂點
-        points = [
-            (0, -size),
-            (-size, size),
-            (size, size)
+        angle_rad = math.radians(self.angle)
+
+        # 三個點的位置（未旋轉時）
+        base_points = [
+            (0, -size),       # top
+            (-size, size),    # bottom-left
+            (size, size)      # bottom-right
         ]
+
         # 套用旋轉矩陣
-        rotated = []
-        for px, py in points:
-            rx = px * math.cos(self.angle) - py * math.sin(self.angle)
-            ry = px * math.sin(self.angle) + py * math.cos(self.angle)
-            rotated.append((x + rx, y + ry))
-        return rotated
+        rotated_points = []
+        for px, py in base_points:
+            rx = px * math.cos(angle_rad) - py * math.sin(angle_rad)
+            ry = px * math.sin(angle_rad) + py * math.cos(angle_rad)
+            rotated_points.append((x + rx, y + ry))
+
+        return rotated_points
 
     def get_rect(self):
         points = self.get_points()
