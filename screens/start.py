@@ -33,9 +33,9 @@ def start(screen):
 
     def draw_triangles(offset):
         pygame.draw.polygon(screen, RED, [
-            (200, 100 + offset),
-            (230, 100 + offset),
-            (215, 130 + offset)
+            (202, 120 + offset),
+            (222, 140 + offset),
+            (242, 120 + offset)
         ])
         pygame.draw.polygon(screen, BLUE, [
             (453, 123 + offset),
