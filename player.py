@@ -95,31 +95,50 @@ class Player:
     def draw(self, screen):
         if self.alive:
             pygame.draw.rect(screen, self.color, self.rect)
-            
-            # 計算眼睛位置
+
+            # === 眼睛邏輯（方形）===
             eye_size = 5
-            padding_x = 5
-            padding_y = 12
+            padding_x = 6
+            padding_y = 10
 
-            center_x = self.rect.centerx
-            center_y = self.rect.centery
-
-            # 眼睛水平偏移（根據是否往右移動）
             keys = pygame.key.get_pressed()
             eye_offset_x = 2 if keys[pygame.K_RIGHT] else (-2 if keys[pygame.K_LEFT] else 0)
             eye_offset_y = 2 if keys[pygame.K_DOWN] else (-2 if keys[pygame.K_UP] else 0)
 
-            # 左眼位置
+            now = pygame.time.get_ticks()
+            blink_cycle = 3000  # 每 2 秒
+            blink_duration = 150
+            blinking = (now % blink_cycle) < blink_duration
+
             eye1_x = self.rect.x + padding_x + eye_offset_x
             eye1_y = self.rect.y + padding_y + eye_offset_y
-
-            # 右眼位置
-            eye2_x = self.rect.x + self.rect.width - eye_size - padding_x + eye_offset_x
+            eye2_x = self.rect.x + self.rect.width - padding_x - eye_size + eye_offset_x
             eye2_y = eye1_y
 
+            eye_color = (30, 30, 30)
 
-            # 畫眼睛
-            pygame.draw.rect(screen, (50, 50, 50), (eye1_x, eye1_y, eye_size, eye_size))
-            pygame.draw.rect(screen, (50, 50, 50), (eye2_x, eye2_y, eye_size, eye_size))
+            if blinking:
+                # 眨眼畫細橫線
+                pygame.draw.line(screen, eye_color, (eye1_x, eye1_y + eye_size // 2), (eye1_x + eye_size, eye1_y + eye_size // 2), 2)
+                pygame.draw.line(screen, eye_color, (eye2_x, eye2_y + eye_size // 2), (eye2_x + eye_size, eye2_y + eye_size // 2), 2)
+            else:
+                # 正常方形眼睛
+                pygame.draw.rect(screen, eye_color, (eye1_x, eye1_y, eye_size, eye_size))
+                pygame.draw.rect(screen, eye_color, (eye2_x, eye2_y, eye_size, eye_size))
+
         else:
+            # 死亡狀態：灰身體 + 閉眼（橫線）
             pygame.draw.rect(screen, (100, 100, 100), self.rect)
+
+            eye_size = 6
+            padding_x = 6
+            padding_y = 10
+
+            eye1_x = self.rect.x + padding_x
+            eye1_y = self.rect.y + padding_y
+            eye2_x = self.rect.x + self.rect.width - padding_x - eye_size
+            eye2_y = eye1_y
+
+            eye_color = (50, 50, 50)
+            pygame.draw.line(screen, eye_color, (eye1_x, eye1_y + eye_size // 2), (eye1_x + eye_size, eye1_y + eye_size // 2), 2)
+            pygame.draw.line(screen, eye_color, (eye2_x, eye2_y + eye_size // 2), (eye2_x + eye_size, eye2_y + eye_size // 2), 2)
