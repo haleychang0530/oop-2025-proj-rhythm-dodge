@@ -9,7 +9,8 @@ def start(screen):
     RED = (255, 58, 111) # origianl: (200, 0, 0)
     BLUE = (0, 215, 237) #original; (0, 200, 255)
 
-    font = pygame.font.SysFont("Arial", 80, bold=True)
+    #font = pygame.font.SysFont("Arial", 80, bold=True)
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 80)
     small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)
 
 
