@@ -459,7 +459,7 @@
     { "time": 70000, "x": 125, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
    
     { "time": 71000, "x": 580, "y": -100, "w": 200, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
-    { "time": 71000, "x": -100, "y": 330, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 71000, "x": -100, "y": 250, "w": 1000, "h": 250, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
     { "time": 71000, "x": 20, "y": -100, "w": 200, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
 
     { "time": 72000, "x": -100, "y": 30, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
