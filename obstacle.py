@@ -52,8 +52,8 @@ class SinObstacle(Obstacle):
 
 class FollowObstacle(Obstacle):
     def __init__(self, x, y, w, h, player, speed, magnitude=20):
-        dx = player.rect.centerx - x
-        dy = player.rect.centery - y
+        dx = player.rect.centerx - (x + w/2)
+        dy = player.rect.centery - (y + h/2)
         length = max(1, math.hypot(dx, dy))
         vx = dx / length * speed
         vy = dy / length * speed
@@ -196,8 +196,8 @@ class CircleObstacle(Obstacle):
 
 class FollowCircleObstacle(CircleObstacle):
     def __init__(self, x, y, radius, player, speed):
-        dx = player.rect.centerx - x
-        dy = player.rect.centery - y
+        dx = player.rect.centerx - (x + radius)
+        dy = player.rect.centery - (y + radius)
         length = max(1, math.hypot(dx, dy))
         vx = dx / length * speed
         vy = dy / length * speed
@@ -387,8 +387,8 @@ class GearObstacle(CircleObstacle):
 class FollowGearObstacle(GearObstacle):
     def __init__(self, x, y, radius, player, speed, teeth, rotation_speed=2):
         super().__init__(x, y, radius, 0, 0, teeth, rotation_speed=rotation_speed)
-        dx = player.rect.centerx - x
-        dy = player.rect.centery - y
+        dx = player.rect.centerx - (x + radius)
+        dy = player.rect.centery - (y + radius)
         length = max(1, math.hypot(dx, dy))
         vx = dx / length * speed
         vy = dy / length * speed
