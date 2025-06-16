@@ -93,16 +93,28 @@ Each level has a .json that defines the sequence of events.
 `Screen: Start Interface`
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="800">
-      
+
+***
+
 #### 1️⃣ **Enter the tutorial to learn how to play the game.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="800">
+
+***
 
 #### 2️⃣ **Select a song to play.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="800">
 
+***
+
 #### 3️⃣ **Use the arrow keys to move the player left and right.**
+
+`Example : Particle effect. Move right and particles will follow!`
+
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/particle.jpg" width="800">
+
+***
 
 #### 4️⃣ **Dodge the obstacles that spawn at the top of the screen.**
 
@@ -114,11 +126,16 @@ Each level has a .json that defines the sequence of events.
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_ring.png" width="800">
 
+***
+
 #### 5️⃣ **Player's blood decreases when the player collides with an obstacle.**
+
+***
 
 #### 6️⃣ **The game ends when the player's blood reaches zero.**
 
 `Screen: Game over screen. Try again or quit!`
+
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
 
