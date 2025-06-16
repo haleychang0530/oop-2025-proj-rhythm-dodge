@@ -8,25 +8,30 @@
 ## 📂 Project Structure
 
 ```Rhythm Dodge/
+Rhythm Dodge/
 ├── main.py              # Main game loop
 ├── player.py            # Player class
 ├── obstacle.py          # Obstacle classes
 ├── timeline.py          # Timeline and obstacle spawner
 ├── particle.py          # Particle effects
-├── ui.py                # HUD and UI functions
-├── start.py             # Start screen
-├── tutorial.py          # Tutorial screen
-├── main_menu.py         # Main menu
-├── win_screen.py        # Victory screen
-├── pause.py             # Pause menu
-├── gameover.py          # Game over screen
-├── levels/
+├── ui.py                # HUD and UI rendering
+├── screens/             # Game screen modules
+│   ├── start.py         # Start screen
+│   ├── tutorial.py      # Tutorial screen     
+│   ├── main_menu.py     # Main menu
+│   ├── pause.py         # Pause menu
+│   ├── win_screen.py    # Victory screen
+│   ├── gameover.py      # Game over screen
+├── levels/              # Level timeline data
 │   ├── level1.json      # Level 1 event timeline
 │   ├── level2.json      # Level 2 event timeline
-├── assets/
-│   ├── music/           # Level music tracks
+├── assets/              # Game assets
+│   ├── music/           # Background music
 │   ├── sound_effect/    # Sound effects
-│   ├── images/          # Sprites (optional)
+│   ├── images/          # Sprites and textures
+│   ├── fonts/           # Font files
+├── beats_to_json/       # Beat extraction utility
+│   ├── beats_to_json    # Convert music beats to JSON
 ├── README.md            # Project documentation
 ```
 
