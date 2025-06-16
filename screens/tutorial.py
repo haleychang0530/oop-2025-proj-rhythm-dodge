@@ -13,11 +13,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 def tutorial_screen(screen):
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
-
+    x, y = 400, 300
     player = Player(450, 300)
     particles = []
-
-    triangle = Triangle((random.randint(100, 700), random.randint(100, 500)), 20)
+    while True:
+        x = random.randint(100, 700)
+        y = random.randint(100, 500)
+        if 300 < x < 500 and 200 < y < 400:
+            continue
+        break
+    triangle = Triangle((x, y), 20)
     screen_rect = screen.get_rect()
 
     skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
