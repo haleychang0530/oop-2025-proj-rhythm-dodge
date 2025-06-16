@@ -9,11 +9,12 @@ def start(screen):
     RED = (255, 58, 111) # origianl: (200, 0, 0)
     BLUE = (0, 215, 237) #original; (0, 200, 255)
 
-    font = pygame.font.SysFont("Arial", 80, bold=True)
+    #font = pygame.font.SysFont("Arial", 80, bold=True)
+    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 80)
     small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)
 
 
-    gear_center = (167, 253)
+    gear_center = (175, 269)
     gear_radius = 25
     gear_teeth = 12
     gear_angle = 0
@@ -32,15 +33,14 @@ def start(screen):
 
     def draw_triangles(offset):
         pygame.draw.polygon(screen, RED, [
-            (200, 100 + offset),
-            (230, 100 + offset),
-            (215, 130 + offset)
+            (202, 120 + offset),
+            (222, 140 + offset),
+            (242, 120 + offset)
         ])
-        pygame.draw.polygon(screen, BLUE, [
-            (453, 123 + offset),
-            (453, 170 + offset),
-            (438, 170 + offset)
-        ])
+        
+    
+    def draw_retangle(x, y, width, height, color):
+        pygame.draw.rect(screen, color, (x, y, width, height))
 
     def draw_gear(center, radius, teeth, angle):
         points = []
@@ -66,6 +66,7 @@ def start(screen):
         screen.fill(BLACK)
         draw_text()
         draw_triangles(triangle_offset)
+        draw_retangle(345, 158, 38, 22, BLUE)
         draw_gear(gear_center, gear_radius, gear_teeth, gear_angle)
 
         # "Press ENTER to continue" text
