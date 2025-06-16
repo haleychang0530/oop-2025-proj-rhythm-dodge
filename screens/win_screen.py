@@ -87,6 +87,7 @@ def victory_screen(screen):
                 note.draw(screen)
 
         if not reached:
+            triangle.update(screen.get_rect()) 
             triangle.draw(screen)
             player.draw(screen)
 
@@ -104,7 +105,7 @@ def victory_screen(screen):
 
             # check collision
             if player.rect.colliderect(triangle.get_rect()):
-                sound = pygame.mixer.Sound("assets\sound_effect\mus_sfx_eyeflash.wav")
+                sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
                 sound.play()
                 reached = True
                 ripple_triggered = True

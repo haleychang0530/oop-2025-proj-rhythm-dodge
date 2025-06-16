@@ -4,30 +4,20 @@ from player import Player
 from particle import Particle
 from effect import win_ripple_effect
 from triangle import Triangle
-import math
-import time
-
+import random
 
 def tutorial_screen(screen):
-    #pygame.display.set_caption("Tutorial")
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
 
     player = Player(450, 300)
     particles = []
 
-    triangle = Triangle(center=(600, 400), size=12)
+    triangle = Triangle((random.randint(100, 700), random.randint(100, 500)), 20)
+    screen_rect = screen.get_rect()
 
     while True:
         screen.fill((30, 30, 30))
-        triangle.draw(screen)
-
-        if player.rect.colliderect(triangle.get_rect()):
-            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
-            sound.play()
-            win_ripple_effect(screen, triangle.center)
-            pygame.time.delay(100)
-            return
 
         keys = pygame.key.get_pressed()
 
@@ -36,10 +26,22 @@ def tutorial_screen(screen):
                 pygame.quit()
                 sys.exit()
 
-        # === Player Update ===
+        # 更新並繪製單一 triangle
+        triangle.update(screen_rect)
+        triangle.draw(screen)
+
+        # 撞到三角形就觸發勝利效果
+        if player.rect.colliderect(triangle.get_rect()):
+            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+            sound.play()
+            win_ripple_effect(screen, triangle.center)
+            pygame.time.delay(100)
+            return
+
+        # 玩家更新
         player.update(keys)
 
-        # === Particle Generation ===
+        # 粒子拖尾
         if player.dashing:
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(255, 255, 255), size=8, life=25))
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
@@ -53,7 +55,6 @@ def tutorial_screen(screen):
 
         player.draw(screen)
 
-        # Instructions
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
