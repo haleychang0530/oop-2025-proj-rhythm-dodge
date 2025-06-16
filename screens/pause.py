@@ -4,7 +4,7 @@ import sys
 
 def show_pause_menu(screen, clock, WIDTH, HEIGHT):
     pause_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
-    option_font = pygame.font.Font(None, 40)
+    option_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)
 
     options = ["Resume", "Retry", "Main Menu"]
     selected = 0
