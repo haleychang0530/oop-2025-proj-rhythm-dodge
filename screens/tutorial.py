@@ -14,7 +14,7 @@ def tutorial_screen(screen):
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
     x, y = 400, 300
-    player = Player(450, 300)
+    player = Player(400, 300)
     particles = []
     while True:
         x = random.randint(100, 700)

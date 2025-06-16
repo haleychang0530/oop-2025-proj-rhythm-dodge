@@ -65,7 +65,7 @@ def victory_screen(screen):
             continue
         break
     notes = [Note() for _ in range(60)]
-    player = Player(450, 300)
+    player = Player(400, 300)
     triangle = Triangle(center=(x, y), size=20)
     particles = []
 
