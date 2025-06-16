@@ -37,11 +37,10 @@ def start(screen):
             (222, 140 + offset),
             (242, 120 + offset)
         ])
-        pygame.draw.polygon(screen, BLUE, [
-            (453, 123 + offset),
-            (453, 170 + offset),
-            (438, 170 + offset)
-        ])
+        
+    
+    def draw_retangle(x, y, width, height, color):
+        pygame.draw.rect(screen, color, (x, y, width, height))
 
     def draw_gear(center, radius, teeth, angle):
         points = []
@@ -67,6 +66,7 @@ def start(screen):
         screen.fill(BLACK)
         draw_text()
         draw_triangles(triangle_offset)
+        draw_retangle(345, 158, 38, 22, BLUE)
         draw_gear(gear_center, gear_radius, gear_teeth, gear_angle)
 
         # "Press ENTER to continue" text
