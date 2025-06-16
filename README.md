@@ -91,35 +91,35 @@ Each level has a .json that defines the sequence of events.
 ### 💡 Steps
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="800">
 
-*Figure: Start Interface*<br>
+        *Figure: Start Interface*<br>
 
-#### 1. **Enter the tutorial to learn how to play the game.**
+#### 1️⃣ **Enter the tutorial to learn how to play the game.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="800">
 
-#### 2. **Select a song to play.**
+#### 2️⃣ **Select a song to play.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/menu.png" width="800">
 
-#### 3. **Use the arrow keys to move the player left and right.**
+#### 3️⃣ **Use the arrow keys to move the player left and right.**
 
-#### 4. **Dodge the obstacles that spawn at the top of the screen.**
+#### 4️⃣ **Dodge the obstacles that spawn at the top of the screen.**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_bomb.jpg" width="800">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_bomb.png" width="800">
 
-*Figure: Gear obstacle. Dodge it!*<br>
+        *Figure: Gear obstacle. Dodge it!*<br>
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_ring.jpg" width="800">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_ring.png" width="800">
 
-*Figure: Ring obstacle. Dash to penetrate!*<br>
+        *Figure: Ring obstacle. Dash to penetrate!*<br>
 
-#### 5. **Player's blood decreases when the player collides with an obstacle.**
+#### 5️⃣ **Player's blood decreases when the player collides with an obstacle.**
 
-#### 6. **The game ends when the player's blood reaches zero.**
+#### 6️⃣ **The game ends when the player's blood reaches zero.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
-*Figure: Game over screen. Try again or quit!*<br>
+        *Figure: Game over screen. Try again or quit!*<br>
 
 ## 🏆 To Do / Ideas
 
