@@ -66,7 +66,7 @@ def start(screen):
         screen.fill(BLACK)
         draw_text()
         draw_triangles(triangle_offset)
-        draw_retangle(345, 158, 38, 22, BLUE)
+        draw_retangle(345, 157, 38, 24, BLUE)
         draw_gear(gear_center, gear_radius, gear_teeth, gear_angle)
 
         # "Press ENTER to continue" text
