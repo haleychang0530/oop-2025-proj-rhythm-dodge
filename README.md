@@ -7,27 +7,34 @@
 
 ## 🚀 Features
 
-✅ **Dynamic Obstacles — Includes multiple obstacle types:**
+### ✅ Dynamic Obstacles — Includes multiple obstacle types:
 
-⚙️ GearObstacle: Rotating gears with teeth that spin continuously.
+⚙️ **GearObstacle**: Rotating gears with teeth that spin continuously.
 
-🔵 LaserCircleObstacle: Charging laser circles with animated stages (charge, fire, fade).
+🔵 **LaserCircleObstacle**: Charging laser circles with animated stages (charge, fire, fade).
 
-🎯 CannonObstacle: Cannons that shoot projectiles at adjustable rates and directions.
+🎯 **CannonObstacle**: Cannons that shoot projectiles at adjustable rates and directions.
 
-✅ **Screen Shake Effect —** Built-in shake method for all obstacles, adding impactful camera shake during hits or special events.
+### ✅ Screen Shake Effect —
+Built-in shake method for all obstacles, adding impactful camera shake during hits or special events.
 
-✅ **Configurable Intensity —** Customize shake duration and magnitude per obstacle for varied dramatic effects.
+### ✅ Configurable Intensity — 
+Customize shake duration and magnitude per obstacle for varied dramatic effects.
 
-✅ **Smooth Animations —** Obstacles update their own rotation, alpha transitions, and expansion over time for a polished visual experience.
+### ✅ Smooth Animations — 
+Obstacles update their own rotation, alpha transitions, and expansion over time for a polished visual experience.
 
-✅ **Modular Design —** Clear class hierarchy (CircleObstacle, RectObstacle → specific bosses) for easy extension and reuse.
+### ✅ Modular Design —
+Clear class hierarchy (CircleObstacle, RectObstacle → specific bosses) for easy extension and reuse.
 
-✅ **Performance Friendly —** Uses lightweight Pygame drawing with alpha blending and efficient update loops.
+### ✅ Performance Friendly —
+Uses lightweight Pygame drawing with alpha blending and efficient update loops.
 
-✅ **Plug-and-Play —** Just create obstacles, call update() and draw(), and trigger shake() whenever needed — no extra setup.
+### ✅ Plug-and-Play — 
+Just create obstacles, call update() and draw(), and trigger shake() whenever needed — no extra setup.
 
-✅ **Future-Proof —** Easy to add more obstacle types, patterns, or AI behaviors thanks to clean OOP structure.
+### ✅ Future-Proof — 
+Easy to add more obstacle types, patterns, or AI behaviors thanks to clean OOP structure.
 
 ## 📂 Project Structure
 
