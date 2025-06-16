@@ -51,10 +51,10 @@ notes = [Note() for _ in range(50)]
 def victory_screen(screen):
     pygame.mixer.music.stop()
 
-    start_time = time.time()
+    #start_time = time.time()
     clock = pygame.time.Clock()
-    font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)
-    sub_font = pygame.font.Font(None, 24)
+    #font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)
+    sub_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
     WHITE = (255, 255, 255)
     BG_COLOR = (10, 10, 30)
     x, y = 400, 300
