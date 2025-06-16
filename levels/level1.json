@@ -502,9 +502,9 @@
     { "time": 82000, "x": 440, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 82500, "x": -100, "y": 30, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 82750, "x": -100, "y": 470, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
-    { "time": 83000, "x": -100, "y": 170, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 83000, "x": -100, "y": 170, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0, "sound":0},
     { "time": 83000, "x": -100, "y": 320, "w": 1000, "h": 100, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
-    { "time": 83500, "x": 540, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 83500, "x": 540, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0, "sound":0},
     { "time": 83500, "x": 140, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
 
     { "time": 84000, "x": 30, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
@@ -550,16 +550,21 @@
     { "time": 95000, "x": 325, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
    
     { "time": 94000, "x": 540, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
-    { "time": 95000, "x": -100, "y": 330, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 95000, "x": -100, "y": 230, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
     { "time": 95000, "x": 10, "y": -100, "w": 210, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
 
-    { "time": 96000, "x": -100, "y": 430, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 96000, "x": -100, "y": 330, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":1},
+    { "time": 96000, "x": 450, "y": -100, "w": 250, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 96000, "x": 100, "y": -100, "w": 250, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
+    { "time": 96000, "x": -100, "y": 30, "w": 1000, "h": 240, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "sound":0, "shake":1},
     { "time": 97000, "x": -100, "y": 330, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 97000, "x": 340, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0, "sound":0},
     { "time": 97500, "x": -100, "y": 130, "w": 1000, "h": 110, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 98000, "x": 640, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 98000, "x": 40, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0, "sound":0},
     { "time": 98500, "x": 440, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 98750, "x": 240, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
-    { "time": 99000, "x": 40, "y": -100, "w": 120, "h": 1000, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
+    { "time": 99000, "x": -100, "y": 255, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 99250, "x": -100, "y": 30, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0},
     { "time": 99500, "x": -100, "y": 480, "w": 1000, "h": 90, "vx": 0, "vy": 0 , "type": "laser", "charge": 1000, "shake":0}
 

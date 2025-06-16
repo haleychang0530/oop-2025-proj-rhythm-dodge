@@ -133,7 +133,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
             
         if not all_pass:
             o.shake(20,10)
-            duration = 30 
+            duration = 0 #weird 
         else:
             duration = max(0, duration - 1)
                        
