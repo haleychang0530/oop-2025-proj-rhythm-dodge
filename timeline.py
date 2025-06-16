@@ -107,12 +107,12 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     if o not in prev_obs and player.blood > 0:
                         all_pass=False
                         damage = effect.hurt(o)
-                        o.shake(20,10)
+                        o.shake(20,20)
                         player.blood = player.blood - damage               
                         prev_obs.append(o)
                     elif player.blood > 0 and isinstance(o, LaserCircleObstacle):
                         all_pass=False
-                        o.shake(20,10)
+                        o.shake(20,20)
                         player.blood = player.blood - effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -131,7 +131,7 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                 for _ in range(30):
                     particles.append(Particle(player.rect.centerx, player.rect.centery))
             
-        if not all_pass:
+        if not all_pass and o not in prev_obs:
             o.shake(20,10)
             duration = 0 #canceled
         else:
