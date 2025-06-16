@@ -4,33 +4,21 @@ from player import Player
 from particle import Particle
 from effect import win_ripple_effect
 from triangle import Triangle
-import math
-import time
 import random
 
-
 def tutorial_screen(screen):
-    #pygame.display.set_caption("Tutorial")
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
 
     player = Player(450, 300)
     particles = []
 
-    # triangle = Triangle(center=(600, 400), size=12)
-    triangle = [Triangle((random.randint(100, 700), random.randint(100, 500)), 20) for _ in range(5)]
+    # 多個 triangle
+    triangles = [Triangle((random.randint(100, 700), random.randint(100, 500)), 20) for _ in range(5)]
     screen_rect = screen.get_rect()
 
     while True:
         screen.fill((30, 30, 30))
-        triangle.draw(screen)
-
-        if player.rect.colliderect(triangle.get_rect()):
-            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
-            sound.play()
-            win_ripple_effect(screen, triangle.center)
-            pygame.time.delay(100)
-            return
 
         keys = pygame.key.get_pressed()
 
@@ -39,28 +27,39 @@ def tutorial_screen(screen):
                 pygame.quit()
                 sys.exit()
 
-        for triangle in triangle:
+        # 更新並繪製三角形
+        for triangle in triangles:
             triangle.update(screen_rect)
             triangle.draw(screen)
 
-        # === Player Update ===
+            # 撞到其中一個三角形就觸發勝利效果
+            if player.rect.colliderect(triangle.get_rect()):
+                sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+                sound.play()
+                win_ripple_effect(screen, triangle.center)
+                pygame.time.delay(100)
+                return
+
+        # 更新玩家
         player.update(keys)
 
-        # === Particle Generation ===
+        # 粒子拖尾
         if player.dashing:
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(255, 255, 255), size=8, life=25))
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
+        # 更新粒子
         for particle in particles[:]:
             particle.update()
             particle.draw(screen)
             if particle.life <= 0:
                 particles.remove(particle)
 
+        # 繪製玩家
         player.draw(screen)
 
-        # Instructions
+        # 教學說明文字
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
