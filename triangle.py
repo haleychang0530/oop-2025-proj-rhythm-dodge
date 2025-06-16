@@ -33,33 +33,31 @@ class Triangle:
         size = self.size
         angle_rad = math.radians(self.angle)
 
-        # 三個點的位置（未旋轉時）
-        base_points = [
-            (0, -size),       # top
-            (-size, size),    # bottom-left
-            (size, size)      # bottom-right
-        ]
+        # 正三角形
+        points = []
+        for i in range(3):
+            theta = angle_rad + i * (2 * math.pi / 3)  # 0°, 120°, 240°
+            px = x + size * math.cos(theta)
+            py = y + size * math.sin(theta)
+            points.append((px, py))
 
-        # 套用旋轉矩陣
-        rotated_points = []
-        for px, py in base_points:
-            rx = px * math.cos(angle_rad) - py * math.sin(angle_rad)
-            ry = px * math.sin(angle_rad) + py * math.cos(angle_rad)
-            rotated_points.append((x + rx, y + ry))
+        return points
 
-        return rotated_points
 
     def get_rect(self):
         points = self.get_points()
         xs = [p[0] for p in points]
         ys = [p[1] for p in points]
         return pygame.Rect(min(xs), min(ys), max(xs) - min(xs), max(ys) - min(ys))
-
+    
     def draw(self, surface, border_width=4):
         # Sparkling effect
         phase = math.sin((time.time() - self.sparkle_start_time) * 5)
         brightness = int(128 + 127 * phase)
         sparkle_color = (brightness, brightness, brightness)
 
-        pygame.draw.polygon(surface, (255, 255, 255), self.get_points(), width=border_width + 2)
-        pygame.draw.polygon(surface, sparkle_color, self.get_points(), width=border_width)
+        points = [(round(x), round(y)) for x, y in self.get_points()]
+        pygame.draw.polygon(surface, (255, 255, 255), points, width=border_width + 2)
+        pygame.draw.polygon(surface, sparkle_color, points, width=border_width)
+
+
