@@ -14,7 +14,7 @@ def start(screen):
     small_font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 30)
 
 
-    gear_center = (167, 253)
+    gear_center = (175, 269)
     gear_radius = 25
     gear_teeth = 12
     gear_angle = 0
