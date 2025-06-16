@@ -97,13 +97,13 @@ class Player:
             pygame.draw.rect(screen, self.color, self.rect)
 
             # === 眼睛邏輯（方形）===
-            eye_size = 5
-            padding_x = 6
+            eye_size = 6
+            padding_x = 5
             padding_y = 10
 
             keys = pygame.key.get_pressed()
-            eye_offset_x = 2 if keys[pygame.K_RIGHT] else (-2 if keys[pygame.K_LEFT] else 0)
-            eye_offset_y = 2 if keys[pygame.K_DOWN] else (-2 if keys[pygame.K_UP] else 0)
+            eye_offset_x = 3 if keys[pygame.K_RIGHT] else (-3 if keys[pygame.K_LEFT] else 0)
+            eye_offset_y = 3 if keys[pygame.K_DOWN] else (-3 if keys[pygame.K_UP] else 0)
 
             now = pygame.time.get_ticks()
             blink_cycle = 3000  # 每 2 秒
@@ -115,7 +115,7 @@ class Player:
             eye2_x = self.rect.x + self.rect.width - padding_x - eye_size + eye_offset_x
             eye2_y = eye1_y
 
-            eye_color = (30, 30, 30)
+            eye_color = (0, 60, 60)
 
             if blinking:
                 # 眨眼畫細橫線
