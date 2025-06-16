@@ -3,8 +3,6 @@
 
 **Players control a character to dodge obstacles and survive the beat!**
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="600">
-
 ## 🚀 Features
 
 ### ✅ Dynamic Obstacles — Includes multiple obstacle types:
@@ -68,7 +66,7 @@ Rhythm Dodge/
 
 ## Class Diagram
 
-<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.png" width="600">
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.jpg" width="600">
 
 ## 🗂️ JSON Level Format
 Each level has a .json that defines the sequence of events.
@@ -91,6 +89,7 @@ Each level has a .json that defines the sequence of events.
 - Reach the end of the song to win!
 
 ### 💡 Steps
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="600">
 
 1. **Enter the tutorial to learn how to play the game.**
 
