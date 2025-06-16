@@ -35,6 +35,10 @@ Rhythm Dodge/
 ├── README.md            # Project documentation
 ```
 
+## Class Diagram
+
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.png" width="600">
+
 ## 🗂️ JSON Level Format
 Each level has a .json that defines the sequence of events.
 
