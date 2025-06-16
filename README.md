@@ -89,10 +89,11 @@ Each level has a .json that defines the sequence of events.
 - Reach the end of the song to win!
 
 ### 💡 Steps
+
+`Screen: Start Interface`
+
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/cover.png" width="800">
-
-        *Figure: Start Interface*<br>
-
+      
 #### 1️⃣ **Enter the tutorial to learn how to play the game.**
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/tutor.png" width="800">
@@ -105,21 +106,22 @@ Each level has a .json that defines the sequence of events.
 
 #### 4️⃣ **Dodge the obstacles that spawn at the top of the screen.**
 
+`Example : Gear obstacle. Dodge it!`
+
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_bomb.png" width="800">
 
-        *Figure: Gear obstacle. Dodge it!*<br>
+`Example : Ring obstacle. Dash to penetrate!`
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/play_ring.png" width="800">
-
-        *Figure: Ring obstacle. Dash to penetrate!*<br>
 
 #### 5️⃣ **Player's blood decreases when the player collides with an obstacle.**
 
 #### 6️⃣ **The game ends when the player's blood reaches zero.**
 
+`Screen: Game over screen. Try again or quit!`
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
-        *Figure: Game over screen. Try again or quit!*<br>
+
 
 ## 🏆 To Do / Ideas
 
