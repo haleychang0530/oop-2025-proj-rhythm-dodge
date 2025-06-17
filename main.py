@@ -10,6 +10,7 @@ from screens.win_screen import victory_screen
 from screens.pause import show_pause_menu
 from screens import gameover
 from timeline import update_obstacles  
+from sound_manager import SoundManager
 
 # 初始化 Pygame
 pygame.init()
@@ -29,7 +30,7 @@ duration = 0  # 用於光線效果的持續時間
 # variables for pause during game
 music_was_paused = False
 level_initialized = False
-
+sound_manager = SoundManager()
 
 while True:
     if game_state == "start":
@@ -152,9 +153,8 @@ while True:
                     pygame.mixer.music.stop()
                     level_initialized = False
                     game_state = "game_over"
-                    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.wav")
-                    sound.set_volume(0.3)
-                    sound.play()
+                    sound_manager.play_sfx("dead")
+                    sound_manager.set_volume(0.3)  # 音效音量
                     inclock += 1
                 else:
                     inclock += 1

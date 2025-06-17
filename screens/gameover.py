@@ -1,5 +1,7 @@
 import pygame
-import sys
+from sound_manager import SoundManager
+
+sound_manager = SoundManager()
 
 def show(screen):
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 48)
@@ -33,18 +35,15 @@ def show(screen):
                 return "quit"
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_block2.wav")
-                    sound.set_volume(0.4)
-                    sound.play()
+                    sound_manager.play_sfx("choose_option")
+                    sound_manager.set_volume(0.4)
                     selected = (selected - 1) % len(options)
                 elif event.key == pygame.K_DOWN:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_block2.wav")
-                    sound.set_volume(0.4)
-                    sound.play()
+                    sound_manager.play_sfx("choose_option")
+                    sound_manager.set_volume(0.4)
                     selected = (selected + 1) % len(options)
                 elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_select.wav")
-                    sound.play()
+                    sound_manager.play_sfx("confirm_option")
                     if options[selected] == "Retry":
                         return "playing"
                     elif options[selected] == "Main Menu":

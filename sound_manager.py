@@ -11,6 +11,7 @@ class SoundManager:
 
             "triangle": pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav"),
             "hurt": pygame.mixer.Sound("assets/sound_effect/snd_break1.wav"),
+            "dead": pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.wav"),
             "lazer": pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.wav"),
 
             "choose_option": pygame.mixer.Sound("assets/sound_effect/snd_block2.wav"),

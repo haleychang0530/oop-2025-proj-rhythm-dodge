@@ -1,14 +1,15 @@
-import pygame
-import sys
+import pygame, sys, random
 from player import Player
 from particle import Particle
 from effect import win_ripple_effect
 from triangle import Triangle
-import random
+from sound_manager import SoundManager
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+sound_manager = SoundManager()
+
 
 def tutorial_screen(screen):
     clock = pygame.time.Clock()
@@ -61,8 +62,7 @@ def tutorial_screen(screen):
 
         # 撞到三角形就觸發勝利效果
         if triangle and player.rect.colliderect(triangle.get_rect()):
-            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
-            sound.play()
+            sound_manager.play_sfx("triangle")
             win_ripple_effect(screen, triangle.center)
             pygame.time.delay(100)
             return
