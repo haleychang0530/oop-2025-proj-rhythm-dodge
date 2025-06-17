@@ -1,38 +1,43 @@
-# 🎵 Rhythm Dodge
-**A dynamic rhythm-based dodge game built with Pygame!**
+# 🎵 **Rhythm Dodge**
+*A dynamic rhythm-based dodge game built with Pygame!*
 
-**Players control a character to dodge obstacles and survive the beat!**
+Dodge, dash, and survive the beat — challenge your reflexes and groove to the rhythm!
 
-## 🚀 Features
+---
 
-### ✅ Dynamic Obstacles — Includes multiple obstacle types:
+## 🚀 **Features**
 
-⚙️ **GearObstacle**: Rotating gears with teeth that spin continuously.
+### ✅ **Dynamic Obstacles**
+- ⚙️ **GearObstacle:** Rotating gears with spinning teeth.
+- 🔵 **LaserCircleObstacle:** Multi-phase laser rings (charge → fire → fade).
+- 🎯 **CannonObstacle:** Cannons that fire projectiles at customizable speeds and angles.
 
-🔵 **LaserCircleObstacle**: Charging laser circles with animated stages (charge, fire, fade).
+### ✅ **Impactful Screen Shake**
+Built-in camera shake for all obstacles — amplify hits and special effects for dramatic flair.
 
-🎯 **CannonObstacle**: Cannons that shoot projectiles at adjustable rates and directions.
+### ✅ **JSON Level Design**
+Define obstacle patterns and timings in a simple JSON format for easy level design.
+Create the timeline to perform the beats of songs!
 
-### ✅ Screen Shake Effect —
-Built-in shake method for all obstacles, adding impactful camera shake during hits or special events.
+### ✅ **Particle Effects**
+Create stunning visual feedback with particles that follow the player, enhancing immersion.
 
-### ✅ Configurable Intensity — 
-Customize shake duration and magnitude per obstacle for varied dramatic effects.
+### ✅ **Customizable Intensity**
+Adjust shake duration and magnitude per obstacle to create unique tension and vibe.
 
-### ✅ Smooth Animations — 
-Obstacles update their own rotation, alpha transitions, and expansion over time for a polished visual experience.
+### ✅ **Smooth Animations**
+Polished obstacle rotation, transparency, and scale transitions for fluid visual feedback.
 
-### ✅ Modular Design —
-Clear class hierarchy (CircleObstacle, RectObstacle → specific bosses) for easy extension and reuse.
+### ✅ **Performance Optimized**
+Lightweight Pygame drawing, alpha blending, and efficient update loops.
 
-### ✅ Performance Friendly —
-Uses lightweight Pygame drawing with alpha blending and efficient update loops.
+### ✅ **Plug-and-Play**
+Create obstacles, call `update()` and `draw()`, trigger `shake()` as needed — minimal setup!
 
-### ✅ Plug-and-Play — 
-Just create obstacles, call update() and draw(), and trigger shake() whenever needed — no extra setup.
+### ✅ **Future-Proof**
+Seamlessly expand with new obstacles, patterns, AI, or levels — all thanks to clean OOP architecture.
 
-### ✅ Future-Proof — 
-Easy to add more obstacle types, patterns, or AI behaviors thanks to clean OOP structure.
+---
 
 ## 📂 Project Structure
 
@@ -63,8 +68,10 @@ Rhythm Dodge/
 │   ├── beats_to_json    # Convert music beats to JSON
 ├── README.md            # Project documentation
 ```
+### ✅ **OOP and Class Diagram**
+Clear class hierarchy:
 
-## Class Diagram
+Easy to extend and reuse for new obstacle types or game modes.
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/diagram.jpg" width="800">
 

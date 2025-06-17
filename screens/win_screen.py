@@ -97,7 +97,6 @@ def victory_screen(screen):
         if not reached:
             triangle.update(screen.get_rect()) 
             triangle.draw(screen)
-            player.draw(screen)
 
             # particles
             if player.dashing:
@@ -119,6 +118,8 @@ def victory_screen(screen):
                 ripple_triggered = True
                 ripple_time = time.time()
                 win_ripple_effect(screen, triangle.center)
+
+            player.draw(screen)
 
         elif ripple_triggered:
             if time.time() - ripple_time > 0.6:
