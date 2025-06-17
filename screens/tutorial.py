@@ -29,7 +29,6 @@ def tutorial_screen(screen):
     triangle = None
     triangle_spawn_time = pygame.time.get_ticks() + 1000  # 延遲 1 秒
 
-
     skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
 
     while True:
