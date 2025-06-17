@@ -1,0 +1,28 @@
+digraph "packages_RhymeDodge" {
+rankdir=BT
+charset="utf-8"
+"oop-2025-proj-rhythm-dodge" [color="black", label=<oop-2025-proj-rhythm-dodge>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.effect" [color="black", label=<oop-2025-proj-rhythm-dodge.effect>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.effect-pygbag" [color="black", label=<oop-2025-proj-rhythm-dodge.effect-pygbag>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.main" [color="black", label=<oop-2025-proj-rhythm-dodge.main>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.main-pygbag" [color="black", label=<oop-2025-proj-rhythm-dodge.main-pygbag>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.obstacle" [color="black", label=<oop-2025-proj-rhythm-dodge.obstacle>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.particle" [color="black", label=<oop-2025-proj-rhythm-dodge.particle>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.player" [color="black", label=<oop-2025-proj-rhythm-dodge.player>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.sound_manager" [color="black", label=<oop-2025-proj-rhythm-dodge.sound_manager>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.timeline" [color="black", label=<oop-2025-proj-rhythm-dodge.timeline>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.triangle" [color="black", label=<oop-2025-proj-rhythm-dodge.triangle>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.ui" [color="black", label=<oop-2025-proj-rhythm-dodge.ui>, shape="box", style="solid"];
+"oop-2025-proj-rhythm-dodge.main" -> "oop-2025-proj-rhythm-dodge.particle" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main" -> "oop-2025-proj-rhythm-dodge.player" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main" -> "oop-2025-proj-rhythm-dodge.sound_manager" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main" -> "oop-2025-proj-rhythm-dodge.timeline" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main" -> "oop-2025-proj-rhythm-dodge.ui" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main-pygbag" -> "oop-2025-proj-rhythm-dodge.particle" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main-pygbag" -> "oop-2025-proj-rhythm-dodge.player" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main-pygbag" -> "oop-2025-proj-rhythm-dodge.timeline" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.main-pygbag" -> "oop-2025-proj-rhythm-dodge.ui" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.obstacle" -> "oop-2025-proj-rhythm-dodge.effect" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.timeline" -> "oop-2025-proj-rhythm-dodge.effect" [arrowhead="open", arrowtail="none"];
+"oop-2025-proj-rhythm-dodge.timeline" -> "oop-2025-proj-rhythm-dodge.particle" [arrowhead="open", arrowtail="none"];
+}
