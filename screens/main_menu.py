@@ -76,7 +76,7 @@ def main_menu(screen):
                     sound_manager.play_sfx("confirm_option")
                     return selected + 1
                 elif event.key == pygame.K_ESCAPE:
-                    sound_anager.play_sfx("confirm_option")
+                    sound_manager.play_sfx("confirm_option")
                     running = False
                     return None
                 
