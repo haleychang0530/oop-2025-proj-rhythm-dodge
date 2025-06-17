@@ -120,6 +120,6 @@ def tutorial_screen(screen):
             label = font.render(text, True, (255, 255, 255))
             screen.blit(label, (20, 20 + i * 30))
 
-        screen.blit(skip_tutorial, (WIDTH // 2 - skip_tutorial.get_width() // 2, 500))
+        screen.blit(skip_tutorial, (800 // 2 - skip_tutorial.get_width() // 2, 500))
 
         pygame.display.flip()
