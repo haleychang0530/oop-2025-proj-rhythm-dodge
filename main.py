@@ -22,7 +22,7 @@ clock = pygame.time.Clock()
 game_state = "start"
 level = 1
 events = []
-time_skip = 0 # 用於時間跳過 for testing
+time_skip = 60 # 用於時間跳過 for testing
 bpm_scale_sp = 0.975  # 時間縮放因子 for bpm 234
 bpm_scale1 = 1.4583  # 時間縮放因子 for bpm 175
 bpm_scale2 = 0.9166 # 時間縮放因子 for bpm 110
@@ -70,11 +70,11 @@ while True:
 
             # 音樂與事件載入
             if level == 1:
-                sound_manager.play_music("assets/music/level1.mp3", start_time=40.94 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level1.mp3", start_time=40.94 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale1
                 sound_manager.set_volume(0.45)
             elif level == 2:
-                sound_manager.play_music("assets/music/level2.mp3", start_time=15.45 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level2.mp3", start_time=15.45 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale2
                 sound_manager.set_volume(0.4)
             
