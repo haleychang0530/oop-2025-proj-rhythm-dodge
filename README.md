@@ -152,18 +152,6 @@ Obstacles shake the screen when the player is hit.
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
-
-
-## 🏆 To Do / Ideas
-
-✅ Custom levels
-
-✅ Particle effects
-
-✅ Pause & resume
-
-✅ Victory and game over screens
-
-✅ Radial beams visual effect
+#### 7️⃣ **If you survive until the end of the song, you win!**
 
 
