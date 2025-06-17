@@ -149,6 +149,8 @@ def main_menu(screen):
             y2 = HEIGHT
             pygame.draw.line(screen, (255, 255, 255), (x, y1), (x, y2), 2)
 
+        pygame.draw.rect(screen, (10, 10, 50), pygame.Rect(0, 0, 800, 600), 5)
+
         # 繪製標題
         title = font_title.render("RHYTHM DODGE", True, (0, 200, 255))
         screen.blit(title, (WIDTH // 2 - title.get_width() // 2, 100))
