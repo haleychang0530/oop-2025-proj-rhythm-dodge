@@ -6,10 +6,12 @@ from effect import win_ripple_effect
 from triangle import Triangle
 from timeline import *
 import random
+from sound_manager import SoundManager
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+sound_manager = SoundManager()
 bpm_scale = 1.06667
 time_skip = 0
 

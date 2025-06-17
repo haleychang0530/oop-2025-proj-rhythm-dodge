@@ -10,6 +10,7 @@ from screens.win_screen import victory_screen
 from screens.pause import show_pause_menu
 from screens import gameover
 from timeline import update_obstacles  
+from sound_manager import SoundManager
 
 # 初始化 Pygame
 pygame.init()
@@ -29,28 +30,31 @@ duration = 0  # 用於光線效果的持續時間
 # variables for pause during game
 music_was_paused = False
 level_initialized = False
-
+sound_manager = SoundManager()
 
 while True:
     if game_state == "start":
+        print(">>> enter start")
         start(screen)
         game_state = "tutorial"
     
     elif game_state == "tutorial":
+        print(">>> enter tutorial")
         tutorial_screen(screen)
         game_state = "main_menu"
 
     elif game_state == "main_menu":
+        print(">>> enter menu")
         level = main_menu(screen)
         if not level:
             pygame.quit()
             sys.exit()
         if level == 1:
-            pygame.mixer.music.load("assets/music/level1.mp3")
+            sound_manager.play_music("assets/music/level1.mp3")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
-            pygame.mixer.music.load("assets/music/level2.mp3")
+            sound_manager.play_music("assets/music/level2.mp3")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         pygame.time.delay(500)
@@ -66,13 +70,13 @@ while True:
 
             # 音樂與事件載入
             if level == 1:
-                pygame.mixer.music.play(start=40.94 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level1.mp3", start_time=40.94 + time_skip, fade_ms=1000)
                 bpm_scale = bpm_scale1
-                pygame.mixer.music.set_volume(0.45)
+                sound_manager.set_volume(0.45)
             elif level == 2:
-                pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level2.mp3", start_time=15.45 + time_skip, fade_ms=1000)
                 bpm_scale = bpm_scale2
-                pygame.mixer.music.set_volume(0.4)
+                sound_manager.set_volume(0.4)
             
 
             #with open("levels/level1.json", "r") as f:
@@ -152,9 +156,8 @@ while True:
                     pygame.mixer.music.stop()
                     level_initialized = False
                     game_state = "game_over"
-                    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.wav")
-                    sound.set_volume(0.3)
-                    sound.play()
+                    sound_manager.play_sfx("dead")
+                    sound_manager.set_volume(0.3)  # 音效音量
                     inclock += 1
                 else:
                     inclock += 1
@@ -188,6 +191,7 @@ while True:
 
         
     elif game_state == "victory":
+        print(">>> victory screen")
         victory_screen(screen)
         game_state = "main_menu"  #  去選單
 
