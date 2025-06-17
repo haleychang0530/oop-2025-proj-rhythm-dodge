@@ -18,6 +18,7 @@ def tutorial_screen(screen):
     with open("levels/tutorial.json", "r") as f:
         events = json.load(f)
     pygame.mixer.music.play(start=0.6 + time_skip, fade_ms=500)
+    sound_manager.set_volume(0.45)
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
     x, y = 400, 300
