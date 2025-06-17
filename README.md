@@ -68,7 +68,9 @@ Rhythm Dodge/
 │   ├── beats_to_json    # Convert music beats to JSON
 ├── README.md            # Project documentation
 ```
-### ✅ **OOP and Class Diagram**
+---
+
+### 📂 **OOP and Class Diagram**
 Clear class hierarchy:
 
 Easy to extend and reuse for new obstacle types or game modes.
