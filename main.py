@@ -34,14 +34,17 @@ sound_manager = SoundManager()
 
 while True:
     if game_state == "start":
+        print(">>> enter start")
         start(screen)
         game_state = "tutorial"
     
     elif game_state == "tutorial":
+        print(">>> enter tutorial")
         tutorial_screen(screen)
         game_state = "main_menu"
 
     elif game_state == "main_menu":
+        print(">>> enter menu")
         level = main_menu(screen)
         if not level:
             pygame.quit()
@@ -188,6 +191,7 @@ while True:
 
         
     elif game_state == "victory":
+        print(">>> victory screen")
         victory_screen(screen)
         game_state = "main_menu"  #  去選單
 
