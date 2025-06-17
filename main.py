@@ -125,7 +125,7 @@ while True:
             '''
             '''再次扳回timeline.py'''
             # 更新障礙物
-            prev_obs, duration = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip, duration)
+            prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)
             
             # 繪製畫面
             screen.fill((10, 10, 30))
@@ -143,9 +143,6 @@ while True:
 
             for p in particles:
                 p.draw(screen)
-
-            if duration > 0:
-                effect.draw_radial_beams(screen, player.rect.center,duration)
                 
             player.draw(screen)
 

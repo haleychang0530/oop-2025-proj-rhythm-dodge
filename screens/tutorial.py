@@ -80,7 +80,7 @@ def tutorial_screen(screen):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
         # 更新障礙物
-        prev_obs, xx = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, now, prev_obs, bpm_scale, time_skip, 0)
+        prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, now, prev_obs, bpm_scale, time_skip)
             
         # 繪製畫面
         screen.fill((30, 30, 30))
