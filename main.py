@@ -128,7 +128,7 @@ while True:
             prev_obs, duration = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip, duration)
             
             # 繪製畫面
-            screen.fill((30, 30, 30))
+            screen.fill((10, 10, 30))
             
             # 畫邊界/玩家/粒子/障礙
             pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
