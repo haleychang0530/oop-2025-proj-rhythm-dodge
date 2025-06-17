@@ -11,7 +11,11 @@
     { "time": 22000, "x": 375, "y": 25, "w": 50, "h": 50, "vx": 0, "vy": 5 , "type": "gear_sin", "frequency": 0.005},
     { "time": 24000, "x": 400, "y": 10, "type": "ring", "duration": 2500, "radius": 250, "thickness": 25},
     { "time": 26000, "x": 400, "y": 590, "type": "ring", "duration": 1500, "radius": 250, "thickness": 25},
-    { "time": 28000, "x": 10, "y": 10, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0},
-    { "time": 30000, "x": 790, "y": 600, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0}
+    { "time": 26000, "x": 350, "y": -100, "w": 100, "h": 750, "vx": 0, "vy": 15 , "type": "laser", "charge": 2000},
+    { "time": 28000, "x": -100, "y": 250, "w": 1000, "h": 100, "vx": 0, "vy": 15 , "type": "laser", "charge": 2000},
+    { "time": 32000, "x": 10, "y": 10, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0},
+    { "time": 36000, "x": 790, "y": 600, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0},
+    { "time": 38000, "x": 100, "y": 50, "w": 400, "h": 700, "vx": 0, "vy": 0 , "type": "circle_laser", "charge": 2000, "radius": 100, "duration":2000},
+    { "time": 40000, "x": 500, "y": 350, "w": 400, "h": 700, "vx": 0, "vy": 0 , "type": "circle_laser", "charge": 2000, "radius": 100, "duration":2000}
 
 ]

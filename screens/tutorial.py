@@ -11,7 +11,7 @@ pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 bpm_scale = 1.06667
-time_skip = 10
+time_skip = 0
 
 def tutorial_screen(screen):
     pygame.mixer.music.load("assets/music/tutorial.mp3")
@@ -34,7 +34,7 @@ def tutorial_screen(screen):
 
     # Triangle 延遲出現用的計時
     triangle = None
-    triangle_spawn_time = 30000  # 延遲 1 秒
+    triangle_spawn_time = 44000  # 延遲
 
     spawned = set()
     particles = []
@@ -62,23 +62,12 @@ def tutorial_screen(screen):
             while True:
                 x = random.randint(100, 700)
                 y = random.randint(100, 500)
-                if 300 < x < 500 and 200 < y < 400:
+                if abs(player.rect.x+15-x) < 60 and abs(player.rect.y+15-y) < 60:
                     continue
                 break
             triangle = Triangle((x, y), 20)
         
-        # 更新並繪製 triangle（如果已生成）
-        if triangle:
-            triangle.update(screen_rect)
-            triangle.draw(screen)
 
-        # 撞到三角形就觸發勝利效果
-        if triangle and player.rect.colliderect(triangle.get_rect()):
-            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
-            sound.play()
-            win_ripple_effect(screen, triangle.center)
-            pygame.time.delay(100)
-            return
 
         # 玩家更新
         player.update(keys)
@@ -113,6 +102,18 @@ def tutorial_screen(screen):
         ]
 
         player.draw(screen)
+        # 更新並繪製 triangle（如果已生成）
+        if triangle:
+            triangle.update(screen_rect)
+            triangle.draw(screen)
+
+        # 撞到三角形就觸發勝利效果
+        if triangle and player.rect.colliderect(triangle.get_rect()):
+            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+            sound.play()
+            win_ripple_effect(screen, triangle.center)
+            pygame.time.delay(100)
+            return
 
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
