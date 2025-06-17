@@ -6,6 +6,7 @@ from triangle import Triangle
 from player import Player
 from particle import Particle
 from effect import win_ripple_effect
+from sound_manager import SoundManager
 import math
 
 pygame.init()
@@ -13,6 +14,7 @@ WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Victory Screen")
 clock = pygame.time.Clock()
+sound_manager = SoundManager()
 
 # === Fonts and Colors ===
 font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 64)
@@ -111,7 +113,7 @@ def victory_screen(screen):
 
             # check collision
             if player.rect.colliderect(triangle.get_rect()):
-                sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+                sound = sound_manager.sfx.get("triangle")
                 sound.play()
                 reached = True
                 ripple_triggered = True

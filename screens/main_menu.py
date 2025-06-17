@@ -2,7 +2,9 @@ import pygame
 import json
 import time
 import random
-import sys
+from sound_manager import SoundManager
+
+sound_manager = SoundManager()
 
 def main_menu(screen):
     WIDTH, HEIGHT = screen.get_size()
@@ -63,31 +65,27 @@ def main_menu(screen):
                 running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_block2.wav")
-                    sound.set_volume(0.4)
-                    sound.play()
+                    sound_manager.play_sfx("choose_option")
+                    sound_manager.set_volume(0.4)
                     selected = (selected - 1) % len(options)
                 elif event.key == pygame.K_DOWN:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_block2.wav")
-                    sound.set_volume(0.4)
-                    sound.play()
+                    sound_manager.play_sfx("choose_option")
+                    sound_manager.set_volume(0.4)
                     selected = (selected + 1) % len(options)
                 elif event.key == pygame.K_RETURN:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_select.wav")
-                    sound.play()
+                    sound_manager.play_sfx("confirm_option")
                     return selected + 1
                 elif event.key == pygame.K_ESCAPE:
-                    sound = pygame.mixer.Sound("assets/sound_effect/snd_select.wav")
-                    sound.play()
+                    sound_manager.play_sfx("confirm_option")
                     running = False
                     return None
                 
         # Detect level selection change
         if selected != prev_selected:
-            pygame.mixer.music.stop()
-            pygame.mixer.music.load(level_music_paths[selected])
-            pygame.mixer.music.play(-1)  # loop
-            pygame.mixer.music.set_volume(0.4)
+            sound_manager.stop_music()
+            sound_manager.play_music(level_music_paths[selected], loop=-1)
+            sound_manager.set_volume(0.4)
+            
             start_time = time.time()
             beat_index = 0
             line_heights = [0.0] * NUM_LINES
