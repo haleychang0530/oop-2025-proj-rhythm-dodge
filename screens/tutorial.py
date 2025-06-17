@@ -109,6 +109,7 @@ def tutorial_screen(screen):
 
         # 撞到三角形就觸發勝利效果
         if triangle and player.rect.colliderect(triangle.get_rect()):
+            pygame.mixer.music.stop()
             sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
             sound.play()
             win_ripple_effect(screen, triangle.center)
