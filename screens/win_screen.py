@@ -11,8 +11,6 @@ import math
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Victory Screen")
 clock = pygame.time.Clock()
 sound_manager = SoundManager()
 
@@ -51,6 +49,8 @@ notes = [Note() for _ in range(50)]
 # pygame.mixer.Sound("assets/sfx/victory.wav").play()
 
 def victory_screen(screen):
+    screen.fill((0, 0, 0))
+    pygame.display.flip()
     pygame.mixer.music.stop()
 
     #start_time = time.time()
@@ -141,7 +141,3 @@ def victory_screen(screen):
 
         pygame.display.flip()
 
-# === 呼叫勝利畫面（測試用）===
-if __name__ == "__main__":
-    victory_screen()
-    print("Back to menu!")
