@@ -25,12 +25,18 @@ def tutorial_screen(screen):
     triangle = Triangle((x, y), 20)
     screen_rect = screen.get_rect()
 
+    # Triangle 延遲出現用的計時
+    triangle = None
+    triangle_spawn_time = pygame.time.get_ticks() + 1000  # 延遲 1 秒
+
+
     skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
 
     while True:
+        now = pygame.time.get_ticks()
         screen.fill((30, 30, 30))
-
         keys = pygame.key.get_pressed()
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -40,12 +46,22 @@ def tutorial_screen(screen):
                 if event.key == pygame.K_RETURN:
                     return "main_menu"  # 跳過教學，進入遊戲
 
-        # 更新並繪製單一 triangle
-        triangle.update(screen_rect)
-        triangle.draw(screen)
+        if triangle is None and now >= triangle_spawn_time:
+            while True:
+                x = random.randint(100, 700)
+                y = random.randint(100, 500)
+                if 300 < x < 500 and 200 < y < 400:
+                    continue
+                break
+            triangle = Triangle((x, y), 20)
+        
+        # 更新並繪製 triangle（如果已生成）
+        if triangle:
+            triangle.update(screen_rect)
+            triangle.draw(screen)
 
         # 撞到三角形就觸發勝利效果
-        if player.rect.colliderect(triangle.get_rect()):
+        if triangle and player.rect.colliderect(triangle.get_rect()):
             sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
             sound.play()
             win_ripple_effect(screen, triangle.center)

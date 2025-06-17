@@ -1,0 +1,39 @@
+digraph "packages_RhythmDodge" {
+rankdir=BT
+charset="utf-8"
+"effect" [color="black", label=<effect>, shape="box", style="solid"];
+"main" [color="black", label=<main>, shape="box", style="solid"];
+"obstacle" [color="black", label=<obstacle>, shape="box", style="solid"];
+"particle" [color="black", label=<particle>, shape="box", style="solid"];
+"player" [color="black", label=<player>, shape="box", style="solid"];
+"screens.gameover" [color="black", label=<screens.gameover>, shape="box", style="solid"];
+"screens.main_menu" [color="black", label=<screens.main_menu>, shape="box", style="solid"];
+"screens.pause" [color="black", label=<screens.pause>, shape="box", style="solid"];
+"screens.start" [color="black", label=<screens.start>, shape="box", style="solid"];
+"screens.tutorial" [color="black", label=<screens.tutorial>, shape="box", style="solid"];
+"screens.win_screen" [color="black", label=<screens.win_screen>, shape="box", style="solid"];
+"timeline" [color="black", label=<timeline>, shape="box", style="solid"];
+"triangle" [color="black", label=<triangle>, shape="box", style="solid"];
+"ui" [color="black", label=<ui>, shape="box", style="solid"];
+"main" -> "obstacle" [arrowhead="open", arrowtail="none"];
+"main" -> "particle" [arrowhead="open", arrowtail="none"];
+"main" -> "player" [arrowhead="open", arrowtail="none"];
+"main" -> "screens.main_menu" [arrowhead="open", arrowtail="none"];
+"main" -> "screens.pause" [arrowhead="open", arrowtail="none"];
+"main" -> "screens.start" [arrowhead="open", arrowtail="none"];
+"main" -> "screens.tutorial" [arrowhead="open", arrowtail="none"];
+"main" -> "screens.win_screen" [arrowhead="open", arrowtail="none"];
+"main" -> "timeline" [arrowhead="open", arrowtail="none"];
+"main" -> "ui" [arrowhead="open", arrowtail="none"];
+"obstacle" -> "effect" [arrowhead="open", arrowtail="none"];
+"screens.tutorial" -> "effect" [arrowhead="open", arrowtail="none"];
+"screens.tutorial" -> "particle" [arrowhead="open", arrowtail="none"];
+"screens.tutorial" -> "player" [arrowhead="open", arrowtail="none"];
+"screens.tutorial" -> "triangle" [arrowhead="open", arrowtail="none"];
+"screens.win_screen" -> "effect" [arrowhead="open", arrowtail="none"];
+"screens.win_screen" -> "particle" [arrowhead="open", arrowtail="none"];
+"screens.win_screen" -> "player" [arrowhead="open", arrowtail="none"];
+"screens.win_screen" -> "triangle" [arrowhead="open", arrowtail="none"];
+"timeline" -> "obstacle" [arrowhead="open", arrowtail="none"];
+"timeline" -> "particle" [arrowhead="open", arrowtail="none"];
+}
