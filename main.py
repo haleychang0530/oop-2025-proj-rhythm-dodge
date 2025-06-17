@@ -79,9 +79,6 @@ while True:
                 sound_manager.set_volume(0.4)
             
 
-            #with open("levels/level1.json", "r") as f:
-                #events = json.load(f)
-
             # 初始化
             spawned = set()
             particles = []
@@ -116,13 +113,7 @@ while True:
             elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
                 # 每幀生成粒子拖尾
                 particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
-            
-            """把[障礙物生成]之功能搬到timeline.py"""
-            '''if level == 1:
-                prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
-            elif level == 2:
-                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2,time_skip)
-            '''
+ 
             '''再次扳回timeline.py'''
             # 更新障礙物
             prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)

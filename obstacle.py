@@ -65,7 +65,7 @@ class FollowObstacle(Obstacle):
 
 
 class LaserObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, sound = True):
+    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, sound = True, shaker=False):
         super().__init__(x, y, w, h, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
@@ -78,6 +78,7 @@ class LaserObstacle(Obstacle):
         self.line_width = 2
         self.transition_progress = 0
         self.sound = sound
+        self.shaker = shaker
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -130,10 +131,13 @@ class LaserObstacle(Obstacle):
             offset_x = random.randint(-self.magnitude, self.magnitude)
             offset_y = random.randint(-self.magnitude, self.magnitude)
             self.shake_duration -= 1
+        elif self.shaker:
+            offset_x = random.randint(-7, 7)
+            offset_y = random.randint(-7, 7)
 
         laser_surface = pygame.Surface((self.rect.width, self.rect.height), pygame.SRCALPHA)
 
-        if self.stage == 1:
+        if self.stage == 1: 
             color = (255, 0, 0, self.alpha) # original:(255, 0, 0) 
             pygame.draw.rect(laser_surface, color, (0, 0, self.rect.width, self.rect.height))
         elif self.stage == 2:
@@ -573,8 +577,6 @@ class RingObstacle(CircleObstacle):
         if self.radius <= 0:
             return  # 不畫
         
-        # Make it shake
-        # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
             offset_x = random.randint(-self.magnitude, self.magnitude)
