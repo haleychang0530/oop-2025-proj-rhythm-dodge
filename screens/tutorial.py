@@ -1,16 +1,23 @@
-import pygame
+import pygame, json
 import sys
 from player import Player
 from particle import Particle
 from effect import win_ripple_effect
 from triangle import Triangle
+from timeline import *
 import random
 
 pygame.init()
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+bpm_scale = 1.06667
+time_skip = 10
 
 def tutorial_screen(screen):
+    pygame.mixer.music.load("assets/music/tutorial.mp3")
+    with open("levels/tutorial.json", "r") as f:
+        events = json.load(f)
+    pygame.mixer.music.play(start=0.6 + time_skip, fade_ms=500)
     clock = pygame.time.Clock()
     font = pygame.font.Font("assets/fonts/Orbitron-Bold.ttf", 24)
     x, y = 400, 300
@@ -27,13 +34,19 @@ def tutorial_screen(screen):
 
     # Triangle 延遲出現用的計時
     triangle = None
-    triangle_spawn_time = pygame.time.get_ticks() + 1000  # 延遲 1 秒
+    triangle_spawn_time = 30000  # 延遲 1 秒
+
+    spawned = set()
+    particles = []
+    prev_obs = []
+    obstacles = []
 
 
     skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
 
     while True:
-        now = pygame.time.get_ticks()
+        clock.tick(60)
+        now = pygame.mixer.music.get_pos() * bpm_scale
         screen.fill((30, 30, 30))
         keys = pygame.key.get_pressed()
 
@@ -77,18 +90,30 @@ def tutorial_screen(screen):
         elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
             particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
 
+        # 更新障礙物
+        prev_obs, xx = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, now, prev_obs, bpm_scale, time_skip, 0)
+            
+        # 繪製畫面
+        screen.fill((30, 30, 30))
+            
+        # 畫邊界/玩家/粒子/障礙
+        pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
+
+        for o in obstacles:
+            o.draw(screen)
+
         for particle in particles[:]:
             particle.update()
             particle.draw(screen)
             if particle.life <= 0:
                 particles.remove(particle)
 
-        player.draw(screen)
-
         lines = [
             "Arrow Keys: Move",
             "Shift with Arrow Keys: Dash",
         ]
+
+        player.draw(screen)
 
         for i, text in enumerate(lines):
             label = font.render(text, True, (255, 255, 255))
@@ -97,4 +122,3 @@ def tutorial_screen(screen):
         screen.blit(skip_tutorial, (WIDTH // 2 - skip_tutorial.get_width() // 2, 500))
 
         pygame.display.flip()
-        clock.tick(60)

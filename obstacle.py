@@ -31,7 +31,7 @@ class Obstacle:
         if self.shake_duration <= 0:
             self.shake_duration = 0
 
-    def shake(self, duration=20, magnitude=20):
+    def shake(self, duration, magnitude):
         self.shake_duration = duration
         self.magnitude = magnitude
 
@@ -337,19 +337,13 @@ class GearObstacle(CircleObstacle):
         self.rotation += self.rotation_speed
         self.rect.center = (self.x, self.y)
 
-    def shake(self, duration=30, magnitude=20):
-        self.shake_duration = duration
-        self.shake_magnitude = magnitude
-
-        self.shake_duration = duration  # duration in frames
-
     def draw(self, screen):
         # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            magnitude = 20  # Shake intensity
-            offset_x = random.randint(-magnitude, magnitude)
-            offset_y = random.randint(-magnitude, magnitude)
+            offset_x = random.randint(-self.magnitude, self.magnitude)
+            offset_y = random.randint(-self.magnitude, self.magnitude)
+            self.shake_duration -= 1
 
         tooth_len = self.radius * 0.3
         surface_size = self.radius * 2 + tooth_len * 2
@@ -589,9 +583,9 @@ class RingObstacle(CircleObstacle):
         # Apply shake offset if active
         offset_x, offset_y = 0, 0
         if self.shake_duration > 0:
-            magnitude = 20  # Shake intensity
-            offset_x = random.randint(-magnitude, magnitude)
-            offset_y = random.randint(-magnitude, magnitude)
+            offset_x = random.randint(-self.magnitude, self.magnitude)
+            offset_y = random.randint(-self.magnitude, self.magnitude)
+            self.shake_duration -= 1
 
         surface_size = self.radius * 2 + self.thickness
         surface = pygame.Surface((surface_size, surface_size), pygame.SRCALPHA)

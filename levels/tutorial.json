@@ -1,0 +1,17 @@
+[   { "time": 2000, "x": 750, "y": 125, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "ob"},
+    { "time": 4000, "x": 750, "y": 225, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "circle"},
+    { "time": 6000, "x": 750, "y": 325, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "gear"},
+    { "time": 8000, "x": 750, "y": 125, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "follow", "speed": 10},
+    { "time": 10000, "x": 750, "y": 225, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "circle_follow", "speed": 10},
+    { "time": 12000, "x": 750, "y": 325, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "gear_follow", "speed": 10},
+    { "time": 14000, "x": 375, "y": 25, "w": 50, "h": 50, "vx": 0, "vy": 6 , "type": "cannon", "speed": 10},
+    { "time": 16000, "x": 750, "y": 125, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "sin", "frequency": 0.005},
+    { "time": 18000, "x": 750, "y": 225, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "circle_sin", "frequency": 0.005},
+    { "time": 20000, "x": 750, "y": 325, "w": 50, "h": 50, "vx": -10, "vy": 0 , "type": "gear_sin", "frequency": 0.005},
+    { "time": 22000, "x": 375, "y": 25, "w": 50, "h": 50, "vx": 0, "vy": 5 , "type": "gear_sin", "frequency": 0.005},
+    { "time": 24000, "x": 400, "y": 10, "type": "ring", "duration": 2500, "radius": 250, "thickness": 25},
+    { "time": 26000, "x": 400, "y": 590, "type": "ring", "duration": 1500, "radius": 250, "thickness": 25},
+    { "time": 28000, "x": 10, "y": 10, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0},
+    { "time": 30000, "x": 790, "y": 600, "type": "ring", "duration": 5000, "radius": 1200, "thickness": 25, "fade": 0}
+
+]
