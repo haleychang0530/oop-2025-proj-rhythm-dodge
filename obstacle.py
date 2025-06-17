@@ -37,8 +37,8 @@ class Obstacle:
 
 
 class SinObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, amplitude, frequency, magnitude=20):
-        super().__init__(x, y, w, h, vx, vy, magnitude)
+    def __init__(self, x, y, w, h, vx, vy, amplitude, frequency):
+        super().__init__(x, y, w, h, vx, vy)
         self.base_y = self.rect.y
         self.amplitude = amplitude
         self.frequency = frequency
@@ -51,13 +51,13 @@ class SinObstacle(Obstacle):
 
 
 class FollowObstacle(Obstacle):
-    def __init__(self, x, y, w, h, player, speed, magnitude=20):
+    def __init__(self, x, y, w, h, player, speed):
         dx = player.rect.centerx - (x + w/2)
         dy = player.rect.centery - (y + h/2)
         length = max(1, math.hypot(dx, dy))
         vx = dx / length * speed
         vy = dy / length * speed
-        super().__init__(x, y, w, h, vx, vy, magnitude)
+        super().__init__(x, y, w, h, vx, vy)
 
     def update(self):
         self.rect.x += self.vx
