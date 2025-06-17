@@ -152,6 +152,7 @@ Obstacles shake the screen when the player is hit.
 
 <img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/over.png" width="800">
 
+***
 #### 7️⃣ **If you survive until the end of the song, you win!**
 
-
+<img src="https://github.com/haleychang0530/oop-2025-proj-rhythm-dodge/blob/main/assets/images/vic.png" width="800">
