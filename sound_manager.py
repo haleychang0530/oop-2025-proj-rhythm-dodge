@@ -23,10 +23,9 @@ class SoundManager:
         if name in self.sfx:
             self.sfx[name].play()
 
-    def play_music(self, path, loop=-1):
+    def play_music(self, path, start_time=0.0, loop=-1, fade_ms=0):
         pygame.mixer.music.load(path)
-        pygame.mixer.music.play(loop)
-        self.music_loaded = True
+        pygame.mixer.music.play(loops=loop, start=start_time, fade_ms=fade_ms)
 
     def get_music_time(self):
         return pygame.mixer.music.get_pos() if self.music_loaded else 0

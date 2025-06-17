@@ -47,11 +47,11 @@ while True:
             pygame.quit()
             sys.exit()
         if level == 1:
-            sound_manager.load_music("assets/music/level1.mp3")
+            sound_manager.play_music("assets/music/level1.mp3")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
-            sound_manager.load_music("assets/music/level2.mp3")
+            sound_manager.play_music("assets/music/level2.mp3")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         pygame.time.delay(500)
