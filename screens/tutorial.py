@@ -41,7 +41,6 @@ def tutorial_screen(screen):
     prev_obs = []
     obstacles = []
 
-
     skip_tutorial = font.render("Press ENTER to skip tutorial", True, (200, 200, 200))
 
     while True:
