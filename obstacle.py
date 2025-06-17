@@ -65,7 +65,7 @@ class FollowObstacle(Obstacle):
 
 
 class LaserObstacle(Obstacle):
-    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, sound = True):
+    def __init__(self, x, y, w, h, vx, vy, charge_time, duration=300, sound = True, shaker = False):
         super().__init__(x, y, w, h, vx, vy)
         self.charge_time = charge_time
         self.duration = duration
@@ -78,6 +78,7 @@ class LaserObstacle(Obstacle):
         self.line_width = 2
         self.transition_progress = 0
         self.sound = sound
+        self.shaker = shaker
 
     def update(self):
         now = pygame.time.get_ticks()
@@ -126,7 +127,9 @@ class LaserObstacle(Obstacle):
     def draw(self, screen):
         offset_x, offset_y = 0, 0
 
-        if self.shake_duration > 0:
+        if self.shaker:
+            offset_x, offset_y = random.randint(-7, 7), random.randint(-7, 7)
+        elif self.shake_duration > 0:
             offset_x = random.randint(-self.magnitude, self.magnitude)
             offset_y = random.randint(-self.magnitude, self.magnitude)
             self.shake_duration -= 1
