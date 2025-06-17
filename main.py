@@ -166,7 +166,7 @@ while True:
                     pygame.time.delay(500)  # 停一秒，讓玩家有時間看到死掉
                     break
 
-            if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
+            if not sound_manager.is_music_playing() and player.alive and not music_was_paused:
                 print("玩家通關成功！")
                 level_initialized = False
                 game_state = "victory"

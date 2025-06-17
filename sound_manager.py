@@ -26,6 +26,8 @@ class SoundManager:
     def play_music(self, path, start_time=0.0, loop=-1, fade_ms=0):
         pygame.mixer.music.load(path)
         pygame.mixer.music.play(loops=loop, start=start_time, fade_ms=fade_ms)
+        self.music_loaded = True
+
 
     def get_music_time(self):
         return pygame.mixer.music.get_pos() if self.music_loaded else 0
@@ -37,3 +39,5 @@ class SoundManager:
         pygame.mixer.music.set_volume(volume)
         for s in self.sfx.values():
             s.set_volume(volume)
+    def is_music_playing(self):
+        return pygame.mixer.music.get_busy()
