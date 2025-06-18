@@ -3,7 +3,7 @@
 
 Dodge, dash, and survive the beat — challenge your reflexes and groove to the rhythm!
 
-https://youtu.be/6_RZkR5fn7w
+[Watch our video!](https://youtu.be/Hs4Y7Y34i3U)
 
 ---
 
