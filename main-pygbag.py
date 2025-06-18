@@ -10,6 +10,7 @@ from screens.win_screen import victory_screen
 from screens.pause import show_pause_menu
 from screens import gameover
 from timeline import update_obstacles  
+from sound_manager import SoundManager
 
 # 初始化 Pygame
 pygame.init()
@@ -29,28 +30,31 @@ duration = 0  # 用於光線效果的持續時間
 # variables for pause during game
 music_was_paused = False
 level_initialized = False
-
+sound_manager = SoundManager()
 
 while True:
     if game_state == "start":
+        print(">>> enter start")
         start(screen)
         game_state = "tutorial"
     
     elif game_state == "tutorial":
+        print(">>> enter tutorial")
         tutorial_screen(screen)
         game_state = "main_menu"
 
     elif game_state == "main_menu":
+        print(">>> enter menu")
         level = main_menu(screen)
         if not level:
             pygame.quit()
             sys.exit()
         if level == 1:
-            pygame.mixer.music.load("assets/music/level1.ogg")
+            sound_manager.play_music("assets/music/level1.ogg")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
-            pygame.mixer.music.load("assets/music/level2.ogg")
+            sound_manager.play_music("assets/music/level2.ogg")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         pygame.time.delay(500)
@@ -66,17 +70,14 @@ while True:
 
             # 音樂與事件載入
             if level == 1:
-                pygame.mixer.music.play(start=40.94 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level1.ogg", start_time=40.94 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale1
-                pygame.mixer.music.set_volume(0.45)
+                sound_manager.set_volume(0.45)
             elif level == 2:
-                pygame.mixer.music.play(start=15.45 + time_skip, fade_ms=1000)
+                sound_manager.play_music("assets/music/level2.ogg", start_time=15.45 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale2
-                pygame.mixer.music.set_volume(0.4)
+                sound_manager.set_volume(0.4)
             
-
-            #with open("levels/level1.json", "r") as f:
-                #events = json.load(f)
 
             # 初始化
             spawned = set()
@@ -112,19 +113,13 @@ while True:
             elif player.alive and (keys[pygame.K_LEFT] or keys[pygame.K_RIGHT] or keys[pygame.K_UP] or keys[pygame.K_DOWN]):
                 # 每幀生成粒子拖尾
                 particles.append(Particle(player.rect.centerx, player.rect.centery, color=(0, 200, 255), size=6, life=20))
-            
-            """把[障礙物生成]之功能搬到timeline.py"""
-            '''if level == 1:
-                prev_obs = level1.update_obstacles(screen,screen_rect,particles,events,player,obstacles, spawned,time_now,prev_obs)
-            elif level == 2:
-                prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs,bpm_scale2,time_skip)
-            '''
+ 
             '''再次扳回timeline.py'''
             # 更新障礙物
-            prev_obs, duration = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip, duration)
+            prev_obs = update_obstacles(screen, screen_rect, particles, events, player, obstacles, spawned, time_now, prev_obs, bpm_scale, time_skip)
             
             # 繪製畫面
-            screen.fill((30, 30, 30))
+            screen.fill((10, 10, 30))
             
             # 畫邊界/玩家/粒子/障礙
             pygame.draw.rect(screen, (50, 50, 50), pygame.Rect(0, 0, 800, 600), 5)
@@ -139,22 +134,17 @@ while True:
 
             for p in particles:
                 p.draw(screen)
-
-            if duration > 0:
-                effect.draw_radial_beams(screen, player.rect.center,duration)
                 
             player.draw(screen)
 
             # 玩家死亡判定
             if not player.alive:
                 if inclock < 1:
-                    pygame.mixer.stop()
                     pygame.mixer.music.stop()
                     level_initialized = False
                     game_state = "game_over"
-                    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.ogg")
-                    sound.set_volume(0.3)
-                    sound.play()
+                    sound_manager.play_sfx("dead")
+                    sound_manager.set_volume(0.3)  # 音效音量
                     inclock += 1
                 else:
                     inclock += 1
@@ -163,7 +153,7 @@ while True:
                     pygame.time.delay(500)  # 停一秒，讓玩家有時間看到死掉
                     break
 
-            if not pygame.mixer.music.get_busy() and player.alive and not music_was_paused:
+            if not sound_manager.is_music_playing() and player.alive and not music_was_paused:
                 print("玩家通關成功！")
                 level_initialized = False
                 game_state = "victory"
@@ -188,6 +178,7 @@ while True:
 
         
     elif game_state == "victory":
+        print(">>> victory screen")
         victory_screen(screen)
         game_state = "main_menu"  #  去選單
 
