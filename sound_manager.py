@@ -3,19 +3,19 @@ import pygame
 class SoundManager:
     def __init__(self):
         self.sfx = {
-            "level1_playing": pygame.mixer.Sound("assets/music/level1.ogg"),
-            "level2_playing": pygame.mixer.Sound("assets/music/level2.ogg"),
+            "level1_playing": pygame.mixer.Sound("assets/music/level1.mp3"),
+            "level2_playing": pygame.mixer.Sound("assets/music/level2.mp3"),
 
-            "level1_menu": pygame.mixer.Sound("assets/music/level1.ogg"),
-            "level2_menu": pygame.mixer.Sound("assets/music/level2.ogg"),
+            "level1_menu": pygame.mixer.Sound("assets/music/level1.mp3"),
+            "level2_menu": pygame.mixer.Sound("assets/music/level2.mp3"),
 
-            "triangle": pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.ogg"),
-            "hurt": pygame.mixer.Sound("assets/sound_effect/snd_break1.ogg"),
-            "dead": pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.ogg"),
-            "lazer": pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.ogg"),
+            "triangle": pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav"),
+            "hurt": pygame.mixer.Sound("assets/sound_effect/snd_break1.wav"),
+            "dead": pygame.mixer.Sound("assets/sound_effect/mus_sfx_a_lithit.wav"),
+            "lazer": pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.wav"),
 
-            "choose_option": pygame.mixer.Sound("assets/sound_effect/snd_block2.ogg"),
-            "confirm_option": pygame.mixer.Sound("assets/sound_effect/snd_select.ogg"),
+            "choose_option": pygame.mixer.Sound("assets/sound_effect/snd_block2.wav"),
+            "confirm_option": pygame.mixer.Sound("assets/sound_effect/snd_select.wav"),
         }
         self.music_loaded = False
 

@@ -14,7 +14,7 @@ bpm_scale = 1.06667
 time_skip = 0
 
 def tutorial_screen(screen):
-    pygame.mixer.music.load("assets/music/tutorial.ogg")
+    pygame.mixer.music.load("assets/music/tutorial.mp3")
     with open("levels/tutorial.json", "r") as f:
         events = json.load(f)
     pygame.mixer.music.play(start=0.6 + time_skip, fade_ms=500)
