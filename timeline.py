@@ -2,7 +2,7 @@ from obstacle import *
 from particle import Particle
 import effect
 
-def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip,duration):
+def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip):
     # 障礙物生成（依時間）
     for i, evt in enumerate(events):
         if evt["time"] + 50 > time_now + time_skip * bpm_scale * 1000 >= evt["time"] and i not in spawned:
@@ -107,14 +107,12 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     if o not in prev_obs and player.blood > 0:
                         all_pass=False
                         damage = effect.hurt(o)
-                        #o.shake(10,10)
                         player.blood = player.blood - damage               
                         prev_obs.append(o)
                         for _ in range(30):
                             particles.append(Particle(player.rect.centerx, player.rect.centery))
                     elif player.blood > 0 and isinstance(o, LaserCircleObstacle):
                         all_pass=False
-                        #o.shake(10,10)
                         player.blood = player.blood - effect.hurt(o)
                         for _ in range(30):
                             particles.append(Particle(player.rect.centerx, player.rect.centery))
@@ -123,22 +121,17 @@ def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spa
                     continue  # 預熱中的雷射不造成傷害
                 if o not in prev_obs and player.blood > 0:
                     all_pass=False
-                    #o.shake(10,10)
                     player.blood = player.blood - effect.hurt(o)
                     prev_obs.append(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
                 elif player.blood > 0 and isinstance(o, LaserObstacle):
                     all_pass=False
-                    #o.shake(10,10)
                     player.blood = player.blood - effect.hurt(o)
                     for _ in range(30):
                         particles.append(Particle(player.rect.centerx, player.rect.centery))
             
         if not all_pass:
             o.shake(15,15)
-            duration = 0 #canceled
-        else:
-            duration = max(0, duration - 1)
-                       
-    return prev_obs, duration
+
+    return prev_obs
