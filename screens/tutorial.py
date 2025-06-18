@@ -14,6 +14,7 @@ bpm_scale = 1.06667
 time_skip = 0
 
 def tutorial_screen(screen):
+
     pygame.mixer.music.load("assets/music/tutorial.ogg")
     with open("levels/tutorial.json", "r") as f:
         events = json.load(f)
@@ -111,10 +112,10 @@ def tutorial_screen(screen):
         # 撞到三角形就觸發勝利效果
         if triangle and player.rect.colliderect(triangle.get_rect()):
             pygame.mixer.music.stop()
-            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav")
+            sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.ogg")
             sound.play()
             win_ripple_effect(screen, triangle.center)
-            pygame.time.delay(100)
+            pygame.time.delay(100)  # 等待效果結束
             return
 
         for i, text in enumerate(lines):
