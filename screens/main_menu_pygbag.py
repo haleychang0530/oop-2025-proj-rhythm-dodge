@@ -2,7 +2,7 @@ import pygame
 import json
 import time
 import random
-from sound_manager import SoundManager
+from sound_manager_pygbag import SoundManager
 
 sound_manager = SoundManager()
 
@@ -29,8 +29,8 @@ def main_menu(screen):
     ]
 
     level_music_paths = [
-        "assets/mp3/level1.mp3",
-        "assets/mp3/level2.mp3"
+        "assets/music/level1.wav",
+        "assets/music/level2.wav"
     ]
     
     pygame.mixer.music.load(level_music_paths[selected])

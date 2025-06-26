@@ -2,11 +2,11 @@ import pygame, json
 import sys
 from player import Player
 from particle import Particle
-from effect import win_ripple_effect
+from effect_pygbag import win_ripple_effect
 from triangle import Triangle
-from timeline import *
+from timeline_pygbag import *
 import random
-from sound_manager import SoundManager
+from sound_manager_pygbag import SoundManager
 
 pygame.init()
 sound_manager = SoundManager()
@@ -14,7 +14,7 @@ bpm_scale = 1.06667
 time_skip = 0
 
 def tutorial_screen(screen):
-    pygame.mixer.music.load("assets/mp3/tutorial.mp3")
+    pygame.mixer.music.load("assets/music/tutorial.wav")
     with open("levels/tutorial.json", "r") as f:
         events = json.load(f)
     pygame.mixer.music.play(start=0.6 + time_skip, fade_ms=500)
