@@ -1,0 +1,6 @@
+[project]
+entrypoint = "main_web.py"
+
+[tool.pygbag]
+repo = "https://pygame-web.github.io/archives/repo"
+cdn = true

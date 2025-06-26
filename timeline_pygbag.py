@@ -1,6 +1,6 @@
 from obstacle_pygbag import *
 from particle import Particle
-import effect_pygbag 
+import effect_pygbag as effect_pygbag 
 
 def update_obstacles(screen,screen_rect,particles,events, player, obstacles, spawned, time_now,prev_obs,bpm_scale,time_skip):
     # 障礙物生成（依時間）

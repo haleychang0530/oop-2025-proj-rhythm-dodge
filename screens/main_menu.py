@@ -29,8 +29,8 @@ def main_menu(screen):
     ]
 
     level_music_paths = [
-        "assets/music/level1.mp3",
-        "assets/music/level2.mp3"
+        "assets/mp3/level1.mp3",
+        "assets/mp3/level2.mp3"
     ]
     
     pygame.mixer.music.load(level_music_paths[selected])

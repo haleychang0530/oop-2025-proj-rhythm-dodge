@@ -50,11 +50,11 @@ while True:
             pygame.quit()
             sys.exit()
         if level == 1:
-            sound_manager.play_music("assets/music/level1.ogg")
+            sound_manager.play_music("assets/mp3/level1.ogg")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
-            sound_manager.play_music("assets/music/level2.ogg")
+            sound_manager.play_music("assets/mp3/level2.ogg")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         pygame.time.delay(500)
@@ -70,11 +70,11 @@ while True:
 
             # 音樂與事件載入
             if level == 1:
-                sound_manager.play_music("assets/music/level1.ogg", start_time=40.94 + time_skip, fade_ms=1000, loop = 0)
+                sound_manager.play_music("assets/mp3/level1.ogg", start_time=40.94 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale1
                 sound_manager.set_volume(0.45)
             elif level == 2:
-                sound_manager.play_music("assets/music/level2.ogg", start_time=15.45 + time_skip, fade_ms=1000, loop = 0)
+                sound_manager.play_music("assets/mp3/level2.ogg", start_time=15.45 + time_skip, fade_ms=1000, loop = 0)
                 bpm_scale = bpm_scale2
                 sound_manager.set_volume(0.4)
             

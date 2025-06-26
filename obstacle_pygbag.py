@@ -1,6 +1,6 @@
 import pygame
 import math
-import effect_pygbag
+import effect_pygbag as effect_pygbag
 import random
 
 class Obstacle:
@@ -111,7 +111,7 @@ class LaserObstacle(Obstacle):
             self.expired = True
 
         if self.activated and not self.effect_playing and self.sound:
-            effect.lazer()
+            effect_pygbag.lazer()
             self.effect_playing = True
 
     def get_centered_line_rect(self, width):

@@ -3,11 +3,11 @@ import pygame
 class SoundManager:
     def __init__(self):
         self.sfx = {
-            "level1_playing": pygame.mixer.Sound("assets/music/level1.mp3"),
-            "level2_playing": pygame.mixer.Sound("assets/music/level2.mp3"),
+            "level1_playing": pygame.mixer.Sound("assets/mp3/level1.mp3"),
+            "level2_playing": pygame.mixer.Sound("assets/mp3/level2.mp3"),
 
-            "level1_menu": pygame.mixer.Sound("assets/music/level1.mp3"),
-            "level2_menu": pygame.mixer.Sound("assets/music/level2.mp3"),
+            "level1_menu": pygame.mixer.Sound("assets/mp3/level1.mp3"),
+            "level2_menu": pygame.mixer.Sound("assets/mp3/level2.mp3"),
 
             "triangle": pygame.mixer.Sound("assets/sound_effect/mus_sfx_eyeflash.wav"),
             "hurt": pygame.mixer.Sound("assets/sound_effect/snd_break1.wav"),
