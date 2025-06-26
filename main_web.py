@@ -9,7 +9,7 @@ from screens.main_menu import main_menu
 from screens.win_screen import victory_screen
 from screens.pause import show_pause_menu
 from screens import gameover
-from timeline import update_obstacles
+from timeline_pygbag import update_obstacles
 from sound_manager_pygbag import SoundManager
 
 # 平台偵測（pygbag 專用）
