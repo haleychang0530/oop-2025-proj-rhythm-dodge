@@ -1,6 +1,6 @@
 import pygame, json, sys, random
 from player import Player
-from obstacle import *
+from obstacle_pygbag import *
 from particle import Particle
 import ui
 from screens.start import start
@@ -51,11 +51,11 @@ while True:
             sys.exit()
         # 載入關卡音樂與事件
         if level == 1:
-            sound_manager.play_music("assets/music/level1.ogg")
+            sound_manager.play_music("assets/music/level1.wav")
             with open("levels/level1.json", "r") as f:
                 events = json.load(f)
         elif level == 2:
-            sound_manager.play_music("assets/music/level2.ogg")
+            sound_manager.play_music("assets/music/level2.wav")
             with open("levels/level2.json", "r") as f:
                 events = json.load(f)
         pygame.time.delay(500)
@@ -67,11 +67,11 @@ while True:
             obstacles = []
             screen_rect = screen.get_rect()
             if level == 1:
-                sound_manager.play_music("assets/music/level1.ogg", start_time=40.94 + time_skip, fade_ms=1000, loop=0)
+                sound_manager.play_music("assets/music/level1.wav", start_time=40.94 + time_skip, fade_ms=1000, loop=0)
                 bpm_scale = bpm_scale1
                 sound_manager.set_volume(0.45)
             elif level == 2:
-                sound_manager.play_music("assets/music/level2.ogg", start_time=15.45 + time_skip, fade_ms=1000, loop=0)
+                sound_manager.play_music("assets/music/level2.wav", start_time=15.45 + time_skip, fade_ms=1000, loop=0)
                 bpm_scale = bpm_scale2
                 sound_manager.set_volume(0.4)
             spawned = set()

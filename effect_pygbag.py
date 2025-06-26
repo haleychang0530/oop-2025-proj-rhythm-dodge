@@ -3,7 +3,7 @@ import math
 import random
 
 def hurt(o):
-    sound = pygame.mixer.Sound("assets/sound_effect/snd_break1.ogg")
+    sound = pygame.mixer.Sound("assets/sound_effect/snd_break1.wav")
     """Play audio and visual effect when the player gets hurt."""
     damage = 0
     ob = o.__class__.__name__
@@ -38,7 +38,7 @@ def hurt(o):
      
 
 def lazer():
-    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.ogg")
+    sound = pygame.mixer.Sound("assets/sound_effect/mus_sfx_rainbowbeam_1.wav")
     sound.set_volume(0.35)
     sound.play(maxtime=1000)
 
