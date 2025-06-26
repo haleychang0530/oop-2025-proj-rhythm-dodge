@@ -5,7 +5,7 @@ from particle import Particle
 import ui
 from screens.start import start
 from screens.tutorial_pygbag import tutorial_screen
-from screens.main_menu_pygbag import main_menu
+from main_menu_pygbag import main_menu
 from screens.win_screen import victory_screen
 from screens.pause import show_pause_menu
 from screens import gameover

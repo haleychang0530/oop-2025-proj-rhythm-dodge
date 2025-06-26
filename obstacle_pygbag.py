@@ -1,6 +1,6 @@
 import pygame
 import math
-import effect_pygbag
+import effect_pygbag as effect_pygbag
 import random
 
 class Obstacle:
